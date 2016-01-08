@@ -1,0 +1,103 @@
+html, body{
+  font-family: monospace;
+}
+header{
+  text-align: center;
+}
+.container{
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+#resume-wrapper{
+  margin: 40px 0;
+  border-radius: 4px;
+  background-color: #ecf0f1;
+  // box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  border: 1px solid #bdc3c7;
+  color:#95a5a6;
+  #resume-menu-bar{
+    background-color: #bdc3c7;
+    padding: 5px;
+    border-radius: 3px 3px 0 0;
+    .circle{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #95a5a6;
+      float: left;
+      margin-right: 5px;
+    }
+  }
+  #resume-content{
+    padding: 20px;
+    line-height: 140%;
+  }
+}
+
+#console{
+  border:15px solid #ecf0f1;
+  background-color: #ecf0f1;
+  padding: 10px;
+  border-radius: 4px;
+  height: 200px;
+  overflow-y:scroll;
+  color:#555;
+  margin-top: 40px;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 11pt;
+    li{
+      &.commandError{
+        color: #e74c3c;
+      }
+      &.commandResponse{
+        color: #7f8c8d;
+      }
+    }
+  }
+  form{
+    margin: 0;
+    padding: 0;
+    .command-prompt-container{
+      font-family: monospace;
+      font-size: 11pt;
+    }
+    input{
+      background-color: transparent;
+      outline: none;
+      border:none;
+      font-family: monospace;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+      color:#555;
+      width: 90%;
+    }
+  }
+}
+
+//syntax highlighting
+pre {
+  .string { color: #27ae60; }
+  .number { color: darkorange; }
+  .boolean { color: blue; }
+  .null { color: magenta; }
+  .key { color: #7f8c8d; font-weight: bold }
+}
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
