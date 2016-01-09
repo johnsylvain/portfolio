@@ -1,32 +1,122 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 html, body {
-  font-family: monospace;
+  font-family: "Inconsolata";
 }
 
 header {
-  text-align: center;
+  margin: 40px 0;
+}
+
+header h1 {
+  font-size: 2rem;
+}
+
+header span::before {
+  content: '';
+  background-color: red;
+  width: 20px;
+  height: 3px;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1000px;
   width: 100%;
   margin: 0 auto;
 }
 
-#resume-wrapper {
-  margin: 40px 0;
-  border-radius: 4px;
-  background-color: #ecf0f1;
-  border: 1px solid #bdc3c7;
-  color: #95a5a6;
+.grid {
+  background: white;
+  margin: 0 0 20px 0;
 }
 
-#resume-wrapper #resume-menu-bar {
+.grid:after {
+  /* Or @extend clearfix */
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[class*='col-'] {
+  float: left;
+  padding-right: 20px;
+}
+
+.grid [class*='col-']:last-of-type {
+  padding-right: 0;
+}
+
+.col-1-2 {
+  width: 50%;
+}
+
+.col-2-3 {
+  width: 66.66%;
+}
+
+.col-1-3 {
+  width: 33.33%;
+}
+
+.menu-bar {
   background-color: #bdc3c7;
   padding: 5px;
   border-radius: 3px 3px 0 0;
 }
 
-#resume-wrapper #resume-menu-bar .circle {
+.menu-bar .circle {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -35,35 +125,55 @@ header {
   margin-right: 5px;
 }
 
+#resume-wrapper {
+  border-radius: 4px;
+  background-color: #ecf0f1;
+  border: 1px solid #bdc3c7;
+  color: #95a5a6;
+}
+
 #resume-wrapper #resume-content {
   padding: 20px;
-  line-height: 140%;
+  line-height: 160%;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+#console-wrapper {
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
 }
 
 #console {
   border: 15px solid #ecf0f1;
   background-color: #ecf0f1;
   padding: 10px;
-  border-radius: 4px;
-  height: 200px;
+  border-radius: 0 0 4px 4px;
+  height: 500px;
   overflow-y: scroll;
   color: #555;
-  margin-top: 40px;
 }
 
 #console ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 11pt;
+  font-size: 10pt;
+}
+
+#console ul li {
+  margin-top: 1px;
+  padding: inherit;
 }
 
 #console ul li.commandError {
   color: #e74c3c;
+  margin-left: 13px;
 }
 
 #console ul li.commandResponse {
   color: #7f8c8d;
+  margin-left: 13px;
 }
 
 #console form {
@@ -72,20 +182,27 @@ header {
 }
 
 #console form .command-prompt-container {
-  font-family: monospace;
-  font-size: 11pt;
+  font-family: "Inconsolata";
+  font-size: 10pt;
 }
 
 #console form input {
   background-color: transparent;
   outline: none;
   border: none;
-  font-family: monospace;
-  font-size: 11pt;
+  font-family: "Inconsolata";
+  font-size: 10pt;
   margin: 0;
   padding: 0;
   color: #555;
   width: 90%;
+}
+
+pre {
+  font-family: "Inconsolata";
+  font-size: 10pt;
+  margin: 0;
+  padding: 0;
 }
 
 pre .string {
