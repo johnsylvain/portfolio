@@ -13,7 +13,11 @@ var model = {
     position: "Web developer and designer",
     contact:{
       email: "me@johnsylva.in",
-      phone: 3136180632
+      phone: 3136180632,
+      social: {
+        github: 'http://github.com/johnsylvain',
+        linkedin: 'http://linkedin.com/in/johnsylvain'
+      }
     },
     education: {
       name: 'Purdue University',
@@ -24,6 +28,7 @@ var model = {
       {
         companyName: 'Blast Radius',
         position: 'Web Development Intern',
+        date: 'Summer 2015',
         description: [
           'ok','morestuff'
         ]
@@ -35,7 +40,33 @@ var model = {
           'ok','morestuff'
         ]
       }
-    ]
+    ],
+    skills: {
+      languages: [
+        {
+          name: 'HTML/CSS',
+          related: [
+            'SASS', 'jade'
+          ]
+        },
+        {
+          name: 'JavaScript',
+          related: [
+            'AngularJS','Vue.js', 'Node.js', 'Express.js', 'jQuery'
+          ]
+        },
+        {
+          name: 'PHP',
+          related: [
+            'SQL', 'Slim', 'Flight'
+          ]
+        }
+      ],
+      technical: [
+        'git','gulp',
+      ]
+
+    }
   },
 
 }
