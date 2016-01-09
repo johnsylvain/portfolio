@@ -1,9 +1,33 @@
 var model = {
-  previousCommands: [],
+  previousCommands: [
+    {
+      text: 'type \'help\' to view commands',
+      type: 'response'
+    }
+  ],
   commandPrefix: '$',
   currentOutput: null,
-  commands:[
-    '', 'open resume', 'show education','show xp', 'show skills','help'
+  commands: [
+    {
+      text: '',
+      params:  null
+    },
+    {
+      text: 'help',
+      params: null
+    },
+    {
+      text: 'email',
+      params: ['<subject>']
+    },
+    {
+      text: 'open',
+      params: ['resume']
+    },
+    {
+      text: 'show',
+      params: ['education', 'skills', 'xp']
+    }
   ],
   defaultMessage: {
     message: [
@@ -140,22 +164,23 @@ var controller = {
 
   enterCommand: function(command){
     var flag = false;
+    var args = command.split(' ');
     model.previousCommands.push({
       text: command,
       type: 'command'
     });
     for (var i = 0; i < model.commands.length; i++) {
       var modelCommand = model.commands[i];
-      if (command === modelCommand){
+      if (args[0] === modelCommand.text){
         flag = true;
       }
     };
     if (!flag) {
       model.previousCommands.push({
-        text: 'command not found: ' + command,
+        text: 'command not found: ' + args[0],
         type: 'error'
-      });
-      model.previousCommands.push({
+      },
+      {
         text: 'to view available commands type: help',
         type: 'response'
       });
@@ -167,45 +192,101 @@ var controller = {
 
   executeCommand: function(command){
     var _this = this;
-    command = command.replace(' ', '_');
+    var comArgs = command.split(' ');
+
     var commands = {
       help: function(){
         var commands = model.commands;
         model.previousCommands.push({
+          text:'-----',
+          type:'response'
+        },{
           text: 'Available Commands:',
           type: 'response'
+        },{
+          text:'-----',
+          type:'response'
         });
         for (var i = 0; i < commands.length; i++) {
           var avalCommand = commands[i];
           model.previousCommands.push({
-            text: avalCommand,
+            text: avalCommand.text,
             type: 'response'
-          })
+          });
+          if (avalCommand.params !== null) {
+            model.previousCommands.push({
+              text: '-accepts: ' + avalCommand.params,
+              type: 'response'
+            });
+          };
         };
         consoleView.render();
       },
-      open_resume: function(){
-        _this.updateOutput({resume: model.data}, function(){
-          resumeContentView.render();
-        });
+      open: function(){
+        var openResume = function(){
+          _this.updateOutput({resume: model.data}, function(){
+            resumeContentView.render();
+          });
+        };
+        if (comArgs.length === 1) {
+          model.previousCommands.push({
+            text: "type 'open resume'",
+            type: 'warning'
+          })
+        } else {
+          return {
+            resume: openResume
+          }
+        }
       },
-      show_education: function(){
-        _this.updateOutput({education: model.data.education}, function(){
-          resumeContentView.render();
-        });
+      show: function(){
+        var showEducation =  function(){
+          _this.updateOutput({education: model.data.education}, function(){
+            resumeContentView.render();
+          });
+        };
+        var showXp = function(){
+          _this.updateOutput({experience: model.data.experience}, function(){
+            resumeContentView.render();
+          });
+        };
+        var showSkills = function(){
+          _this.updateOutput({skills: model.data.skills}, function(){
+            resumeContentView.render();
+          });
+        }
+        if (comArgs.length === 1) {
+          model.previousCommands.push({
+            text: "type 'show [" + model.commands[4].params + "]'",
+            type: 'warning'
+          })
+        } else {
+          return {
+            education: showEducation,
+            skills: showSkills,
+            xp: showXp
+          }
+        }
       },
-      show_xp: function(){
-        _this.updateOutput({experience: model.data.experience}, function(){
-          resumeContentView.render();
-        });
-      },
-      show_skills: function(){
-        _this.updateOutput({skills: model.data.skills}, function(){
-          resumeContentView.render();
-        });
+      email: function(){
+        var subject = '';
+        for (var i = 1; i < comArgs.length; i++) {
+          subject += (' ' + comArgs[i])
+        };
+        var link = 'mailto:me@johnsylva.in?subject=' + subject;
+        window.open(link);
       }
     }
-    if(command !== '') commands[command]();
+
+    if (comArgs.length === 1) {
+      commands[comArgs[0]]();
+    } else if(comArgs[0] === 'email'){
+      commands[comArgs[0]]();
+    } else if (comArgs.length > 1){
+      var subCommand = commands[comArgs[0]]();
+      subCommand[comArgs[1]]();
+    }
+
   },
 
   getPreviousCommands: function(){
@@ -275,7 +356,9 @@ var consoleView = {
       } else if(command.type === 'response'){
         elem.textContent = command.text;
         elem.className = 'commandResponse';
-
+      } else if(command.type === 'warning'){
+        elem.textContent = command.text;
+        elem.className = 'commandWarning';
       }
 
       this.prevElem.appendChild(elem);

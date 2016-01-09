@@ -106,7 +106,8 @@ footer{
   span{
     font-size: 0.7rem;
     color:#555;
-    margin-left: -25px;
+    margin: 0 0 0 -25px;
+    padding: 0;
   }
 }
 #resume-wrapper{
@@ -124,7 +125,10 @@ footer{
 
 #console-wrapper{
   position: fixed;
+  // width: 25%;
+  // max-width: 150px;
   width: 25%;
+  max-width: 300px;
 }
 #console{
   border:15px solid #34495e;
@@ -146,7 +150,11 @@ footer{
         margin-left: 13px;
       }
       &.commandResponse{
-        color: #7f8c8d;
+        color: #9f9f9f;
+        margin-left: 13px;
+      }
+      &.commandWarning{
+        color: #e67e22;
         margin-left: 13px;
       }
     }
