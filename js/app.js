@@ -3,7 +3,7 @@ var model = {
   commandPrefix: '$',
   currentOutput: null,
   commands:[
-    '','open', 'open resume', 'show education','show xp', 'help'
+    '', 'open resume', 'show education','show xp', 'show skills','help'
   ],
   defaultMessage: {
     message: "to view the resume, enter a command in the terminal to the left"
@@ -22,22 +22,36 @@ var model = {
     education: {
       name: 'Purdue University',
       gradutionDate: 'May 2017',
-      gpa: 3.97
+      gpa: 3.97,
+      area: {
+        major: 'Computer Graphics Technology',
+        minor: 'Computer Information Technology'
+      }
     },
     experience: [
       {
-        companyName: 'Blast Radius',
+        title: 'Blast Radius',
         position: 'Web Development Intern',
         date: 'Summer 2015',
         description: [
-          'ok','morestuff'
+          'Developed interactive website experiences for a variety of clients.',
+          'Collaborated with professionals in web development and design.'
         ]
       },
       {
-        companyName: 'Blast Radius',
-        position: 'Web Development Intern',
+        title: 'Freelance Graphic Design',
+        date: 'August 2014 - Present',
         description: [
-          'ok','morestuff'
+          'Consulted with clients to produce designs and marketing materials',
+          'Clients include: Organizaions, Student Government Campaigns, and Career Fairs'
+        ]
+      },
+      {
+        title: 'Eagle Scout',
+        date: 'June 2013',
+        description: [
+          'Oversaw the development and conducted a community service project.',
+          'Resulted in more than 150 hours of service.'
         ]
       }
     ],
@@ -150,6 +164,7 @@ var controller = {
 
   executeCommand: function(command){
     var _this = this;
+    command = command.replace(' ', '_');
     var commands = {
       help: function(){
         var commands = model.commands;
@@ -166,8 +181,23 @@ var controller = {
         };
         consoleView.render();
       },
-      open: function(){
+      open_resume: function(){
         _this.updateOutput(model.data, function(){
+          resumeContentView.render();
+        });
+      },
+      show_education: function(){
+        _this.updateOutput(model.data.education, function(){
+          resumeContentView.render();
+        });
+      },
+      show_xp: function(){
+        _this.updateOutput(model.data.experience, function(){
+          resumeContentView.render();
+        });
+      },
+      show_skills: function(){
+        _this.updateOutput(model.data.skills, function(){
           resumeContentView.render();
         });
       }
