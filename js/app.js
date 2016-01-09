@@ -6,7 +6,10 @@ var model = {
     '', 'open resume', 'show education','show xp', 'show skills','help'
   ],
   defaultMessage: {
-    message: "to view the resume, enter a command in the terminal to the left"
+    message: [
+      "to view the resume, enter 'open resume' in the terminal to the left",
+      "type 'help' to view other commands"
+    ]
   },
   data: {
     name: "John Sylvain",
@@ -182,22 +185,22 @@ var controller = {
         consoleView.render();
       },
       open_resume: function(){
-        _this.updateOutput(model.data, function(){
+        _this.updateOutput({resume: model.data}, function(){
           resumeContentView.render();
         });
       },
       show_education: function(){
-        _this.updateOutput(model.data.education, function(){
+        _this.updateOutput({education: model.data.education}, function(){
           resumeContentView.render();
         });
       },
       show_xp: function(){
-        _this.updateOutput(model.data.experience, function(){
+        _this.updateOutput({experience: model.data.experience}, function(){
           resumeContentView.render();
         });
       },
       show_skills: function(){
-        _this.updateOutput(model.data.skills, function(){
+        _this.updateOutput({skills: model.data.skills}, function(){
           resumeContentView.render();
         });
       }
@@ -207,6 +210,12 @@ var controller = {
 
   getPreviousCommands: function(){
     return model.previousCommands;
+  },
+
+  getFileName: function(){
+    var current = model.currentOutput;
+    var fileName = Object.keys(current)[0];
+    return fileName;
   }
 
 }
@@ -228,9 +237,15 @@ var consoleView = {
   init: function(){
     this.promptElem = document.getElementById('command-prompt');
     this.prevElem = document.getElementById('commands');
+    this.fileNameElem = document.getElementById('file-name');
 
+    var consoleElem = document.getElementById('console');
     var commandInput = document.getElementById('command-input');
     commandInput.focus();
+
+    consoleElem.addEventListener('click', function(){
+      commandInput.focus();
+    })
 
     this.promptElem.addEventListener('submit', function(e){
       e.preventDefault();
@@ -244,6 +259,9 @@ var consoleView = {
   render: function(){
     this.prevElem.innerHTML = '';
     var commands = controller.getPreviousCommands();
+
+    this.fileNameElem.textContent = controller.getFileName();
+
 
     for (var i = 0; i < commands.length; i++) {
       var command = commands[i];
