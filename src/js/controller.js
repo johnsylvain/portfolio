@@ -144,10 +144,6 @@ var controller = {
     } else if(comArgs[0] === 'email'){
       commands[comArgs[0]]();
     } else if (comArgs.length > 1){
-      // for (var i = 0; i < model.commands.length; i++) {
-      //   var comTest = model.commands[i];
-
-      // };
       var subCommand = commands[comArgs[0]]();
       if(subCommand[comArgs[1]]) {
         subCommand[comArgs[1]]()
