@@ -37,7 +37,7 @@ var model = {
   },
   data: {
     name: "John Sylvain",
-    position: "Web developer and designer",
+    position: "Full Stack Developer",
     contact:{
       email: "me@johnsylva.in",
       phone: 3136180632,
@@ -49,7 +49,7 @@ var model = {
     education: {
       name: 'Purdue University',
       gradutionDate: 'May 2017',
-      gpa: 3.97,
+      gpa: 3.98,
       area: {
         major: 'Computer Graphics Technology',
         minor: 'Computer Information Technology'
@@ -57,20 +57,29 @@ var model = {
     },
     experience: [
       {
+        title: 'USAA',
+        position: 'Software Development Intern',
+        date: 'Summer 2016',
+        description: [
+          'Developed an AngularJS application to manage business rules for all employees',
+          'Analyzed data and created visualizations for the Enterprise Systems Division.'
+        ]
+      },
+      {
         title: 'Blast Radius',
         position: 'Web Development Intern',
         date: 'Summer 2015',
         description: [
-          'Developed interactive website experiences for a variety of clients.',
-          'Collaborated with professionals in web development and design.'
+          'Developed websites and dynamic emails for a number of blue chip clients.',
+          'Aided in the relaunch of the global Blast Radius website'
         ]
       },
       {
-        title: 'Freelance Graphic Design',
+        title: 'Freelance Web Development and Design',
         date: 'August 2014 - Present',
         description: [
-          'Consulted with clients to produce designs and marketing materials',
-          'Clients include: Organizaions, Student Government Campaigns, and Career Fairs'
+          'Developed websites and graphics while building relationships with clients.',
+          'Clients include: university organizations, professors, and career fairs.'
         ]
       },
       {

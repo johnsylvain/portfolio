@@ -54,15 +54,20 @@ html, body{
 }
 header{
   padding: 40px 0;
-  font-family: 'Montserrat';
+  font-family: $font;
   color: #8f8f8f;
   text-align: center;
   h1{
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
   }
   p{
-    font-weight: thin;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 5px;
   }
   span::before{
     content: '';
