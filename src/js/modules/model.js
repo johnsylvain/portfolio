@@ -29,6 +29,10 @@ module.exports = {
     {
       text: 'show',
       params: ['education', 'skills', 'xp']
+    },
+    {
+      text: 'social',
+      params: ['github', 'linkedin']
     }
   ],
   defaultMessage: {

@@ -143,6 +143,26 @@ var controller = {
         };
         var link = 'mailto:me@johnsylva.in?subject=' + subject;
         window.open(link);
+      },
+      social: function(){
+
+        var github = function(){
+          window.open('http://github.com/johnsylvain');
+        }
+        var linkedin = function(){
+          window.open('http://linkedin.com/in/johnsylvain');
+        }
+        if (comArgs.length === 1) {
+          model.previousCommands.push({
+            text: "type 'social [" + model.commands[5].params + "]'",
+            type: 'warning'
+          })
+        } else {
+          return{
+            github: github,
+            linkedin: linkedin
+          }
+        }
       }
     }
 
