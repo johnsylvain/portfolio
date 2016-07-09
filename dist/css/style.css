@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700);
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -53,13 +54,13 @@ table {
 }
 
 html, body {
-  font-family: "Inconsolata";
+  font-family: "Ubuntu Mono";
   background-color: #ecf0f1;
 }
 
 header {
   padding: 40px 0;
-  font-family: "Inconsolata";
+  font-family: "Ubuntu Mono";
   color: #8f8f8f;
   text-align: center;
 }
@@ -93,7 +94,7 @@ footer {
 }
 
 .container {
-  max-width: 700px;
+  max-width: 800px;
   width: 100%;
   margin: 0 auto;
   padding: 15px;
@@ -187,7 +188,7 @@ footer {
 }
 
 #console form .command-prompt-container {
-  font-family: "Inconsolata";
+  font-family: "Ubuntu Mono";
   font-size: 10pt;
 }
 
@@ -195,7 +196,7 @@ footer {
   background-color: transparent;
   outline: none;
   border: none;
-  font-family: "Inconsolata";
+  font-family: "Ubuntu Mono";
   font-size: 10pt;
   margin: 0;
   padding: 0;
@@ -204,7 +205,8 @@ footer {
 }
 
 pre {
-  font-family: "Inconsolata";
+  line-height: 150%;
+  font-family: "Ubuntu Mono";
   font-size: 10pt;
   margin: 0;
   padding: 0;

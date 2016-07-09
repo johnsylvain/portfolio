@@ -1,39 +1,64 @@
 var gulp = require('gulp'),
   sass = require('gulp-sass'),
+  browserSync = require('browser-sync'),
+  browserify = require('browserify'),
+  source = require('vinyl-source-stream'),
   autoprefix = require('gulp-autoprefixer'),
-  concat = require('gulp-concat'),
-  sourcemaps = require('gulp-sourcemaps'),
-  uglify = require('gulp-uglify');
+  gutil = require('gulp-util'),
+  imagemin = require('gulp-imagemin');
 
+var paths = {
+  js: './src/js/**/*.js',
+  css: './src/scss/**/*.scss'
+};
 
-gulp.task('sass', function(){
-  gulp.src('./src/scss/**/*.scss')
-    .pipe( sass().on('error', sass.logError) )
-    .pipe(autoprefix())
-    .pipe(sass({outputStyle: 'expanded'}))
-    .pipe( gulp.dest('./dist/css/'));
-});
-
-gulp.task('compress',function(){
-  gulp.src(['src/js/model.js',
-      'src/js/filters.js',
-      'src/js/controller.js',
-      'src/js/views.js',
-      'src/js/app.js'])
-    .pipe(sourcemaps.init())
-      .pipe(concat('app.js').on('error', function(e){
-        console.log(e);
-       }))
-      .pipe(uglify().on('error', function(e){
-        console.log(e);
-      }))
-    .pipe(sourcemaps.write())
+gulp.task('js', () => {
+  return browserify('./src/js/app.js')
+    .bundle()
+    .on('error', (e) => {
+      gutil.log(e);
+    })
+    .pipe(source('bundle.js'))
     .pipe(gulp.dest('./dist/js/'));
 });
 
-gulp.task('watch', function(){
-  gulp.watch('./src/scss/**/*.scss', ['sass']);
-  gulp.watch('./src/js/**/*.js', ['compress']);
+gulp.task('css', () => {
+  gulp.src(paths.css)
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefix())
+    .pipe(sass({outputStyle: 'expanded'}))
+    .pipe(gulp.dest('./dist/css/'))
+    .pipe(browserSync.stream());
 });
 
-gulp.task('default',['watch']);
+
+gulp.task('serve', ['css'],() => {
+  browserSync.init({
+    server: {
+      baseDir: './dist'
+    }
+  });
+  gulp.watch(paths.css, ['css']);
+  gulp.watch('./**/*.html').on('change', browserSync.reload);
+  gulp.watch(paths.js).on('change', browserSync.reload);
+});
+
+gulp.task('watch', ['js', 'css', 'move', 'images'], () => {
+  gulp.watch(paths.js, ['js']);
+  gulp.watch(paths.css, ['css']);
+  gulp.watch('./src/img/**/*.*', ['images']);
+  gulp.watch('./src/**/*.html', ['move'])
+});
+
+gulp.task('move', () => {
+  gulp.src('./src/**/*.html')
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('images', () => {
+  gulp.src('./src/img/**/*.*')
+    .pipe(imagemin())
+    .pipe(gulp.dest('./dist/img/'));
+});
+
+gulp.task('default', ['js','css','move','images', 'watch', 'serve']);

@@ -1,4 +1,6 @@
-var filters = {
+'use strict';
+
+module.exports = {
   textToJSON: function(json){
     if (typeof json != 'string') {
       json = JSON.stringify(json, undefined, 2);

@@ -1,4 +1,6 @@
-var model = {
+'use strict';
+
+module.exports = {
   previousCommands: [
     {
       text: 'type \'help\' to view commands',
