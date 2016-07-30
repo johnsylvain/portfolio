@@ -9,6 +9,7 @@ module.exports = {
   ],
   commandPrefix: '$',
   currentOutput: null,
+  mobileView: false,
   commands: [
     {
       text: '',
