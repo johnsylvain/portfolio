@@ -49,6 +49,10 @@ table {
   border-spacing: 0;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -101,7 +105,7 @@ footer {
 }
 
 #page-wrap {
-  padding-left: 25%;
+  padding-left: 33%;
 }
 
 .menu-bar {
@@ -142,8 +146,8 @@ footer {
 
 #console-wrapper {
   position: fixed;
-  width: 25%;
-  max-width: 300px;
+  width: 33%;
+  max-width: 400px;
 }
 
 #console {
