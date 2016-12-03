@@ -61,4 +61,4 @@ gulp.task('images', () => {
     .pipe(gulp.dest('./dist/img/'));
 });
 
-gulp.task('default', ['js','css','move','images', 'watch', 'serve']);
+gulp.task('default', ['js','css','move', 'watch', 'serve']);

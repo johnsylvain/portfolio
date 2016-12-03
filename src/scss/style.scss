@@ -48,6 +48,10 @@ table {
 }
 //////////////////////
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 *{box-sizing: border-box;}
 
 html, body{
@@ -94,7 +98,7 @@ footer{
 }
 
 #page-wrap{
-	padding-left: 25%;
+	padding-left: 33%;
 }
 
 .menu-bar{
@@ -134,8 +138,8 @@ footer{
 	position: fixed;
 	// width: 25%;
 	// max-width: 150px;
-	width: 25%;
-	max-width: 300px;
+	width: 33%;
+	max-width: 400px;
 }
 #console{
 	border:15px solid #34495e;
