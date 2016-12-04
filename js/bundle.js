@@ -103,7 +103,7 @@ var model = {
 			name: 'Purdue University',
 			gradutionDate: 'May 2017',
 			gpa: 3.98,
-			area: {
+			study: {
 				major: 'Computer Graphics Technology',
 				minor: 'Computer Information Technology'
 			}
