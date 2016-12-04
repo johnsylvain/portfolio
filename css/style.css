@@ -127,16 +127,139 @@ table {
 
 @-webkit-keyframes zoom-in {
   from {
-    -webkit-transform: scale(0.95);
-    transform: scale(0.95);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
   }
 }
 
 @keyframes zoom-in {
   from {
-    -webkit-transform: scale(0.95);
-    transform: scale(0.95);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
   }
+}
+
+@-webkit-keyframes zoom-out {
+  15% {
+    -webkit-transform: scale(0.23) translateY(0%);
+    transform: scale(0.23) translateY(0%);
+    opacity: 1;
+  }
+  30% {
+    -webkit-transform: scale(0.25) translateY(0%);
+    transform: scale(0.25) translateY(0%);
+    opacity: 1;
+  }
+  60% {
+    -webkit-transform: scale(0.25) translateY(300%);
+    transform: scale(0.25) translateY(300%);
+  }
+  61% {
+    opacity: 0;
+  }
+  63% {
+    -webkit-transform: scale(1) translateY(0%);
+    transform: scale(1) translateY(0%);
+  }
+  65% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoom-out {
+  15% {
+    -webkit-transform: scale(0.23) translateY(0%);
+    transform: scale(0.23) translateY(0%);
+    opacity: 1;
+  }
+  30% {
+    -webkit-transform: scale(0.25) translateY(0%);
+    transform: scale(0.25) translateY(0%);
+    opacity: 1;
+  }
+  60% {
+    -webkit-transform: scale(0.25) translateY(300%);
+    transform: scale(0.25) translateY(300%);
+  }
+  61% {
+    opacity: 0;
+  }
+  63% {
+    -webkit-transform: scale(1) translateY(0%);
+    transform: scale(1) translateY(0%);
+  }
+  65% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes trash-can {
+  20% {
+    top: calc(100vh - 300px);
+  }
+  60% {
+    top: calc(100vh - 300px);
+  }
+  70% {
+    top: 100vh;
+  }
+}
+
+@keyframes trash-can {
+  20% {
+    top: calc(100vh - 300px);
+  }
+  60% {
+    top: calc(100vh - 300px);
+  }
+  70% {
+    top: 100vh;
+  }
+}
+
+.trash {
+  position: fixed;
+  top: 100%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 50vw;
+  height: auto;
+}
+
+.trash img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50vw;
+  height: auto;
+}
+
+.trash.crash {
+  -webkit-animation: trash-can 4s;
+  animation: trash-can 4s;
+}
+
+.trash.crash#trash-front {
+  z-index: 9000;
+}
+
+.trash#trash-front {
+  z-index: -10;
+}
+
+.fade-in {
+  opacity: 0;
+  -webkit-animation: fade-in 0.5s forwards;
+  animation: fade-in 0.5s forwards;
+  -webkit-animation-delay: 0.75s;
+  animation-delay: 0.75s;
 }
 
 * {
@@ -145,7 +268,20 @@ table {
 
 html, body {
   font-family: "Ubuntu Mono";
+  background-color: #2c2c2c;
+}
+
+#wrapper {
   background-color: #555;
+}
+
+#wrapper.crash {
+  overflow: hidden;
+  height: 100vh;
+  -webkit-animation: zoom-out 4s forwards;
+  animation: zoom-out 4s forwards;
+  position: relative;
+  z-index: 1000;
 }
 
 .content {
@@ -196,13 +332,20 @@ header span::before {
 footer {
   text-align: center;
   color: white;
-  padding: 60px 0 20px;
+  padding: 60px 0 0px;
   font-size: 0.825rem;
 }
 
+footer p {
+  margin-bottom: 5px;
+}
+
 footer a {
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: lighter;
+  color: #27ae60;
+}
+
+footer a:hover {
+  font-weight: bold;
 }
 
 .container {
@@ -257,8 +400,6 @@ footer a {
   opacity: 0;
   -webkit-animation: fade-in 0.5s forwards, zoom-in 0.5s;
   animation: fade-in 0.5s forwards, zoom-in 0.5s;
-  -webkit-animation-delay: 0.7s;
-  animation-delay: 0.7s;
 }
 
 #resume-wrapper #resume-content {
@@ -270,6 +411,10 @@ footer a {
   position: fixed;
   width: 33%;
   max-width: 400px;
+  opacity: 0;
+  left: -200px;
+  -webkit-animation: fade-in 0.5s forwards, slide-right 0.5s forwards;
+  animation: fade-in 0.5s forwards, slide-right 0.5s forwards;
 }
 
 #console {
@@ -393,11 +538,35 @@ pre .key {
 }
 
 /* close commented backslash hack */
+#mobile-message {
+  display: none;
+  opacity: 0;
+  -webkit-animation: zoom-in 0.5s, fade-in 0.5s forwards;
+  animation: zoom-in 0.5s, fade-in 0.5s forwards;
+}
+
+#mobile-message p {
+  color: white;
+  font-weight: 300;
+  font-smoothing: none;
+  margin-bottom: 10px;
+}
+
+#mobile-message p a {
+  color: #27ae60;
+}
+
 @media (max-width: 768px) {
   #console-wrapper {
     display: none;
   }
   #page-wrap {
     padding-left: 0;
+  }
+  #resume-wrapper {
+    display: none;
+  }
+  #mobile-message {
+    display: block;
   }
 }
