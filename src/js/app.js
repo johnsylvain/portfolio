@@ -78,7 +78,8 @@ var model = {
 		},
 		{
 			text: 'rm',
-			params: ['-rf']
+			params: ['-rf'],
+			ignored: true
 		}
 	],
 	defaultMessage: {
@@ -417,7 +418,37 @@ var controller = {
 			},
 			rm: function() {
 				var rf = function() {
-					console.log('removing all files...');
+					var targets = [
+						document.getElementById('wrapper'),
+						document.getElementsByClassName('trash'),
+					];
+
+
+
+					document.getElementById('command-input').disabled = true;
+					targets.forEach(function(el, i) {
+						if(Array.from(el)[0]){
+							Array.from(el).forEach(function(e) {
+								helpers.addClass(e, 'crash');
+							})
+						} else {
+							helpers.addClass(el, 'crash');
+						}
+					})
+					window.setTimeout(function(){
+						document.getElementById('command-input').disabled = false;
+
+						targets.forEach(function(el, i) {
+							if(Array.from(el)[0]){
+								Array.from(el).forEach(function(e) {
+									helpers.removeClass(e, 'crash');
+								})
+							} else {
+								helpers.removeClass(el, 'crash');
+							}
+						})
+
+					}, 4000)
 				}
 
 				if (comArgs.length === 1) {
@@ -489,11 +520,11 @@ var consoleView = {
 		this.prevElem = document.getElementById('commands');
 		this.fileNameElem = document.getElementById('file-name');
 
-		var consoleElem = document.getElementById('console');
+		this.consoleElem = document.getElementById('console');
 		this.commandInput = document.getElementById('command-input');
 		this.commandInput.focus();
 
-		consoleElem.addEventListener('click', function(){
+		this.consoleElem.addEventListener('click', function(){
 			_this.commandInput.focus();
 		})
 
@@ -566,6 +597,24 @@ var filters = {
 				return '<span class="' + cls + '">' + match + '</span>';
 			});
 	}
+}
+
+var helpers = {
+	hasClass:function(ele, cls) {
+		return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+	},
+
+	addClass:function(ele, cls) {
+		if (!this.hasClass(ele, cls)) ele.className += " " + cls;
+	},
+
+	removeClass:function(ele, cls) {
+		if (this.hasClass(ele, cls)) {
+			var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+			ele.className = ele.className.replace(reg, ' ');
+		}
+	}
+	
 }
 
 app.init();

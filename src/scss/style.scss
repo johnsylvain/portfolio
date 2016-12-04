@@ -2,6 +2,7 @@
 
 // Variables
 $font: 'Ubuntu Mono';
+$green: #27ae60;
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -58,13 +59,101 @@ table {
 @keyframes slide-left { from {left:20px}}
 @keyframes slide-right { to {left:0px}}
 @keyframes slide-up { from {top:20px}}
-@keyframes zoom-in {from {transform:scale(0.95);}}
+@keyframes zoom-in {from {transform:scale(0.9);}}
+
+@keyframes zoom-out {
+	15% {
+		transform:scale(0.23) translateY(0%);
+		opacity: 1;
+	}
+	30% {
+		transform:scale(0.25) translateY(0%);
+		opacity: 1;
+	}
+	60% {
+		transform: scale(0.25) translateY(300%);
+	}
+	61% {
+		opacity: 0;
+	}
+	63% {
+		transform: scale(1) translateY(0%);
+	}
+	65% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+
+	}
+}
+
+@keyframes trash-can{
+	20% {
+		top: calc(100vh - 300px);
+	}
+	60% {
+		top: calc(100vh - 300px);
+	}
+	70% {
+		top: 100vh;
+	}
+}
+
+.trash {
+	position: fixed;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	width:50vw;
+	height: auto;
+	// z-index: 9999;
+	img{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width:50vw;
+		height: auto;
+	}
+	&.crash {
+		animation: trash-can 4s;	
+		&#trash-front {
+			// position: absolute;
+
+			z-index: 9000;
+
+		}
+	}
+	&#trash-front {
+
+		z-index: -10;
+
+	}
+}
+
+
+.fade-in {
+	opacity:0;
+	animation:fade-in 0.5s forwards;
+	animation-delay:0.75s;
+}
 
 *{box-sizing: border-box;}
 
 html, body{
 	font-family: $font;
+	background-color: #2c2c2c;
+}
+#wrapper {
 	background-color: #555;
+	&.crash{
+		overflow:hidden;
+		height:100vh;
+		animation: zoom-out 4s forwards;
+		position: relative;
+		z-index: 1000;
+	}
+
 }
 
 .content {
@@ -111,11 +200,16 @@ header{
 footer{
 	text-align: center;
 	color:white;
-	padding: 60px 0 20px;
+	padding: 60px 0 0px;
 	font-size: 0.825rem;
+	p {
+		margin-bottom: 5px;
+	}
 	a{
-		color:rgba(white, 0.7);
-		font-weight:lighter;
+		color:$green;
+		&:hover{
+			font-weight:bold;
+		}
 	}
 }
 
@@ -165,7 +259,7 @@ footer{
 	opacity: 0;
 
 	animation: fade-in 0.5s forwards, zoom-in 0.5s;
-	animation-delay: 0.7s;
+	// animation-delay: 0.7s;
 
 	#resume-content{
 		padding: 20px;
@@ -179,7 +273,10 @@ footer{
 	// max-width: 150px;
 	width: 33%;
 	max-width: 400px;
-
+	opacity: 0;
+	left: -200px;
+	animation: fade-in 0.5s forwards, slide-right 0.5s forwards;
+	// animation-delay: 0.7s;
 }
 #console{
 	border:15px solid #444;
@@ -245,7 +342,7 @@ pre {
 	font-size: 10pt;
 	margin: 0;
 	padding: 0;
-	.string { color: #27ae60; }
+	.string { color: $green; }
 	.number { color: darkorange; }
 	.boolean { color: blue; }
 	.null { color: magenta; }
@@ -266,7 +363,20 @@ pre {
 .clearfix { display: block; }
 /* close commented backslash hack */
 
-
+#mobile-message {
+	display:none;
+	opacity: 0;
+	animation: zoom-in 0.5s, fade-in 0.5s forwards;
+	p{
+		color:white;
+		font-weight:300;
+		font-smoothing: none;
+		margin-bottom: 10px;
+		a {
+			color: $green;
+		}
+	}
+}
 
 @media (max-width: 768px) {
 	#console-wrapper{
@@ -274,5 +384,13 @@ pre {
 	}
 	#page-wrap{
 		padding-left: 0;
+	}
+
+	#resume-wrapper {
+		display:none;
+	}
+
+	#mobile-message {
+		display:block;
 	}
 }

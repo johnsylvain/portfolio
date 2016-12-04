@@ -1,52 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>John Sylvain &#8226; Full Stack Developer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="./css/style.css"/>
+	<meta charset="UTF-8">
+	<title>John Sylvain &#8226; Full Stack Developer</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./css/style.css"/>
 </head>
 <body>
+	<div id="page">
+		
+	
+		<div id="wrapper">
+			<div id="console-wrapper">
+				<div id="console">
+					<ul id="commands"></ul>
+					<form id="command-prompt">
+						<div class="command-prompt-container">
+							$ <input type="text" name="prompt" id="command-input" autocomplete="off"/>
+						</div>
+					</form>
+				</div>
+			</div>
 
-  <div id="console-wrapper">
-    <div id="console">
-      <ul id="commands"></ul>
-      <form id="command-prompt">
-        <div class="command-prompt-container">
-          $ <input type="text" name="prompt" id="command-input" autocomplete="off"/>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div id="page-wrap">
-    <div class="container">
-      <div class="content">
-        <header>
-          <h1>John Sylvain</h1>
-          <p>Full Stack Developer</p>
-        </header>
-        <div id="resume-wrapper">
-          <div class="menu-bar clearfix">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <span><span id="file-name"></span>.json</span>
-          </div>
-          <div id="resume-content">
-            <pre id="resume-code">
-            </pre>
-          </div>
-        </div>
-        
-      </div>
-      <footer>
-        John Sylvain &copy; 2016
-        <p><a href="http://github.com/johnsylvain/cli-resume">View Source</a></p>
-      </footer>
-    </div>
-  </div>
-
-  <script src="./js/bundle.js"></script>
+			<div id="page-wrap">
+				<div class="container">
+					<div class="content">
+						<header>
+							<h1>John Sylvain</h1>
+							<p>Full Stack Developer</p>
+						</header>
+						<div id="resume-wrapper">
+							<div class="menu-bar clearfix">
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<span><span id="file-name"></span>.json</span>
+							</div>
+							<div id="resume-content">
+								<pre id="resume-code">
+								</pre>
+							</div>
+						</div>
+						<div id="mobile-message">
+							<p>Hello. I'm John Sylvain, a passionate full stack developer.</p>
+							<p>To gain the full experience, please view on a desktop browser.</p>
+							<br>
+							<p>Links:</p>
+							<p><a href="http://johnsylvain.me/resume.pdf">View Resume</a>
+								<a href="http://github.com/johnsylvain" target="_blank">GitHub</a>
+								<a href="http://linkedin.com/in/johnsylvain" target="_blank">LinkedIn</a></p>
+							</div>
+						</div>
+						<footer class="slide-up fade-in">
+							<p>
+								John Sylvain &copy; 2016
+							</p>
+							<p>
+								<a href="http://github.com/johnsylvain" target="_blank">GitHub</a>
+								<a href="http://linkedin.com/in/johnsylvain" target="_blank">LinkedIn</a>
+							</p>
+							<p><a href="http://github.com/johnsylvain/cli-resume" target="_blank">View Source</a></p>
+						</footer>
+					</div>
+				</div>
+			
+		</div>
+		<div class="trash">
+			<img src="img/trash.png" alt="">
+		</div>
+		<div class="trash" id="trash-front">
+			<img src="img/trash-front.png" alt="">
+			
+		</div>
+	</div>
+	<script src="./js/bundle.js"></script>
 </body>
 </html>
