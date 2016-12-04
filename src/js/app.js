@@ -57,6 +57,10 @@ var model = {
 			params: null
 		},
 		{
+			text: 'clear',
+			params: null
+		},
+		{
 			text: 'email',
 			params: ['<subject>']
 		},
@@ -71,10 +75,6 @@ var model = {
 		{
 			text: 'social',
 			params: ['github', 'linkedin']
-		},
-		{
-			text: 'clear',
-			params: null
 		},
 		{
 			text: 'rm',
@@ -241,19 +241,28 @@ var controller = {
 		return model.enteredCommands.currentCommand;
 	},
 
+	getCommand: function(text){
+		return model.commands.filter(function(c) {
+			return c.text === text;
+		})
+	},
+
 	enterCommand: function(command){
 		var flag = false;
 		var args = command.split(' ');
-		model.previousCommands.push({
-			text: command,
-			type: 'command'
-		});
+		if (args[0] !== '') {
+			model.previousCommands.push({
+				text: command,
+				type: 'command'
+			});
 
-		model.enteredCommands.data.push({
-			text: command,
-			type: 'command'
-		});
-		model.enteredCommands.pointer = 0;
+			model.enteredCommands.data.push({
+				text: command,
+				type: 'command'
+			});
+			model.enteredCommands.pointer = 0;
+			
+		}
 
 		for (var i = 0; i < model.commands.length; i++) {
 			var modelCommand = model.commands[i];
@@ -308,21 +317,26 @@ var controller = {
 				for (var i = 0; i < commands.length; i++) {
 					if (commands[i].text !== 'rm') {
 						var avalCommand = commands[i];
+
+						var response = '';
+						if (avalCommand.params !== null) {
+							response = avalCommand.text + ' [' + avalCommand.params + ']';
+						} else {
+							response = avalCommand.text;
+						}
+
+
 						model.previousCommands.push({
-							text: avalCommand.text,
+							text: response,
 							type: 'response'
 						});
-						if (avalCommand.params !== null) {
-							model.previousCommands.push({
-								text: '-accepts: ' + avalCommand.params,
-								type: 'response'
-							});
-						};
+						
 					}
 				};
 				consoleView.render();
 			},
 			open: function(){
+
 				var openResume = function(){
 					_this.updateOutput({resume: model.data}, function(){
 						resumeContentView.render();
@@ -334,7 +348,7 @@ var controller = {
 				}
 				if (comArgs.length === 1) {
 					model.previousCommands.push({
-						text: "type 'open [" + model.commands[3].params + "]'",
+						text: "type 'open [" + controller.getCommand('open')[0].params + "]'",
 						type: 'warning'
 					})
 				} else {
@@ -362,7 +376,7 @@ var controller = {
 				}
 				if (comArgs.length === 1) {
 					model.previousCommands.push({
-						text: "type 'show [" + model.commands[4].params + "]'",
+						text: "type 'show [" + controller.getCommand('show')[0].params + "]'",
 						type: 'warning'
 					})
 				} else {
@@ -383,21 +397,21 @@ var controller = {
 			},
 			social: function(){
 
-				var github = function(){
-					window.open('http://github.com/johnsylvain');
+				var openLink = function(site){
+					return function(){
+						window.open(model.data.contact.social[site])
+					}
 				}
-				var linkedin = function(){
-					window.open('http://linkedin.com/in/johnsylvain');
-				}
+
 				if (comArgs.length === 1) {
 					model.previousCommands.push({
-						text: "type 'social [" + model.commands[5].params + "]'",
+						text: "type 'social [" + controller.getCommand('social')[0].params + "]'",
 						type: 'warning'
 					})
 				} else {
 					return{
-						github: github,
-						linkedin: linkedin
+						github: openLink('github'),
+						linkedin: openLink('linkedin')
 					}
 				}
 			},
