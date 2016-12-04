@@ -52,23 +52,38 @@ table {
     display: none;
 }
 
+@keyframes typing { from { width: 0; } }
+@keyframes blink-caret { 50% { border-color: transparent; } }
+
 *{box-sizing: border-box;}
 
 html, body{
 	font-family: $font;
-	background-color: #ecf0f1;
+	background-color: #555;
+}
+
+.content {
+  flex: 1;
 }
 header{
 	padding: 40px 0;
 	font-family: $font;
-	color: #8f8f8f;
-	text-align: center;
+	color: #fff;
 	h1{
 		font-size: 2rem;
 		font-weight: 400;
-		text-transform: uppercase;
-		letter-spacing: 4px;
+		letter-spacing: 2px;
 		margin-bottom: 10px;
+
+		// padding-right: 0.3em;
+		
+		width:calc(13ch + 26px);
+		white-space:nowrap;
+		overflow:hidden;
+		border-right: .6em solid #27ae60;
+
+		animation: typing 1s steps(13, end), /* # of steps = # of characters */
+							blink-caret 1s step-end infinite;
 	}
 	p{
 		font-weight: 400;
@@ -85,9 +100,13 @@ header{
 
 footer{
 	text-align: center;
-	color:#333;
-	padding: 40px;
+	color:white;
+	padding: 60px 0 20px;
 	font-size: 0.825rem;
+	a{
+		color:rgba(white, 0.7);
+		font-weight:lighter;
+	}
 }
 
 .container{
@@ -95,6 +114,9 @@ footer{
 	width: 100%;
 	margin: 0 auto;
 	padding: 15px;
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
 }
 
 #page-wrap{
@@ -117,15 +139,16 @@ footer{
 	span{
 		font-size: 0.7rem;
 		color:#5a6a6b;
-		margin: 0 0 0 -25px;
+		margin: -15px 0 0 -25px;
 		padding: 0;
+
 	}
 }
 #resume-wrapper{
 	border-radius: 4px;
-	background-color: #fff;
-	box-shadow: 0 3px 16px rgba(0,0,0,0.1);
-	border: 1px solid #bdc3c7;
+	background-color: #2c2c2c;
+	box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+	// border: 1px solid #bdc3c7;
 	color:#95a5a6;
 
 	#resume-content{
@@ -142,8 +165,9 @@ footer{
 	max-width: 400px;
 }
 #console{
-	border:15px solid #34495e;
-	background-color: #34495e;
+	border:15px solid #444;
+	// background-color: #34495e;
+	background-color: #444;
 	padding: 10px;
 	height: 100vh;
 	overflow-y:scroll;

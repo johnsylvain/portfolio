@@ -53,28 +53,62 @@ table {
   display: none;
 }
 
+@-webkit-keyframes typing {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+
+@-webkit-keyframes blink-caret {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes blink-caret {
+  50% {
+    border-color: transparent;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
 
 html, body {
   font-family: "Ubuntu Mono";
-  background-color: #ecf0f1;
+  background-color: #555;
+}
+
+.content {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }
 
 header {
   padding: 40px 0;
   font-family: "Ubuntu Mono";
-  color: #8f8f8f;
-  text-align: center;
+  color: #fff;
 }
 
 header h1 {
   font-size: 2rem;
   font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   margin-bottom: 10px;
+  width: calc(13ch + 26px);
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: .6em solid #27ae60;
+  -webkit-animation: typing 1s steps(13, end), blink-caret 1s step-end infinite;
+  animation: typing 1s steps(13, end), blink-caret 1s step-end infinite;
 }
 
 header p {
@@ -92,9 +126,14 @@ header span::before {
 
 footer {
   text-align: center;
-  color: #333;
-  padding: 40px;
+  color: white;
+  padding: 60px 0 20px;
   font-size: 0.825rem;
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: lighter;
 }
 
 .container {
@@ -102,6 +141,14 @@ footer {
   width: 100%;
   margin: 0 auto;
   padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 #page-wrap {
@@ -127,15 +174,14 @@ footer {
 .menu-bar span {
   font-size: 0.7rem;
   color: #5a6a6b;
-  margin: 0 0 0 -25px;
+  margin: -15px 0 0 -25px;
   padding: 0;
 }
 
 #resume-wrapper {
   border-radius: 4px;
-  background-color: #fff;
-  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
-  border: 1px solid #bdc3c7;
+  background-color: #2c2c2c;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
   color: #95a5a6;
 }
 
@@ -151,8 +197,8 @@ footer {
 }
 
 #console {
-  border: 15px solid #34495e;
-  background-color: #34495e;
+  border: 15px solid #444;
+  background-color: #444;
   padding: 10px;
   height: 100vh;
   overflow-y: scroll;
