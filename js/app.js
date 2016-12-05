@@ -44,6 +44,11 @@ var model = {
 		currentCommand: '',
 		pointer: 0,
 	},
+	weather: {
+		lat: 0,
+		lon: 0,
+
+	},
 	commandPrefix: '$',
 	currentOutput: null,
 	mobileView: false,
@@ -80,11 +85,17 @@ var model = {
 			text: 'rm',
 			params: ['-rf'],
 			ignored: true
+		},
+		{
+			text: 'weather',
+			params: null,
+			ignored: true
 		}
 	],
 	defaultMessage: {
 		message: [
 			"to view the resume, enter 'open resume' in the terminal to the left",
+			"to view a pdf resume, http://johnsylvain.me/resume.pdf",
 			"type 'help' to view other commands"
 		]
 	},
@@ -163,7 +174,7 @@ var model = {
 			},
 			{
 				title: "Spott",
-				description: "Simple music discovery,",
+				description: "Simple music discovery",
 				links: {
 					github: "http://github.com/johnsylvain/spott",
 					demo: "http://spott.johnsylvain.me/"
@@ -317,7 +328,7 @@ var controller = {
 					type:'response'
 				});
 				for (var i = 0; i < commands.length; i++) {
-					if (commands[i].text !== 'rm') {
+					if (commands[i].ignored !== true) {
 						var avalCommand = commands[i];
 
 						var response = '';
@@ -469,6 +480,91 @@ var controller = {
 					}
 					
 				}
+			},
+
+			weather: function() {
+				function getUserLocation(callback) {
+					var options = {
+						enableHighAccuracy: true,
+						timeout: 5000,
+						maximumAge: 0
+					};
+
+					function success(pos) {
+						var crd = pos.coords;
+						callback(crd);
+					};
+
+					function error(err) {
+						console.warn('ERROR(' + err.code + '): ' + err.message);
+					};
+
+					navigator.geolocation.getCurrentPosition(success, error, options);
+
+				}
+
+				function getUserWeather(lat, lon, callback) {
+					var key = '2f4d666f6f04dbad2164175736a5a2dc';
+					var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' + 
+						lat + '&lon=' + lon + '&APPID=' + key;
+					
+					window.fetch(url, {
+						method:'get'
+					}).then(function(res){
+						return res.json();
+					}).then(function(json){
+						callback(json);
+					});
+
+				}
+
+				if (comArgs.length === 1) {
+					model.previousCommands.push({
+						text: 'Getting Current Location...',
+						type: 'response'
+					})
+					document.getElementById('command-prompt').style.display = 'none'
+
+					getUserLocation(function(crd) {
+
+						model.previousCommands.push({
+							text: 'Latitude : ' + crd.latitude,
+							type: 'response'
+						},{
+							text: 'Longitude: ' + crd.longitude,
+							type: 'response'
+						});
+
+
+						consoleView.render();
+						getUserWeather(crd.latitude, crd.longitude, function(res){
+							model.previousCommands.push({
+								text: '------',
+								type: 'response'
+							}, {
+								text: 'Weather for: ' + res.name,
+								type: 'response'
+							}, {
+								text: 'Temperature: ' + res.main.temp,
+								type: 'response'
+							}, {
+								text: 'Conditions: ' + res.weather[0].description,
+								type: 'response'
+							});
+
+
+							document.getElementById('command-prompt').style.display = 'block';
+							document.getElementById('command-prompt').focus();
+							consoleView.render();
+						})
+					});
+				} else {
+					model.previousCommands.push({
+						text: 'error: \'weather\' does not take any parameters',
+						type: 'error'
+					})
+					
+				}
 			}
 		}
 
@@ -479,6 +575,8 @@ var controller = {
 		if (comArgs.length === 1) {
 			commands[comArgs[0]]();
 		} else if(comArgs[0] === 'email'){
+			commands[comArgs[0]]();
+		} else if(comArgs[0] === 'weather'){
 			commands[comArgs[0]]();
 		} else if (comArgs.length > 1){
 			var subCommand = commands[comArgs[0]]();
@@ -610,7 +708,6 @@ var filters = {
 		var reg = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g;
 		return text.replace(reg, function(match){
 			url = match.replace('</span>', String.empty);
-			console.log(match);
 			return '<a href="' + url + '" target="_blank">' + match + '</a>';
 		})
 	}
