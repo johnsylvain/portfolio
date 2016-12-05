@@ -1,4 +1,3 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var app = {
 	pageWidth: window.innerWidth,
 	breakpoint: 768,
@@ -610,7 +609,7 @@ var filters = {
 	findUrls: function(text) {
 		var reg = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g;
 		return text.replace(reg, function(match){
-			url = match.replace('</span>', String.empty)
+			url = match.replace('</span>', String.empty);
 			console.log(match);
 			return '<a href="' + url + '" target="_blank">' + match + '</a>';
 		})
@@ -636,5 +635,3 @@ var helpers = {
 }
 
 app.init();
-
-},{}]},{},[1])
