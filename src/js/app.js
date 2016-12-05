@@ -609,7 +609,7 @@ var filters = {
 	findUrls: function(text) {
 		var reg = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g;
 		return text.replace(reg, function(match){
-			url = match.replace('</span>', String.empty)
+			url = match.replace('</span>', String.empty);
 			console.log(match);
 			return '<a href="' + url + '" target="_blank">' + match + '</a>';
 		})

@@ -1,0 +1,62 @@
+@keyframes typing { from { width: 0; } }
+@keyframes blink-caret { 50% { border-color: rgba(white, 0); } }
+@keyframes fade-in {to {opacity: 1;}}
+@keyframes slide-left { from {left:20px}}
+@keyframes slide-right { to {left:0px}}
+@keyframes slide-up { from {top:20px}}
+@keyframes zoom-in {from {transform:scale(0.9);}}
+
+@keyframes zoom-out {
+	15% {
+		transform:scale(0.23) translateY(0%);
+		opacity: 1;
+	}
+	30% {
+		transform:scale(0.25) translateY(0%);
+		opacity: 1;
+	}
+	60% {
+		transform: scale(0.25) translateY(300%);
+	}
+	61% {
+		opacity: 0;
+	}
+	63% {
+		transform: scale(1) translateY(0%);
+	}
+	65% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+
+	}
+}
+
+@keyframes trash-can{
+	20% {
+		top: calc(100vh - 300px);
+	}
+	37% {
+		transform:translateX(-50%) rotateZ(0deg);
+	}
+	40% {
+		transform:translateX(-50%) rotateZ(2deg);
+	}
+	45% {
+		transform:translateX(-50%) rotateZ(-1deg);
+	}
+	60% {
+		transform: translateX(-50%) rotateZ(0deg);
+		top: calc(100vh - 300px);
+	}
+	70% {
+		top: 100vh;
+	}
+}
+
+.fade-in {
+	opacity:0;
+	animation:fade-in 0.5s forwards;
+	animation-delay:0.75s;
+}

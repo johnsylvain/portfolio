@@ -13,13 +13,15 @@ var paths = {
 };
 
 gulp.task('js', () => {
-  return browserify('./src/js/app.js')
-    .bundle()
-    .on('error', (e) => {
-      gutil.log(e);
-    })
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./dist/js/'));
+  //return browserify('./src/js/app.js')
+  //  .bundle()
+  //  .on('error', (e) => {
+  //    gutil.log(e);
+  //  })
+  //  .pipe(source('bundle.js'))
+  //  .pipe(gulp.dest('./dist/js/'));
+  gulp.src(paths.js)
+    .pipe( gulp.dest('./dist/js/'))
 });
 
 gulp.task('css', () => {

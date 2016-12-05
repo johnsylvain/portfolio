@@ -1,58 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700);
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-body {
-  line-height: 1;
-}
-
-ol, ul {
-  list-style: none;
-}
-
-blockquote, q {
-  quotes: none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-
 @-webkit-keyframes typing {
   from {
     width: 0;
@@ -203,7 +149,21 @@ table {
   20% {
     top: calc(100vh - 300px);
   }
+  37% {
+    -webkit-transform: translateX(-50%) rotateZ(0deg);
+    transform: translateX(-50%) rotateZ(0deg);
+  }
+  40% {
+    -webkit-transform: translateX(-50%) rotateZ(2deg);
+    transform: translateX(-50%) rotateZ(2deg);
+  }
+  45% {
+    -webkit-transform: translateX(-50%) rotateZ(-1deg);
+    transform: translateX(-50%) rotateZ(-1deg);
+  }
   60% {
+    -webkit-transform: translateX(-50%) rotateZ(0deg);
+    transform: translateX(-50%) rotateZ(0deg);
     top: calc(100vh - 300px);
   }
   70% {
@@ -215,43 +175,26 @@ table {
   20% {
     top: calc(100vh - 300px);
   }
+  37% {
+    -webkit-transform: translateX(-50%) rotateZ(0deg);
+    transform: translateX(-50%) rotateZ(0deg);
+  }
+  40% {
+    -webkit-transform: translateX(-50%) rotateZ(2deg);
+    transform: translateX(-50%) rotateZ(2deg);
+  }
+  45% {
+    -webkit-transform: translateX(-50%) rotateZ(-1deg);
+    transform: translateX(-50%) rotateZ(-1deg);
+  }
   60% {
+    -webkit-transform: translateX(-50%) rotateZ(0deg);
+    transform: translateX(-50%) rotateZ(0deg);
     top: calc(100vh - 300px);
   }
   70% {
     top: 100vh;
   }
-}
-
-.trash {
-  position: fixed;
-  top: 100%;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  width: 50vw;
-  height: auto;
-}
-
-.trash img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50vw;
-  height: auto;
-}
-
-.trash.crash {
-  -webkit-animation: trash-can 4s;
-  animation: trash-can 4s;
-}
-
-.trash.crash#trash-front {
-  z-index: 9000;
-}
-
-.trash#trash-front {
-  z-index: -10;
 }
 
 .fade-in {
@@ -260,6 +203,60 @@ table {
   animation: fade-in 0.5s forwards;
   -webkit-animation-delay: 0.75s;
   animation-delay: 0.75s;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 * {
@@ -288,6 +285,81 @@ html, body {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+#page-wrap {
+  padding-left: 33%;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.clearfix {
+  display: inline-block;
+}
+
+/* start commented backslash hack \*/
+* html .clearfix {
+  height: 1%;
+}
+
+.clearfix {
+  display: block;
+}
+
+/* close commented backslash hack */
+.trash {
+  position: fixed;
+  top: 100%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 50vw;
+  height: 50vw;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+}
+
+.trash img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50vw;
+  height: auto;
+}
+
+.trash.crash {
+  -webkit-animation: trash-can 4s;
+  animation: trash-can 4s;
+}
+
+.trash.crash#trash-front {
+  z-index: 9000;
+}
+
+.trash#trash-front {
+  z-index: -10;
 }
 
 header {
@@ -346,25 +418,6 @@ footer a {
 
 footer a:hover {
   font-weight: bold;
-}
-
-.container {
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 15px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  min-height: 100vh;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-#page-wrap {
-  padding-left: 33%;
 }
 
 .menu-bar {
@@ -524,29 +577,6 @@ pre a:hover {
   text-decoration: underline;
 }
 
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
-}
-
-.clearfix {
-  display: inline-block;
-}
-
-/* start commented backslash hack \*/
-* html .clearfix {
-  height: 1%;
-}
-
-.clearfix {
-  display: block;
-}
-
-/* close commented backslash hack */
 #mobile-message {
   display: none;
   opacity: 0;
