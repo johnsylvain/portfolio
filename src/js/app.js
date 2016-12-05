@@ -70,7 +70,7 @@ var model = {
 		},
 		{
 			text: 'show',
-			params: ['education', 'skills', 'xp']
+			params: ['education', 'skills', 'xp', 'projects']
 		},
 		{
 			text: 'social',
@@ -144,39 +144,40 @@ var model = {
 				]
 			}
 		],
-		skills: {
-			languages: [
-				{
-					name: 'HTML/CSS',
-					related: [
-						'SASS', 'pug'
-					]
-				},
-				{
-					name: 'JavaScript',
-					related: [
-						'AngularJS','Vue.js', 'React.js','Node.js', 'Express.js'
-					]
-				},
-				{
-					name: 'PHP',
-					related: [
-						'SQL', 'Slim', 'Flight'
-					]
-				},
-				{
-					name: 'C#',
-					related: [
-						'.NET',
-					]
+		projects: [
+			{
+				title: "Reddit TV",
+				description: "Reddit Video Streaming App",
+				links: {
+					github: "http://github.com/johnsylvain/reddit-tv",
+					demo: "http://johnsylvain.github.io/reddit-tv"
 				}
-			],
-			technical: [
-				'git','gulp','object oriented programming', 'linux', 'webpack', 'SSH'
-			]
-
+			},
+			{
+				title: "JS Link Shortener",
+				description: "Short link generator",
+				links: {
+					github: "http://github.com/johnsylvain/link-shortener",
+					demo: "http://johnsylva.in"
+				}
+			},
+			{
+				title: "Spott",
+				description: "Simple music discovery,",
+				links: {
+					github: "http://github.com/johnsylvain/spott",
+					demo: "http://spott.johnsylvain.me/"
+				}
+			}
+		],
+		skills: {
+			"JavaScript": ['AngularJS', 'React.js', 'Node.js', 'Express.js', 'Vue.js'],
+			"HTML/CSS": ['SASS'],
+			"PHP": ['SQL', 'Slim', 'Flight'],
+			"C#": ['.NET'],
+			"other": ['git','gulp','object oriented programming', 'linux', 'webpack', 'SSH']
 		}
-	},
+	}
 
 }
 
@@ -374,6 +375,11 @@ var controller = {
 					_this.updateOutput({skills: model.data.skills}, function(){
 						resumeContentView.render();
 					});
+				};
+				var showProjects = function() {
+					_this.updateOutput({projects: model.data.projects}, function() {
+						resumeContentView.render();
+					})
 				}
 				if (comArgs.length === 1) {
 					model.previousCommands.push({
@@ -384,7 +390,8 @@ var controller = {
 					return {
 						education: showEducation,
 						skills: showSkills,
-						xp: showXp
+						xp: showXp,
+						projects: showProjects
 					}
 				}
 			},
