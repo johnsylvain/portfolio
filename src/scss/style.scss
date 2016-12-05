@@ -347,6 +347,13 @@ pre {
 	.boolean { color: blue; }
 	.null { color: magenta; }
 	.key { color: #7f8c8d; font-weight: bold }
+	a{
+		color:$green;
+		text-decoration: none;
+		&:hover{
+			text-decoration:underline;
+		}
+	}
 }
 
 .clearfix:after {

@@ -514,7 +514,8 @@ var resumeContentView = {
 
 	render: function(){
 		var data = controller.getCurrentOutput();
-		var json = filters.textToJSON(JSON.stringify(data,null,'    '));
+		var json = filters.textToJSON(JSON.stringify(data,null,'   '));
+		json = filters.findUrls(json);
 		this.resumeContainerElem.innerHTML = json;
 	}
 }
@@ -603,6 +604,15 @@ var filters = {
 				}
 				return '<span class="' + cls + '">' + match + '</span>';
 			});
+	},
+
+	findUrls: function(text) {
+		var reg = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g;
+		return text.replace(reg, function(match){
+			url = match.replace('</span>', String.empty)
+			console.log(match);
+			return '<a href="' + url + '" target="_blank">' + match + '</a>';
+		})
 	}
 }
 
