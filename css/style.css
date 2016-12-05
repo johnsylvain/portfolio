@@ -515,6 +515,15 @@ pre .key {
   font-weight: bold;
 }
 
+pre a {
+  color: #27ae60;
+  text-decoration: none;
+}
+
+pre a:hover {
+  text-decoration: underline;
+}
+
 .clearfix:after {
   visibility: hidden;
   display: block;
