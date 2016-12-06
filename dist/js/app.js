@@ -44,53 +44,18 @@ var model = {
 		currentCommand: '',
 		pointer: 0,
 	},
-	weather: {
-		lat: 0,
-		lon: 0,
-
-	},
-	commandPrefix: '$',
 	currentOutput: null,
 	mobileView: false,
-	commands: [
-		{
-			text: '',
-			params:  null
-		},
-		{
-			text: 'help',
-			params: null
-		},
-		{
-			text: 'clear',
-			params: null
-		},
-		{
-			text: 'email',
-			params: ['<subject>']
-		},
-		{
-			text: 'open',
-			params: ['resume', 'pdf']
-		},
-		{
-			text: 'show',
-			params: ['education', 'skills', 'xp', 'projects']
-		},
-		{
-			text: 'social',
-			params: ['github', 'linkedin']
-		},
-		{
-			text: 'rm',
-			params: ['-rf'],
-			ignored: true
-		},
-		{
-			text: 'weather',
-			params: null,
-			ignored: true
-		}
+	commands: [ 
+		{ text: '',	params: null },
+		{ text: 'help', params: null },
+		{ text: 'clear', params: null },
+		{ text: 'email', params: ['<subject>'] },
+		{ text: 'open', params: ['resume', 'pdf'] },
+		{ text: 'show', params: ['education', 'skills', 'xp', 'projects'] },
+		{ text: 'social', params: ['github', 'linkedin'] },
+		{ text: 'rm', params: ['-rf'], ignored: true },
+		{ text: 'weather', params: null, ignored: true }
 	],
 	defaultMessage: {
 		message: [
@@ -111,7 +76,7 @@ var model = {
 			}
 		},
 		education: {
-			name: 'Purdue University',
+			school: 'Purdue University',
 			gradutionDate: 'May 2017',
 			gpa: 3.98,
 			study: {
@@ -206,7 +171,9 @@ var controller = {
 			this.executeCommand('open resume');
 			consoleView.render();
 		} else {
-			this.updateOutput(model.defaultMessage, resumeContentView.render)
+			this.updateOutput(model.defaultMessage).then(function(res) {
+				resumeContentView.render();
+			})
 		}
 	},
 
@@ -222,9 +189,11 @@ var controller = {
 		return model.currentOutput;
 	},
 
-	updateOutput: function(newOutput, callback){
-		model.currentOutput = newOutput;
-		callback();
+	updateOutput: function(newOutput) {
+		return new Promise(function(resolve, reject) {
+			model.currentOutput = newOutput;
+			resolve();
+		})
 	},
 
 	handleCommands: function(key) {
@@ -261,6 +230,8 @@ var controller = {
 	},
 
 	enterCommand: function(command){
+		command = command.trim();
+
 		var flag = false;
 		var args = command.split(' ');
 		if (args[0] !== '') {
@@ -269,21 +240,31 @@ var controller = {
 				type: 'command'
 			});
 
-			model.enteredCommands.data.push({
-				text: command,
-				type: 'command'
-			});
+			var lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1];
+			if (lastCommand) {
+				if(command !== lastCommand.text){
+					model.enteredCommands.data.push({
+						text: command,
+						type: 'command'
+					});
+				}
+				
+			} else {
+				model.enteredCommands.data.push({
+					text: command,
+					type: 'command'
+				});
+			}
 			model.enteredCommands.pointer = 0;
+
 			
 		}
 
-		for (var i = 0; i < model.commands.length; i++) {
-			var modelCommand = model.commands[i];
-			if (args[0] === modelCommand.text){
-				flag = true;
-			}
-		};
-		if (!flag) {
+		var flag = model.commands.filter(function(o) {
+			return o.text === args[0]
+		})
+
+		if (!flag.length) {
 			model.previousCommands.push({
 				text: 'command not found: ' + args[0],
 				type: 'error'
@@ -344,7 +325,7 @@ var controller = {
 			open: function(){
 
 				var openResume = function(){
-					_this.updateOutput({resume: model.data}, function(){
+					_this.updateOutput({resume: model.data}).then(function(res){
 						resumeContentView.render();
 					});
 				};
@@ -365,26 +346,15 @@ var controller = {
 				}
 			},
 			show: function(){
-				var showEducation =  function(){
-					_this.updateOutput({education: model.data.education}, function(){
-						resumeContentView.render();
-					});
-				};
-				var showXp = function(){
-					_this.updateOutput({experience: model.data.experience}, function(){
-						resumeContentView.render();
-					});
-				};
-				var showSkills = function(){
-					_this.updateOutput({skills: model.data.skills}, function(){
-						resumeContentView.render();
-					});
-				};
-				var showProjects = function() {
-					_this.updateOutput({projects: model.data.projects}, function() {
-						resumeContentView.render();
-					})
-				}
+				var showSection = function(section) {
+					return function() {
+						var obj = {};
+						obj[section] = model.data[section];
+						_this.updateOutput(obj).then(function() {
+							resumeContentView.render();
+						})
+					}
+				} 
 				if (comArgs.length === 1) {
 					model.previousCommands.push({
 						text: "type 'show [" + controller.getCommand('show')[0].params + "]'",
@@ -392,10 +362,10 @@ var controller = {
 					})
 				} else {
 					return {
-						education: showEducation,
-						skills: showSkills,
-						xp: showXp,
-						projects: showProjects
+						education: showSection('education'),
+						skills: showSection('skills'),
+						xp: showSection('experience'),
+						projects: showSection('projects')
 					}
 				}
 			},
@@ -433,8 +403,6 @@ var controller = {
 						document.getElementById('wrapper'),
 						document.getElementsByClassName('trash'),
 					];
-
-
 
 					document.getElementById('command-input').disabled = true;
 					targets.forEach(function(el, i) {
@@ -478,40 +446,43 @@ var controller = {
 			},
 
 			weather: function() {
-				function getUserLocation(callback) {
-					
-					window.fetch('http://ip-api.com/json', {
-						method: 'get'
-					}).then(function(res) {
-						return res.json()
-					}).then(function(json) {
-						var crd = {
-							lat: json.lat,
-							lon: json.lon,
-							name: json.city,
-							country: json.countryCode
-						}
-						callback(crd, null);
-					}).catch(function(err) {
-						callback(null, err);
-					});
 
-
+				function getUserLocationPromise() {
+					return new Promise(function(resolve, reject) {
+						window.fetch('http://ip-api.com/json', {
+							method: 'get'
+						}).then(function(res) {
+							return res.json()
+						}).then(function(json) {
+							var crd = {
+								lat: json.lat,
+								lon: json.lon,
+								name: json.city,
+								country: json.countryCode
+							}
+							resolve(crd);
+						}).catch(function(err) {
+							reject(err);
+						});
+					})
 				}
 
-				function getUserWeather(lat, lon, callback) {
-					var key = '2f4d666f6f04dbad2164175736a5a2dc';
-					var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' + 
-						lat + '&lon=' + lon + '&APPID=' + key;
-					
-					window.fetch(url, {
-						method:'get'
-					}).then(function(res){
-						return res.json();
-					}).then(function(json){
-						callback(json);
-					});
-
+				function getUserWeatherPromise(lat, lon) {
+					return new Promise(function(resolve, reject) {
+						var key = '2f4d666f6f04dbad2164175736a5a2dc';
+						var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' + 
+							lat + '&lon=' + lon + '&APPID=' + key;
+						
+						window.fetch(url, {
+							method:'get'
+						}).then(function(res){
+							return res.json();
+						}).then(function(json){
+							resolve(json);
+						}).catch(function(err) {
+							reject(err);
+						});
+					})
 				}
 
 				if (comArgs.length === 1) {
@@ -520,19 +491,7 @@ var controller = {
 					)
 					document.getElementById('command-prompt').style.display = 'none'
 
-					getUserLocation(function(crd, err) {
-
-						if(err){
-							model.previousCommands.push(
-								{ text: "Error: Could not retrieve IP", type: 'error'},
-								{ text: "Try disabling your ad blocker", type: 'response'}
-							);
-							consoleView.render();
-							document.getElementById('command-prompt').style.display = 'block';
-							document.getElementById('command-input').focus();
-							return;
-						}
-
+					getUserLocationPromise().then(function(crd) {
 						model.previousCommands.push({
 							text: 'Latitude : ' + crd.lat,
 							type: 'response'
@@ -540,11 +499,9 @@ var controller = {
 							text: 'Longitude: ' + crd.lon,
 							type: 'response'
 						});
-
-
 						consoleView.render();
-						getUserWeather(crd.lat, crd.lon, function(res){
 
+						getUserWeatherPromise(crd.lat, crd.lon).then(function(res) {
 							model.previousCommands.push(
 								{text: '------', type: 'response'},
 								{text: 'Getting weather data...', type: 'response-bold'},
@@ -553,12 +510,23 @@ var controller = {
 								{text: 'Conditions: ' + res.weather[0].description, type: 'response'}
 							);
 
-
 							document.getElementById('command-prompt').style.display = 'block';
 							document.getElementById('command-input').focus();
+							
 							consoleView.render();
+						}).catch(function(err) {
+							console.error(err);
 						})
-					});
+					}).catch(function(err) {
+						model.previousCommands.push(
+							{ text: "Error: Could not retrieve IP", type: 'error'},
+							{ text: "Try disabling your ad blocker", type: 'response'}
+						);
+						consoleView.render();
+						document.getElementById('command-prompt').style.display = 'block';
+						document.getElementById('command-input').focus();
+					})
+
 				} else {
 					model.previousCommands.push({
 						text: 'error: \'weather\' does not take any parameters',
