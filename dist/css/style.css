@@ -502,6 +502,11 @@ footer a:hover {
   margin-left: 13px;
 }
 
+#console ul li.commandResponseBold {
+  color: #cfcfcf;
+  margin-left: 13px;
+}
+
 #console ul li.commandWarning {
   color: #e67e22;
   margin-left: 13px;

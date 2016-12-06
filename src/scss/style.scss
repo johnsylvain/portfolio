@@ -178,6 +178,11 @@ footer{
 				color: #9f9f9f;
 				margin-left: 13px;
 			}
+			&.commandResponseBold{
+				color: #cfcfcf;
+				margin-left: 13px;
+				// font-weight:bold;
+			}
 			&.commandWarning{
 				color: #e67e22;
 				margin-left: 13px;

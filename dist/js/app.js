@@ -317,16 +317,9 @@ var controller = {
 			},
 			help: function(){
 				var commands = model.commands;
-				model.previousCommands.push({
-					text:'-----',
-					type:'response'
-				},{
-					text: 'Available Commands:',
-					type: 'response'
-				},{
-					text:'-----',
-					type:'response'
-				});
+				model.previousCommands.push(
+					{ text: 'Available Commands:', type: 'response-bold'}
+				);
 				for (var i = 0; i < commands.length; i++) {
 					if (commands[i].ignored !== true) {
 						var avalCommand = commands[i];
@@ -466,6 +459,8 @@ var controller = {
 							}
 						})
 
+						document.getElementById('command-input').focus();
+
 					}, 4000)
 				}
 
@@ -484,22 +479,23 @@ var controller = {
 
 			weather: function() {
 				function getUserLocation(callback) {
-					var options = {
-						enableHighAccuracy: true,
-						timeout: 5000,
-						maximumAge: 0
-					};
+					
+					window.fetch('http://ip-api.com/json', {
+						method: 'get'
+					}).then(function(res) {
+						return res.json()
+					}).then(function(json) {
+						var crd = {
+							lat: json.lat,
+							lon: json.lon,
+							name: json.city,
+							country: json.countryCode
+						}
+						callback(crd, null);
+					}).catch(function(err) {
+						callback(null, err);
+					});
 
-					function success(pos) {
-						var crd = pos.coords;
-						callback(crd);
-					};
-
-					function error(err) {
-						console.warn('ERROR(' + err.code + '): ' + err.message);
-					};
-
-					navigator.geolocation.getCurrentPosition(success, error, options);
 
 				}
 
@@ -519,42 +515,47 @@ var controller = {
 				}
 
 				if (comArgs.length === 1) {
-					model.previousCommands.push({
-						text: 'Getting Current Location...',
-						type: 'response'
-					})
+					model.previousCommands.push(
+						{ text: 'Getting IP Address...',	type: 'response-bold'}
+					)
 					document.getElementById('command-prompt').style.display = 'none'
 
-					getUserLocation(function(crd) {
+					getUserLocation(function(crd, err) {
+
+						if(err){
+							model.previousCommands.push(
+								{ text: "Error: Could not retrieve IP", type: 'error'},
+								{ text: "Try disabling your ad blocker", type: 'response'}
+							);
+							consoleView.render();
+							document.getElementById('command-prompt').style.display = 'block';
+							document.getElementById('command-input').focus();
+							return;
+						}
 
 						model.previousCommands.push({
-							text: 'Latitude : ' + crd.latitude,
+							text: 'Latitude : ' + crd.lat,
 							type: 'response'
 						},{
-							text: 'Longitude: ' + crd.longitude,
+							text: 'Longitude: ' + crd.lon,
 							type: 'response'
 						});
 
 
 						consoleView.render();
-						getUserWeather(crd.latitude, crd.longitude, function(res){
-							model.previousCommands.push({
-								text: '------',
-								type: 'response'
-							}, {
-								text: 'Weather for: ' + res.name,
-								type: 'response'
-							}, {
-								text: 'Temperature: ' + res.main.temp,
-								type: 'response'
-							}, {
-								text: 'Conditions: ' + res.weather[0].description,
-								type: 'response'
-							});
+						getUserWeather(crd.lat, crd.lon, function(res){
+
+							model.previousCommands.push(
+								{text: '------', type: 'response'},
+								{text: 'Getting weather data...', type: 'response-bold'},
+								{text: 'Weather for: ' + crd.name + ', ' + crd.country, type: 'response'},
+								{text: 'Temperature: ' + res.main.temp, type: 'response'},
+								{text: 'Conditions: ' + res.weather[0].description, type: 'response'}
+							);
 
 
 							document.getElementById('command-prompt').style.display = 'block';
-							document.getElementById('command-prompt').focus();
+							document.getElementById('command-input').focus();
 							consoleView.render();
 						})
 					});
@@ -649,6 +650,8 @@ var consoleView = {
 
 		this.fileNameElem.textContent = controller.getFileName();
 
+		this.consoleElem.scrollTop = this.consoleElem.scrollHeight;
+
 		if (controller.getEnteredCommands()) {
 			this.commandInput.value = controller.getEnteredCommands().text;
 		} else {
@@ -667,6 +670,9 @@ var consoleView = {
 			} else if(command.type === 'response'){
 				elem.textContent = command.text;
 				elem.className = 'commandResponse';
+			} else if(command.type === 'response-bold'){
+				elem.textContent = command.text;
+				elem.className = 'commandResponseBold';
 			} else if(command.type === 'warning'){
 				elem.textContent = command.text;
 				elem.className = 'commandWarning';
