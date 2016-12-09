@@ -409,15 +409,18 @@ footer {
 }
 
 footer p {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 footer a {
+  text-decoration: none;
   color: #27ae60;
+  font-size: 9pt;
+  border-bottom: 2px solid rgba(39, 174, 96, 0.3);
 }
 
 footer a:hover {
-  font-weight: bold;
+  border-bottom: 2px solid rgba(39, 174, 96, 0.8);
 }
 
 .menu-bar {
@@ -457,7 +460,6 @@ footer a:hover {
 
 #resume-wrapper #resume-content {
   padding: 20px;
-  line-height: 160%;
 }
 
 #console-wrapper {
@@ -474,42 +476,41 @@ footer a:hover {
   border: 15px solid #444;
   background-color: #444;
   padding: 10px;
-  font-size: 2em;
   height: 100vh;
   overflow-y: scroll;
   color: #fff;
+  font-size: 11pt;
 }
 
 #console ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 11pt;
 }
 
 #console ul li {
-  margin-top: 1px;
   padding: inherit;
+  line-height: 100%;
 }
 
 #console ul li.commandError {
   color: #e74c3c;
-  margin-left: 13px;
+  margin-left: 2ch;
 }
 
 #console ul li.commandResponse {
   color: #9f9f9f;
-  margin-left: 13px;
+  margin-left: 2ch;
 }
 
 #console ul li.commandResponseBold {
   color: #cfcfcf;
-  margin-left: 13px;
+  margin-left: 2ch;
 }
 
 #console ul li.commandWarning {
   color: #e67e22;
-  margin-left: 13px;
+  margin-left: 2ch;
 }
 
 #console form {
@@ -532,6 +533,7 @@ footer a:hover {
   padding: 0;
   color: #fff;
   width: 90%;
+  line-height: 100%;
 }
 
 pre {
@@ -545,11 +547,12 @@ pre {
   /* Opera 7 */
   word-wrap: break-word;
   /* Internet Explorer 5.5+ */
-  line-height: 150%;
+  line-height: 170%;
   font-family: "Ubuntu Mono";
-  font-size: 10pt;
+  font-size: 11pt;
   margin: 0;
   padding: 0;
+  color: #7e7e7e;
 }
 
 pre .string {
@@ -569,17 +572,17 @@ pre .null {
 }
 
 pre .key {
-  color: #7f8c8d;
-  font-weight: bold;
+  color: #a8a8a8;
 }
 
 pre a {
   color: #27ae60;
   text-decoration: none;
+  border-bottom: 2px solid rgba(39, 174, 96, 0.2);
 }
 
 pre a:hover {
-  text-decoration: underline;
+  border-bottom: 2px solid rgba(39, 174, 96, 0.8);
 }
 
 #mobile-message {

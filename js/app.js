@@ -294,7 +294,6 @@ var controller = {
 				}
 
 				model.previousCommands = [];
-				resumeContentView.render();
 			},
 			help: function(){
 				var commands = model.commands;
@@ -320,7 +319,6 @@ var controller = {
 						
 					}
 				};
-				consoleView.render();
 			},
 			open: function(){
 
@@ -408,10 +406,13 @@ var controller = {
 					targets.forEach(function(el, i) {
 						if(Array.from(el)[0]){
 							Array.from(el).forEach(function(e) {
-								helpers.addClass(e, 'crash');
+								// helpers.addClass(e, 'crash');
+								e.classList.add('crash');
 							})
 						} else {
-							helpers.addClass(el, 'crash');
+							// helpers.addClass(el, 'crash');
+							el.classList.add('crash');
+
 						}
 					})
 					window.setTimeout(function(){
@@ -420,10 +421,12 @@ var controller = {
 						targets.forEach(function(el, i) {
 							if(Array.from(el)[0]){
 								Array.from(el).forEach(function(e) {
-									helpers.removeClass(e, 'crash');
+									// helpers.removeClass(e, 'crash');
+									e.classList.remove('crash');
 								})
 							} else {
-								helpers.removeClass(el, 'crash');
+								// helpers.removeClass(el, 'crash');
+								el.classList.remove('crash');
 							}
 						})
 
@@ -679,8 +682,10 @@ var filters = {
 	},
 
 	findUrls: function(text) {
-		var reg = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g;
+		
+		var reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
 		return text.replace(reg, function(match){
+			console.log(match)
 			url = match.replace('</span>', String.empty);
 			return '<a href="' + url + '" target="_blank">' + match + '</a>';
 		})
