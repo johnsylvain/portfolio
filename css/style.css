@@ -431,16 +431,17 @@ footer a:hover {
 }
 
 .menu-bar .circle {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   background-color: #95a5a6;
   float: left;
-  margin-right: 5px;
+  margin: 3px;
+  margin-top: 4px;
 }
 
 .menu-bar span {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: #5a6a6b;
   margin: -15px 0 0 -25px;
   padding: 0;
@@ -454,6 +455,7 @@ footer a:hover {
   position: relative;
   top: 0;
   opacity: 0;
+  line-height: 100%;
   -webkit-animation: fade-in 0.5s forwards, zoom-in 0.5s;
   animation: fade-in 0.5s forwards, zoom-in 0.5s;
 }
@@ -474,6 +476,7 @@ footer a:hover {
 
 #console {
   border: 15px solid #444;
+  line-height: 100%;
   background-color: #444;
   padding: 10px;
   height: 100vh;
@@ -547,7 +550,7 @@ pre {
   /* Opera 7 */
   word-wrap: break-word;
   /* Internet Explorer 5.5+ */
-  line-height: 170%;
+  line-height: 150%;
   font-family: "Ubuntu Mono";
   font-size: 11pt;
   margin: 0;

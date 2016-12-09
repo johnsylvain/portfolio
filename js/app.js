@@ -50,6 +50,8 @@ var model = {
 		{ text: '',	params: null },
 		{ text: 'help', params: null },
 		{ text: 'clear', params: null },
+		{ text: 'pwd', params: null, ignored: true },
+		{ text: 'ls', params: null, ignored: true },
 		{ text: 'email', params: ['<subject>'] },
 		{ text: 'open', params: ['resume', 'pdf'] },
 		{ text: 'show', params: ['education', 'skills', 'xp', 'projects'] },
@@ -147,11 +149,12 @@ var model = {
 			}
 		],
 		skills: {
-			"JavaScript": ['AngularJS', 'React.js', 'Node.js', 'Express.js', 'Vue.js'],
-			"HTML/CSS": ['SASS'],
-			"PHP": ['SQL', 'Slim', 'Flight'],
+			"JavaScript": ['AngularJS', 'React.js', 'ES6','Node.js', 'Vue.js'],
+			"HTML/CSS": ['Sass'],
+			"PHP": ['Slim', 'Flight'],
 			"C#": ['.NET'],
-			"other": ['git','gulp','object oriented programming', 'linux', 'webpack', 'SSH']
+			"database": ['SQL', 'MongoDB'], 
+			"other": ['git','gulp', 'linux', 'webpack', 'SSH', 'python', 'regex']
 		}
 	}
 
@@ -284,6 +287,36 @@ var controller = {
 		var comArgs = command.split(' ');
 
 		var commands = {
+			pwd: function() {
+				if(comArgs.length !== 1) {
+					model.previousCommands.push({
+						text: "'pwd' does not need any arguments",
+						type: 'error'
+					});
+					return;
+				}
+
+				model.previousCommands.push({ 
+					text: window.location.host, 
+					type: 'response-bold' 
+				})
+			},
+			ls: function() {
+				if(comArgs.length !== 1) {
+					model.previousCommands.push({
+						text: "'clear' does not need any arguments",
+						type: 'error'
+					});
+					return;
+				}
+
+				model.previousCommands.push(
+					{ text: "index.html", type: 'response' },
+					{ text: "main.js", type: 'response' },
+					{ text: "style.css", type: 'response' }
+				)
+
+			},
 			clear: function(){
 				if (comArgs.length !== 1){
 					model.previousCommands.push({
@@ -406,11 +439,9 @@ var controller = {
 					targets.forEach(function(el, i) {
 						if(Array.from(el)[0]){
 							Array.from(el).forEach(function(e) {
-								// helpers.addClass(e, 'crash');
 								e.classList.add('crash');
 							})
 						} else {
-							// helpers.addClass(el, 'crash');
 							el.classList.add('crash');
 
 						}
@@ -421,11 +452,9 @@ var controller = {
 						targets.forEach(function(el, i) {
 							if(Array.from(el)[0]){
 								Array.from(el).forEach(function(e) {
-									// helpers.removeClass(e, 'crash');
 									e.classList.remove('crash');
 								})
 							} else {
-								// helpers.removeClass(el, 'crash');
 								el.classList.remove('crash');
 							}
 						})
@@ -449,6 +478,14 @@ var controller = {
 			},
 
 			weather: function() {
+
+				if (comArgs.length !== 1) {
+					model.previousCommands.push({
+						text: 'error: \'weather\' does not take any parameters',
+						type: 'error'
+					})
+					return;
+				} 
 
 				function getUserLocationPromise() {
 					return new Promise(function(resolve, reject) {
@@ -488,55 +525,52 @@ var controller = {
 					})
 				}
 
-				if (comArgs.length === 1) {
-					model.previousCommands.push(
-						{ text: 'Getting IP Address...',	type: 'response-bold'}
-					)
-					document.getElementById('command-prompt').style.display = 'none'
+				var prompt = document.getElementById('command-prompt');
+				var input = document.getElementById('command-input');
 
-					getUserLocationPromise().then(function(crd) {
-						model.previousCommands.push({
-							text: 'Latitude : ' + crd.lat,
-							type: 'response'
-						},{
-							text: 'Longitude: ' + crd.lon,
-							type: 'response'
-						});
-						consoleView.render();
+				model.previousCommands.push(
+					{ text: 'Getting IP Address...',	type: 'response-bold'}
+				)
+				prompt.style.display = 'none'
 
-						getUserWeatherPromise(crd.lat, crd.lon).then(function(res) {
-							model.previousCommands.push(
-								{text: '------', type: 'response'},
-								{text: 'Getting weather data...', type: 'response-bold'},
-								{text: 'Weather for: ' + crd.name + ', ' + crd.country, type: 'response'},
-								{text: 'Temperature: ' + res.main.temp, type: 'response'},
-								{text: 'Conditions: ' + res.weather[0].description, type: 'response'}
-							);
+				getUserLocationPromise().then(function(crd) {
 
-							document.getElementById('command-prompt').style.display = 'block';
-							document.getElementById('command-input').focus();
-							
-							consoleView.render();
-						}).catch(function(err) {
-							console.error(err);
-						})
-					}).catch(function(err) {
-						model.previousCommands.push(
-							{ text: "Error: Could not retrieve IP", type: 'error'},
-							{ text: "Try disabling your ad blocker", type: 'response'}
-						);
-						consoleView.render();
-						document.getElementById('command-prompt').style.display = 'block';
-						document.getElementById('command-input').focus();
-					})
-
-				} else {
 					model.previousCommands.push({
-						text: 'error: \'weather\' does not take any parameters',
-						type: 'error'
+						text: 'Latitude: ' + crd.lat,
+						type: 'response'
+					},{
+						text: 'Longitude: ' + crd.lon,
+						type: 'response'
+					});
+					consoleView.render();
+
+					getUserWeatherPromise(crd.lat, crd.lon).then(function(res) {
+						model.previousCommands.push(
+							{text: '------', type: 'response'},
+							{text: 'Getting weather data...', type: 'response-bold'},
+							{text: 'Weather for: ' + crd.name + ', ' + crd.country, type: 'response'},
+							{text: 'Temperature: ' + res.main.temp, type: 'response'},
+							{text: 'Conditions: ' + res.weather[0].description, type: 'response'}
+						);
+
+						prompt.style.display = 'block';
+						input.focus();
+						
+						consoleView.render();
+					}).catch(function(err) {
+						console.error(err);
 					})
-					
-				}
+				}).catch(function(err) {
+					model.previousCommands.push(
+						{ text: "Error: Could not retrieve IP", type: 'error'},
+						{ text: "Try disabling your ad blocker", type: 'response'}
+					);
+					consoleView.render();
+					prompt.style.display = 'block';
+					input.focus();
+				})
+
+				
 			}
 		}
 
@@ -682,32 +716,12 @@ var filters = {
 	},
 
 	findUrls: function(text) {
-		
 		var reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
 		return text.replace(reg, function(match){
-			console.log(match)
 			url = match.replace('</span>', String.empty);
 			return '<a href="' + url + '" target="_blank">' + match + '</a>';
 		})
 	}
-}
-
-var helpers = {
-	hasClass:function(ele, cls) {
-		return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
-	},
-
-	addClass:function(ele, cls) {
-		if (!this.hasClass(ele, cls)) ele.className += " " + cls;
-	},
-
-	removeClass:function(ele, cls) {
-		if (this.hasClass(ele, cls)) {
-			var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-			ele.className = ele.className.replace(reg, ' ');
-		}
-	}
-	
 }
 
 app.init();
