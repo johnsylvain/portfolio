@@ -16,8 +16,8 @@ var app = {
 	handleKeypress: function(e) {
 		var availableKeys = model.keyCommands;
 		var keyPress = availableKeys.filter(function(key) {
-			if(key.shortcut === 'ctrl'){
-				return key.code === e.which && e.ctrlKey;
+			if(key.shortcut){
+				return key.code === e.which && e[key.shortcut];
 			} else if (!key.shourcut){
 				return key.code === e.which;
 			}
@@ -31,7 +31,7 @@ var model = {
 	keyCommands: [
 		{ code: 38, shortcut: null, action: 'UP' },
 		{ code: 40, shortcut: null, action: 'DOWN' },
-		{ code: 75, shortcut: 'ctrl', action: 'CLEAR' }
+		{ code: 75, shortcut: 'ctrlKey', action: 'CLEAR' }
 	],
 	previousCommands: [
 		{
@@ -66,97 +66,7 @@ var model = {
 			"type 'help' to view other commands"
 		]
 	},
-	data: {
-		name: "John Sylvain",
-		position: "Full Stack Developer",
-		contact:{
-			email: "jsylvain007@gmail.com",
-			phone: 3136180632,
-			social: {
-				github: 'http://github.com/johnsylvain',
-				linkedin: 'http://linkedin.com/in/johnsylvain'
-			}
-		},
-		education: {
-			school: 'Purdue University',
-			gradutionDate: 'May 2017',
-			gpa: 3.98,
-			study: {
-				major: 'Computer Graphics Technology',
-				minor: 'Computer Information Technology'
-			}
-		},
-		experience: [
-			{
-				title: 'USAA',
-				position: 'Software Development Intern',
-				date: 'Summer 2016',
-				description: [
-					'Developed an AngularJS application to manage business rules for all employees',
-					'Analyzed data and created visualizations for the Enterprise Systems Division.'
-				]
-			},
-			{
-				title: 'Blast Radius',
-				position: 'Web Development Intern',
-				date: 'Summer 2015',
-				description: [
-					'Developed websites and dynamic emails for a number of blue chip clients.',
-					'Aided in the relaunch of the global Blast Radius website'
-				]
-			},
-			{
-				title: 'Freelance Web Development and Design',
-				date: 'August 2014 - Present',
-				description: [
-					'Developed websites and graphics while building relationships with clients.',
-					'Clients include: university organizations, professors, and career fairs.'
-				]
-			},
-			{
-				title: 'Eagle Scout',
-				date: 'June 2013',
-				description: [
-					'Oversaw the development and conducted a community service project.',
-					'Resulted in more than 150 hours of service.'
-				]
-			}
-		],
-		projects: [
-			{
-				title: "Reddit TV",
-				description: "Reddit Video Streaming App",
-				links: {
-					github: "http://github.com/johnsylvain/reddit-tv",
-					demo: "http://johnsylvain.github.io/reddit-tv"
-				}
-			},
-			{
-				title: "JS Link Shortener",
-				description: "Short link generator",
-				links: {
-					github: "http://github.com/johnsylvain/link-shortener",
-					demo: "http://johnsylva.in"
-				}
-			},
-			{
-				title: "Spott",
-				description: "Simple music discovery",
-				links: {
-					github: "http://github.com/johnsylvain/spott",
-					demo: "http://spott.johnsylvain.me/"
-				}
-			}
-		],
-		skills: {
-			"JavaScript": ['AngularJS', 'React.js', 'ES6','Node.js', 'Vue.js'],
-			"HTML/CSS": ['Sass'],
-			"PHP": ['Slim', 'Flight'],
-			"C#": ['.NET'],
-			"database": ['SQL', 'MongoDB'], 
-			"other": ['git','gulp', 'linux', 'webpack', 'SSH', 'python', 'regex']
-		}
-	}
+	data: {}
 
 }
 
@@ -167,6 +77,67 @@ var controller = {
 		resumeContentView.init();
 		consoleView.init();
 
+		this.loadResumeData()
+			.then(function(res) {
+				console.log(res)
+				model.data = res;
+			})
+			.catch(function(err) {
+				console.error(err);
+			})
+
+	},
+
+	fetchData: function(method, url) {
+		var xhr;
+
+		if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+			xhr = new XMLHttpRequest();
+		} else if (window.ActiveXObject) { // IE
+			try {
+				xhr = new ActiveXObject('Msxml2.XMLHTTP');
+			} 
+			catch (e) {
+				try {
+					xhr = new ActiveXObject('Microsoft.XMLHTTP');
+				} 
+				catch (e) {}
+			}
+		}
+
+		return new Promise(function(resolve, reject) {
+			
+			xhr.onload = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					resolve({
+						data: JSON.parse(xhr.responseText),
+						status: this.status
+					});
+				} else {
+					reject(new Error('Could not retrieve data from: ' + url))
+				}
+			}
+
+			xhr.onerror = function(e) {
+				reject({ error: e })
+			}; 
+
+			xhr.open(method, url, true);
+			xhr.send();	
+		});
+	},
+
+	loadResumeData: function() {
+		var _this = this;
+		return new Promise(function(resolve, reject) {
+			_this.fetchData('GET', './data.json')
+				.then(function(res) {
+					resolve(res.data)
+				})
+				.catch(function(err) {
+					reject(err);
+				});
+		});
 	},
 
 	setMobileView: function(){
@@ -293,6 +264,7 @@ var controller = {
 						text: "'pwd' does not need any arguments",
 						type: 'error'
 					});
+					consoleView.render();
 					return;
 				}
 
@@ -304,9 +276,11 @@ var controller = {
 			ls: function() {
 				if(comArgs.length !== 1) {
 					model.previousCommands.push({
-						text: "'clear' does not need any arguments",
+						text: "'ls' does not need any arguments",
 						type: 'error'
 					});
+					consoleView.render();
+
 					return;
 				}
 
@@ -489,21 +463,20 @@ var controller = {
 
 				function getUserLocationPromise() {
 					return new Promise(function(resolve, reject) {
-						window.fetch('http://ip-api.com/json', {
-							method: 'get'
-						}).then(function(res) {
-							return res.json()
-						}).then(function(json) {
-							var crd = {
-								lat: json.lat,
-								lon: json.lon,
-								name: json.city,
-								country: json.countryCode
-							}
-							resolve(crd);
-						}).catch(function(err) {
-							reject(err);
-						});
+
+						_this.fetchData('GET', 'http://ip-api.com/json')
+							.then(function(res) {
+								var crd = {
+									lat: res.data.lat, 
+									lon: res.data.lon,
+									name: res.data.city,
+									country: res.data.countryCode
+								}
+								resolve(crd);
+							})
+							.catch(function(err) {
+								reject(err);
+							})
 					})
 				}
 
@@ -512,16 +485,14 @@ var controller = {
 						var key = '2f4d666f6f04dbad2164175736a5a2dc';
 						var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' + 
 							lat + '&lon=' + lon + '&APPID=' + key;
-						
-						window.fetch(url, {
-							method:'get'
-						}).then(function(res){
-							return res.json();
-						}).then(function(json){
-							resolve(json);
-						}).catch(function(err) {
-							reject(err);
-						});
+
+						_this.fetchData('GET', url)
+							.then(function(res) {
+								resolve(res.data);
+							})
+							.catch(function(err) {
+								reject(err);
+							});
 					})
 				}
 
@@ -557,10 +528,13 @@ var controller = {
 						input.focus();
 						
 						consoleView.render();
-					}).catch(function(err) {
-						console.error(err);
 					})
-				}).catch(function(err) {
+					.catch(function(err) {
+						// console.error(err);
+					})
+				})
+				.catch(function(err) {
+					console.log("Error: " + err)
 					model.previousCommands.push(
 						{ text: "Error: Could not retrieve IP", type: 'error'},
 						{ text: "Try disabling your ad blocker", type: 'response'}
