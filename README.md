@@ -4,7 +4,7 @@ An interactive resume built with vanilla JavaScript.  Users use the terminal on 
 
 ## Screenshot
 
-![alt text](./screenshot.jpg "screenshot")
+![alt text](./screenshot.png "screenshot")
 
 ## Installation
 
