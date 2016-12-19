@@ -7,12 +7,6 @@ var app = {
 		window.addEventListener('resize', this.handleResize.bind(this));
 		window.addEventListener('keyup', this.handleKeypress.bind(this));
 	},
-	handleResize: function(){
-		this.pageWidth = window.innerWidth;
-		if (this.pageWidth <= this.breakpoint) {
-			controller.setMobileView();
-		}
-	},
 	handleKeypress: function(e) {
 		var availableKeys = model.keyCommands;
 		var keyPress = availableKeys.filter(function(key) {
@@ -23,7 +17,7 @@ var app = {
 			}
 		})[0]
 
-		if(keyPress) { controller.handleCommands(keyPress.action); }
+		if(keyPress) { controller.executeKeypress(keyPress.action); }
 	}
 }
 
@@ -45,7 +39,7 @@ var model = {
 		pointer: 0,
 	},
 	currentOutput: null,
-	mobileView: false,
+	socialProfiles: [],
 	commands: [ 
 		{ text: '',	params: null },
 		{ text: 'help', params: null },
@@ -60,8 +54,8 @@ var model = {
 		{ text: 'weather', params: null, ignored: true }
 	],
 	defaultMessage: {
-		message: [
-			"to view the resume, enter 'open resume' in the terminal to the left",
+		welcomeMessage: [
+			"to view my resume, enter 'open resume' in the terminal to the left",
 			"to view a pdf resume, http://johnsylvain.me/resume.pdf",
 			"type 'help' to view other commands"
 		]
@@ -79,8 +73,16 @@ var controller = {
 
 		this.loadResumeData()
 			.then(function(res) {
-				console.log(res)
+
 				model.data = res;
+				model.socialProfiles = Object.keys(model.data.contact.social)
+
+				var socialCommand = model.commands.filter(function(command) {
+					return command.text === 'social'
+				})[0];
+
+				socialCommand.params = model.socialProfiles
+
 			})
 			.catch(function(err) {
 				console.error(err);
@@ -140,17 +142,6 @@ var controller = {
 		});
 	},
 
-	setMobileView: function(){
-		if (!model.mobileView) {
-			this.executeCommand('open resume');
-			consoleView.render();
-		} else {
-			this.updateOutput(model.defaultMessage).then(function(res) {
-				resumeContentView.render();
-			})
-		}
-	},
-
 	getResumeData: function(){
 		return model.data;
 	},
@@ -170,7 +161,7 @@ var controller = {
 		})
 	},
 
-	handleCommands: function(key) {
+	executeKeypress: function(key) {
 		if (key === 'UP' || key === 'DOWN') {
 			if(key === 'UP' && 
 				model.enteredCommands.pointer < model.enteredCommands.data.length) {
@@ -307,25 +298,20 @@ var controller = {
 				model.previousCommands.push(
 					{ text: 'Available Commands:', type: 'response-bold'}
 				);
-				for (var i = 0; i < commands.length; i++) {
-					if (commands[i].ignored !== true) {
-						var avalCommand = commands[i];
-
+				commands.forEach(function(avalCommand, i) {
+					if (avalCommand.ignored !== true) {
 						var response = '';
 						if (avalCommand.params !== null) {
-							response = avalCommand.text + ' [' + avalCommand.params + ']';
+							response = avalCommand.text + ' [' + avalCommand.params.toLocaleString() + ']';
 						} else {
 							response = avalCommand.text;
 						}
-
-
 						model.previousCommands.push({
 							text: response,
 							type: 'response'
-						});
-						
+						});	
 					}
-				};
+				})
 			},
 			open: function(){
 
@@ -359,7 +345,8 @@ var controller = {
 							resumeContentView.render();
 						})
 					}
-				} 
+				}
+
 				if (comArgs.length === 1) {
 					model.previousCommands.push({
 						text: "type 'show [" + controller.getCommand('show')[0].params + "]'",
@@ -624,6 +611,8 @@ var consoleView = {
 	},
 
 	render: function(){
+		var _this = this;
+
 		this.prevElem.innerHTML = '';
 		var commands = controller.getPreviousCommands();
 
@@ -637,8 +626,7 @@ var consoleView = {
 			this.commandInput.value = '';
 		}
 
-		for (var i = 0; i < commands.length; i++) {
-			var command = commands[i];
+		commands.forEach(function(command, i) {
 			var elem = document.createElement('li');
 
 			if (command.type === 'command') {
@@ -657,8 +645,10 @@ var consoleView = {
 				elem.className = 'commandWarning';
 			}
 
-			this.prevElem.appendChild(elem);
-		};
+			_this.prevElem.appendChild(elem);
+			
+		})
+
 
 	}
 }
