@@ -476,7 +476,7 @@ footer a:hover {
 
 #console {
   border: 15px solid #444;
-  line-height: 100%;
+  background-color: #34495e;
   background-color: #444;
   padding: 10px;
   height: 100vh;
@@ -493,7 +493,7 @@ footer a:hover {
 
 #console ul li {
   padding: inherit;
-  line-height: 100%;
+  line-height: 110%;
 }
 
 #console ul li.commandError {
@@ -536,7 +536,7 @@ footer a:hover {
   padding: 0;
   color: #fff;
   width: 90%;
-  line-height: 100%;
+  line-height: 110%;
 }
 
 pre {

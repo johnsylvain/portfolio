@@ -82,7 +82,7 @@
    ],
    "skills": {
       "JavaScript": [
-         "AngularJS",
+         "Angular",
          "React.js",
          "ES6",
          "Node.js",
@@ -92,24 +92,17 @@
          "Sass"
       ],
       "PHP": [
-         "Slim",
-         "Flight"
-      ],
-      "C#": [
-         ".NET"
+         "Slim"
       ],
       "database": [
-         "SQL",
+         "MySQL",
          "MongoDB"
       ],
       "other": [
          "git",
          "gulp",
-         "linux",
          "webpack",
-         "SSH",
-         "python",
-         "regex"
+         "linux"
       ]
    }
 }

@@ -3,8 +3,6 @@ var app = {
 	breakpoint: 768,
 	init: function(){
 		controller.init();
-		this.handleResize();
-		window.addEventListener('resize', this.handleResize.bind(this));
 		window.addEventListener('keyup', this.handleKeypress.bind(this));
 	},
 	handleKeypress: function(e) {
@@ -40,7 +38,7 @@ var model = {
 	},
 	currentOutput: null,
 	socialProfiles: [],
-	commands: [ 
+	commands: [
 		{ text: '',	params: null },
 		{ text: 'help', params: null },
 		{ text: 'clear', params: null },
@@ -60,8 +58,8 @@ var model = {
 			"type 'help' to view other commands"
 		]
 	},
-	data: {}
-
+	data: {},
+    date: new Date().getFullYear()
 }
 
 var controller = {
@@ -70,6 +68,7 @@ var controller = {
 
 		resumeContentView.init();
 		consoleView.init();
+        view.init();
 
 		this.loadResumeData()
 			.then(function(res) {
@@ -98,17 +97,17 @@ var controller = {
 		} else if (window.ActiveXObject) { // IE
 			try {
 				xhr = new ActiveXObject('Msxml2.XMLHTTP');
-			} 
+			}
 			catch (e) {
 				try {
 					xhr = new ActiveXObject('Microsoft.XMLHTTP');
-				} 
+				}
 				catch (e) {}
 			}
 		}
 
 		return new Promise(function(resolve, reject) {
-			
+
 			xhr.onload = function() {
 				if (this.readyState === 4 && this.status === 200) {
 					resolve({
@@ -122,10 +121,10 @@ var controller = {
 
 			xhr.onerror = function(e) {
 				reject({ error: e })
-			}; 
+			};
 
 			xhr.open(method, url, true);
-			xhr.send();	
+			xhr.send();
 		});
 	},
 
@@ -141,6 +140,10 @@ var controller = {
 				});
 		});
 	},
+
+    getDate: function() {
+        return model.date;
+    },
 
 	getResumeData: function(){
 		return model.data;
@@ -163,7 +166,7 @@ var controller = {
 
 	executeKeypress: function(key) {
 		if (key === 'UP' || key === 'DOWN') {
-			if(key === 'UP' && 
+			if(key === 'UP' &&
 				model.enteredCommands.pointer < model.enteredCommands.data.length) {
 				model.enteredCommands.pointer += 1;
 			}
@@ -179,7 +182,7 @@ var controller = {
 		if(key === 'CLEAR') {
 			this.executeCommand('clear');
 		}
-		
+
 
 		consoleView.render();
 	},
@@ -213,7 +216,7 @@ var controller = {
 						type: 'command'
 					});
 				}
-				
+
 			} else {
 				model.enteredCommands.data.push({
 					text: command,
@@ -222,7 +225,7 @@ var controller = {
 			}
 			model.enteredCommands.pointer = 0;
 
-			
+
 		}
 
 		var flag = model.commands.filter(function(o) {
@@ -259,9 +262,9 @@ var controller = {
 					return;
 				}
 
-				model.previousCommands.push({ 
-					text: window.location.host, 
-					type: 'response-bold' 
+				model.previousCommands.push({
+					text: window.location.host,
+					type: 'response-bold'
 				})
 			},
 			ls: function() {
@@ -309,7 +312,7 @@ var controller = {
 						model.previousCommands.push({
 							text: response,
 							type: 'response'
-						});	
+						});
 					}
 				})
 			},
@@ -434,7 +437,7 @@ var controller = {
 					return {
 						'-rf': rf
 					}
-					
+
 				}
 			},
 
@@ -446,7 +449,7 @@ var controller = {
 						type: 'error'
 					})
 					return;
-				} 
+				}
 
 				function getUserLocationPromise() {
 					return new Promise(function(resolve, reject) {
@@ -454,7 +457,7 @@ var controller = {
 						_this.fetchData('GET', 'http://ip-api.com/json')
 							.then(function(res) {
 								var crd = {
-									lat: res.data.lat, 
+									lat: res.data.lat,
 									lon: res.data.lon,
 									name: res.data.city,
 									country: res.data.countryCode
@@ -470,7 +473,7 @@ var controller = {
 				function getUserWeatherPromise(lat, lon) {
 					return new Promise(function(resolve, reject) {
 						var key = '2f4d666f6f04dbad2164175736a5a2dc';
-						var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' + 
+						var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' +
 							lat + '&lon=' + lon + '&APPID=' + key;
 
 						_this.fetchData('GET', url)
@@ -513,7 +516,7 @@ var controller = {
 
 						prompt.style.display = 'block';
 						input.focus();
-						
+
 						consoleView.render();
 					})
 					.catch(function(err) {
@@ -531,7 +534,7 @@ var controller = {
 					input.focus();
 				})
 
-				
+
 			}
 		}
 
@@ -569,6 +572,13 @@ var controller = {
 		return fileName;
 	}
 
+}
+
+var view = {
+    init: function() {
+        this.dateElem = document.getElementById('date');
+        this.dateElem.innerHTML = controller.getDate();
+    }
 }
 
 var resumeContentView = {
@@ -646,7 +656,7 @@ var consoleView = {
 			}
 
 			_this.prevElem.appendChild(elem);
-			
+
 		})
 
 
@@ -661,7 +671,7 @@ var filters = {
 		json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 		var reg = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
-		return json.replace(reg, 
+		return json.replace(reg,
 			function (match) {
 				var cls = 'number';
 				if (/^"/.test(match)) {
