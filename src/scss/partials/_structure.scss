@@ -4,6 +4,7 @@ html, body{
 }
 #wrapper {
 	background-color: #555;
+
 	&.crash{
 		overflow:hidden;
 		height:100vh;
@@ -45,5 +46,3 @@ html, body{
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
 /* close commented backslash hack */
-
-
