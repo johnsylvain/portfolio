@@ -1,4 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700);
+@import url("https://fonts.googleapis.com/css?family=Karla:400,700");
+@font-face {
+  font-family: "Ubuntu Mono";
+  src: url("./fonts/UbuntuMono-R.eot?") format("eot"), url("./fonts/UbuntuMono-R.woff") format("woff"), url("./fonts/UbuntuMono-R.ttf") format("truetype"), url("./fonts/UbuntuMono-R.svg#UbuntuMono-Regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @-webkit-keyframes typing {
   from {
     width: 0;
@@ -32,6 +40,24 @@
 @keyframes fade-in {
   to {
     opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
@@ -264,12 +290,19 @@ table {
 }
 
 html, body {
-  font-family: "Ubuntu Mono";
-  background-color: #2c2c2c;
+  font-family: "Ubuntu Mono", monospace;
+  background: -webkit-linear-gradient(right, #d78eff, #8ec7ff, #a74dff);
+  background: linear-gradient(270deg, #d78eff, #8ec7ff, #a74dff);
+  background-size: 300% 300%;
+  color: #555;
+}
+
+* {
+  font-smoothing: antialiased;
 }
 
 #wrapper {
-  background-color: #555;
+  background-color: #fff;
 }
 
 #wrapper.crash {
@@ -291,7 +324,7 @@ html, body {
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
-  padding: 15px;
+  padding: 10px 25px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -302,8 +335,21 @@ html, body {
   flex-direction: column;
 }
 
+#content {
+  position: relative;
+}
+
 #page-wrap {
-  padding-left: 33%;
+  -webkit-transition: padding-left 0.5s ease;
+  transition: padding-left 0.5s ease;
+}
+
+#page-wrap.interactiveMode {
+  padding-left: 27%;
+}
+
+#page-wrap.nonInteractiveMode {
+  padding-left: 0%;
 }
 
 .clearfix:after {
@@ -329,6 +375,64 @@ html, body {
 }
 
 /* close commented backslash hack */
+.grid {
+  margin: 0 0 10px 0;
+}
+
+.grid:after {
+  /* Or @extend clearfix */
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[class*='col-'] {
+  float: left;
+  padding-right: 10px;
+}
+
+.grid [class*='col-']:last-of-type {
+  padding-left: 10px;
+  padding-right: 0;
+}
+
+.col-2-3 {
+  width: 66.66%;
+}
+
+.col-1-3 {
+  width: 33.33%;
+}
+
+.col-1-2 {
+  width: 50%;
+}
+
+.col-1-4 {
+  width: 25%;
+}
+
+.col-3-4 {
+  width: 75%;
+}
+
+.col-1-8 {
+  width: 12.5%;
+}
+
+/* Opt-in outside padding */
+.grid-pad {
+  padding: 10px 0 10px 10px;
+}
+
+.grid-pad [class*='col-']:last-of-type {
+  padding-right: 10px;
+}
+
+.align-right {
+  text-align: right;
+}
+
 .trash {
   position: fixed;
   top: 100%;
@@ -364,48 +468,58 @@ html, body {
 
 header {
   padding: 40px 0;
-  font-family: "Ubuntu Mono";
-  color: #fff;
+  font-family: 'Karla';
+  color: #555;
 }
 
 header h1 {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 400;
   letter-spacing: 2px;
   margin-bottom: 10px;
-  width: calc(12ch + 26px);
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: .1em solid darkorange;
-  -webkit-animation: typing 1s steps(12, end), blink-caret 1s step-end infinite;
-  animation: typing 1s steps(12, end), blink-caret 1s step-end infinite;
+  font-weight: bold;
+  padding-right: 0.3em;
 }
 
 header p {
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 5px;
-  opacity: 0;
-  position: relative;
-  left: 0;
-  -webkit-animation: fade-in 0.5s forwards, slide-left 0.5s;
-  animation: fade-in 0.5s forwards, slide-left 0.5s;
-  -webkit-animation-delay: 0.5s;
-  animation-delay: 0.5s;
 }
 
-header span::before {
-  content: '';
-  background-color: red;
-  width: 20px;
-  height: 3px;
+header #toggle-interactive {
+  float: right;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  opacity: 0.8;
+  margin-top: 10px;
+  -webkit-transition: background-image 0.5s, -webkit-transform 0.5s;
+  transition: background-image 0.5s, -webkit-transform 0.5s;
+  transition: transform 0.5s, background-image 0.5s;
+  transition: transform 0.5s, background-image 0.5s, -webkit-transform 0.5s;
+  background-image: url(../img/code.svg);
+}
+
+header #toggle-interactive.interactiveMode {
+  background-image: url(../img/close.svg);
+  -webkit-transform: rotateZ(360deg);
+  transform: rotateZ(360deg);
+}
+
+header #toggle-interactive.nonInteractiveMode {
+  background-image: url(../img/code.svg);
+}
+
+header #toggle-interactive:hover {
+  opacity: 0.9;
 }
 
 footer {
-  text-align: center;
-  color: white;
-  padding: 60px 0 0px;
+  padding: 80px 0 40px;
   font-size: 0.825rem;
+  color: #555;
 }
 
 footer p {
@@ -416,7 +530,9 @@ footer a {
   text-decoration: none;
   color: #27ae60;
   font-size: 9pt;
+  padding-bottom: 2px;
   border-bottom: 2px solid rgba(39, 174, 96, 0.3);
+  margin-right: 4px;
 }
 
 footer a:hover {
@@ -447,41 +563,168 @@ footer a:hover {
   padding: 0;
 }
 
+#landing-wrapper {
+  font-family: 'Karla';
+  color: #555;
+  font-size: 14pt;
+  line-height: 140%;
+  margin-top: 30px;
+  -webkit-transition: visbility 0s, opacity 0.5s;
+  transition: visbility 0s, opacity 0.5s;
+  z-index: 1000;
+}
+
+#landing-wrapper #projects {
+  margin-top: 10px;
+}
+
+#landing-wrapper #projects .placeholder {
+  width: auto;
+  text-align: center;
+  background-color: #efefef;
+  color: #555;
+  margin: 50% 0 0 50%;
+  padding: 20px 15px;
+  font-size: 12pt;
+  border-radius: 2px;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#landing-wrapper #projects .project {
+  margin-top: 10px;
+  position: static;
+  width: 100%;
+  border-radius: 3px;
+  background-color: #efefef;
+}
+
+#landing-wrapper #projects .project img {
+  width: 100%;
+  height: auto;
+  border-radius: 2px 2px 0 0;
+}
+
+#landing-wrapper #projects .project .caption {
+  padding: 10px 15px 13px;
+}
+
+#landing-wrapper #projects .project .caption h3 {
+  font-size: 14pt;
+}
+
+#landing-wrapper #projects .project .caption p {
+  font-size: 11pt;
+}
+
+#landing-wrapper #projects .project .caption .links {
+  margin-top: 5px;
+}
+
+#landing-wrapper #projects .project .caption .links a {
+  color: #555;
+  text-decoration: none;
+  background-color: #dedede;
+  padding: 4px 10px;
+  border-radius: 50px;
+  margin-right: 3px;
+}
+
+#landing-wrapper #projects .project .caption .links a:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+#landing-wrapper h2 {
+  font-size: 24pt;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+#landing-wrapper.interactiveMode {
+  visibility: hidden;
+  opacity: 0;
+  z-index: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+#landing-wrapper.nonInteractiveMode {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1000;
+  height: auto;
+}
+
 #resume-wrapper {
+  font-family: 'Ubuntu Mono', monospace;
+  position: absolute;
   border-radius: 4px;
-  background-color: #2c2c2c;
+  background-color: #555;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
   color: #95a5a6;
   position: relative;
   top: 0;
   opacity: 0;
+  z-index: 0;
   line-height: 100%;
-  -webkit-animation: fade-in 0.5s forwards, zoom-in 0.5s;
-  animation: fade-in 0.5s forwards, zoom-in 0.5s;
+  -webkit-transition: visibility 0s, opacity 0.5s;
+  transition: visibility 0s, opacity 0.5s;
+  height: 0;
+  overflow: hidden;
+}
+
+#resume-wrapper.interactiveMode {
+  visibility: visible;
+  opacity: 1;
+  height: auto;
+  z-index: 1000;
+}
+
+#resume-wrapper.nonInteractiveMode {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  z-index: 0;
 }
 
 #resume-wrapper #resume-content {
   padding: 20px;
 }
 
+#resume-wrapper #resume-content #resume-code {
+  font-family: 'Ubuntu Mono', monospace;
+}
+
 #console-wrapper {
+  font-family: 'Ubuntu Mono', monospace;
   position: fixed;
-  width: 33%;
-  max-width: 400px;
+  width: 27%;
+  max-width: 450px;
   opacity: 0;
   left: -200px;
-  -webkit-animation: fade-in 0.5s forwards, slide-right 0.5s forwards;
-  animation: fade-in 0.5s forwards, slide-right 0.5s forwards;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+#console-wrapper.interactiveMode {
+  left: 0px;
+  opacity: 1;
+}
+
+#console-wrapper.nonInteractiveMode {
+  left: -200px;
+  opacity: 0;
 }
 
 #console {
-  border: 15px solid #444;
-  background-color: #34495e;
-  background-color: #444;
+  border: 15px solid #e0e0e0;
+  background-color: #e0e0e0;
   padding: 10px;
   height: 100vh;
   overflow-y: scroll;
-  color: #fff;
+  color: #555;
   font-size: 11pt;
 }
 
@@ -502,12 +745,12 @@ footer a:hover {
 }
 
 #console ul li.commandResponse {
-  color: #9f9f9f;
+  color: #8f8f8f;
   margin-left: 2ch;
 }
 
 #console ul li.commandResponseBold {
-  color: #cfcfcf;
+  color: #6f6f6f;
   margin-left: 2ch;
 }
 
@@ -522,19 +765,18 @@ footer a:hover {
 }
 
 #console form .command-prompt-container {
-  font-family: "Ubuntu Mono";
   font-size: 11pt;
 }
 
 #console form input {
   background-color: transparent;
+  font-family: 'Ubuntu Mono', monospace;
   outline: none;
   border: none;
-  font-family: "Ubuntu Mono";
   font-size: 11pt;
   margin: 0;
   padding: 0;
-  color: #fff;
+  color: #555;
   width: 90%;
   line-height: 110%;
 }
@@ -551,11 +793,11 @@ pre {
   word-wrap: break-word;
   /* Internet Explorer 5.5+ */
   line-height: 150%;
-  font-family: "Ubuntu Mono";
+  font-family: "Ubuntu Mono", monospace;
   font-size: 11pt;
   margin: 0;
   padding: 0;
-  color: #7e7e7e;
+  color: #a0a0a0;
 }
 
 pre .string {
@@ -575,7 +817,7 @@ pre .null {
 }
 
 pre .key {
-  color: #a8a8a8;
+  color: #b0b0b0;
 }
 
 pre a {
@@ -607,17 +849,38 @@ pre a:hover {
 }
 
 @media (max-width: 768px) {
-  #console-wrapper {
-    display: none;
-  }
   #page-wrap {
     padding-left: 0;
   }
-  #resume-wrapper {
+  #toggle-interactive {
     display: none;
   }
-  #mobile-message {
-    display: block;
+  [class*='col-'] {
+    width: 100%;
+    padding-left: 0;
+    padding: 0;
+  }
+  .grid [class*='col-']:last-of-type {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  header {
+    text-align: center;
+  }
+  header h1 {
+    font-size: 2.5rem;
+  }
+  header p {
+    font-size: 10pt;
+  }
+  footer [class*='col-'] {
+    margin-top: 25px;
+  }
+  footer .align-right {
+    text-align: center;
+  }
+  #placeholder {
+    display: none;
   }
   .trash {
     display: none;

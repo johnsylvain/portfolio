@@ -1,9 +1,16 @@
 html, body{
 	font-family: $font;
-	background-color: #2c2c2c;
+	// background-color: #7f7f7f;
+	background: linear-gradient(270deg, #d78eff, #8ec7ff, #a74dff);
+	background-size: 300% 300%;
+	// color: #2c2c2c;
+	color:#555;
 }
+
+*{font-smoothing:antialiased;}
 #wrapper {
-	background-color: #555;
+	// background-color: #555;
+	background-color: #fff;
 
 	&.crash{
 		overflow:hidden;
@@ -23,14 +30,23 @@ html, body{
 	max-width: 800px;
 	width: 100%;
 	margin: 0 auto;
-	padding: 15px;
+	padding: 10px 25px;
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
 }
-
+#content {
+	position: relative;
+}
 #page-wrap{
-	padding-left: 33%;
+	// padding-left: 33%;
+	transition: padding-left 0.5s ease;
+	&.interactiveMode {
+		padding-left: 27%;
+	}
+	&.nonInteractiveMode{
+		padding-left: 0%;
+	}
 }
 
 .clearfix:after {
@@ -46,3 +62,55 @@ html, body{
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
 /* close commented backslash hack */
+
+$pad: 10px;
+
+.grid {
+  margin: 0 0 $pad 0;
+
+  &:after {
+    /* Or @extend clearfix */
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+[class*='col-'] {
+  float: left;
+  padding-right: $pad;
+  .grid &:last-of-type {
+    padding-left: $pad;
+		padding-right: 0;
+  }
+}
+.col-2-3 {
+  width: 66.66%;
+}
+.col-1-3 {
+  width: 33.33%;
+}
+.col-1-2 {
+  width: 50%;
+}
+.col-1-4 {
+  width: 25%;
+}
+.col-3-4 {
+  width: 75%;
+}
+.col-1-8 {
+  width: 12.5%;
+}
+
+/* Opt-in outside padding */
+.grid-pad {
+  padding: $pad 0 $pad $pad;
+  [class*='col-']:last-of-type {
+    padding-right: $pad;
+  }
+}
+
+.align-right {
+	text-align: right;
+}

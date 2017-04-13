@@ -1,9 +1,21 @@
 var app = {
 	pageWidth: window.innerWidth,
 	breakpoint: 768,
+	interactiveMode: false,
+
 	init: function(){
+		var _this = this;
 		controller.init();
 		window.addEventListener('keyup', this.handleKeypress.bind(this));
+		document.getElementById('toggle-interactive').addEventListener('click', function() {
+			_this.switchModes();
+		});
+
+		window.addEventListener('resize', function(event) {
+			if(window.innerWidth <= _this.breakpoint) {
+				_this.switchModes(true);
+			}
+		})
 	},
 	handleKeypress: function(e) {
 		var availableKeys = model.keyCommands;
@@ -16,6 +28,38 @@ var app = {
 		})[0]
 
 		if(keyPress) { controller.executeKeypress(keyPress.action); }
+	},
+
+	switchModes: function(flag) {
+		var targets = [
+			document.getElementById('page-wrap'),
+			document.getElementById('landing-wrapper'),
+			document.getElementById('resume-wrapper'),
+			document.getElementById('console-wrapper'),
+			document.getElementById('container'),
+			document.getElementById('toggle-interactive')
+		];
+
+		if (flag){
+			targets.forEach(function(t) {
+				t.classList.remove('interactiveMode');
+				t.classList.add('nonInteractiveMode');
+			});
+			this.interactiveMode = false;
+			return;
+		}
+		if (!this.interactiveMode) {
+			targets.forEach(function(t) {
+				t.classList.add('interactiveMode');
+				t.classList.remove('nonInteractiveMode');
+			})
+		} else {
+			targets.forEach(function(t) {
+				t.classList.remove('interactiveMode');
+				t.classList.add('nonInteractiveMode');
+			})
+		}
+		this.interactiveMode = !this.interactiveMode;
 	}
 }
 
@@ -68,7 +112,7 @@ var controller = {
 
 		resumeContentView.init();
 		consoleView.init();
-        view.init();
+    view.init();
 
 		this.loadResumeData()
 			.then(function(res) {
