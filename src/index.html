@@ -8,6 +8,7 @@
 	<meta name="keywords" content="John Sylvain, web development,html,css,javascript,web design, purdue, angular, nodejs">
 	<meta name="author" content="John Sylvain">
 	<link rel="stylesheet" href="./css/style.css"/>
+	<link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
 </head>
 <body>
 	<div id="page">
@@ -35,66 +36,74 @@
 									<p>Full Stack Developer</p>
 								</div>
 								<div class="col-1-4">
-									<div id="toggle-interactive"></div>
+									<div id="toggle-interactive" class="toggle-btn"></div>
 								</div>
 							</div>
 						</header>
 						<div id="landing-wrapper">
-							<h2>Projects</h2>
-							<div id="projects">
-								<div class="grid">
-									<div class="col-1-2">
-										<div class="project">
-											<img src="./img/reddittv.svg" alt=""/>
-											<div class="caption">
-												<h3>Reddit TV</h3>
-												<p>Reddit Video Streaming App</p>
-												<p class="links">
-													<a href="http://johnsylvain.github.io/reddit-tv/" target="_blank">Demo</a>
-													<a href="http://github.com/johnsylvain/reddit-tv/" target="_blank">GitHub</a>
-												</p>
+							<div class="section about">
+								<h2>About</h2>
+								<p>I am a passionate full stack developer currently studying at Purdue University. In the past, I have worked for <a href="http://usaa.com" target="_blank">USAA</a> and <a href="http://blastradius.com" target="_blank">Blast Radius</a>. I design and develop web applications that are simple and fun to use.</p>
+								<p class="mobile-hide">If you would like to learn more about me and my experience, free to check out my <a href="#" class="toggle-btn">interactive resume</a>, or download <a href="http://johnsylvain.me/resume.pdf" target="_blank">a PDF</a>.</p>
+								<p class="mobile-show">If you would like to learn more about me and my experience, free to check out my  <a href="http://johnsylvain.me/resume.pdf" target="_blank">resume</a>.</p>
+							</div>
+							<div class="section">
+								<h2>Projects</h2>
+								<div id="projects">
+									<div class="grid">
+										<div class="col-1-2">
+											<div class="project">
+												<img src="./img/reddittv.svg" alt=""/>
+												<div class="caption">
+													<h3>Reddit TV</h3>
+													<p>Reddit Video Streaming App</p>
+													<p class="links">
+														<a href="http://johnsylvain.github.io/reddit-tv/" target="_blank">Demo</a>
+														<a href="http://github.com/johnsylvain/reddit-tv/" target="_blank">GitHub</a>
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-1-2">
+											<div class="project">
+												<img src="./img/jslink.svg" alt=""/>
+												<div class="caption">
+													<h3>JS Link Shortener</h3>
+													<p>Custom Short link generator</p>
+													<p class="links">
+														<a href="http://github.com/johnsylvain/link-shortener/" target="_blank">GitHub</a>
+													</p>
+												</div>
 											</div>
 										</div>
 									</div>
-									<div class="col-1-2">
-										<div class="project">
-											<img src="./img/jslink.svg" alt=""/>
-											<div class="caption">
-												<h3>JS Link Shortener</h3>
-												<p>Custom Short link generator</p>
-												<p class="links">
-													<a href="http://johnsylva.in" target="_blank">Demo</a>
-													<a href="http://github.com/johnsylvain/link-shortener/" target="_blank">GitHub</a>
-												</p>
+									<div class="grid">
+										<div class="col-1-2">
+											<div class="project">
+												<img src="./img/spott2.svg" alt=""/>
+												<div class="caption">
+													<h3>Spott</h3>
+													<p>Simple Music Discovery</p>
+													<p class="links">
+														<a href="http://spott.johnsylvain.me" target="_blank">Demo</a>
+														<a href="http://github.com/johnsylvain/spott/" target="_blank">GitHub</a>
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-1-2">
+											<div class="placeholder" id="placeholder">
+												More projects coming soon.
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="grid">
-									<div class="col-1-2">
-										<div class="project">
-											<img src="./img/spott.svg" alt=""/>
-											<div class="caption">
-												<h3>Spott</h3>
-												<p>Simple Music Discovery</p>
-												<p class="links">
-													<a href="http://spott.johnsylvain.me" target="_blank">Demo</a>
-													<a href="http://github.com/johnsylvain/spott/" target="_blank">GitHub</a>
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-1-2">
-										<div class="placeholder" id="placeholder">
-											More projects coming soon.
-										</div>
-									</div>
-								</div>
+
 							</div>
 						</div>
 						<div id="resume-wrapper">
 							<div class="menu-bar clearfix">
-								<div class="circle"></div>
+								<div class="circle toggle-btn"></div>
 								<div class="circle"></div>
 								<div class="circle"></div>
 								<span><span id="file-name"></span>.json</span>
@@ -107,22 +116,21 @@
 						<div id="mobile-message">
 						</div>
 					</div>
-					<footer class="grid">
-						<div class="col-1-2">
-							<p>I am a fullstack developer currently studying at Purdue University. Previously, I have worked at USAA and Blast Radius.</p>
+					<footer>
+						<div class="grid">
+							<div class="col-1-2">
+								<p>
+									&#0169; John Sylvain <span id="date"></span>
+								</p>
+							</div>
+							<div class="col-1-2 align-right">
+								<p>
+									<a href="http://github.com/johnsylvain" target="_blank">GitHub</a>
+									<a href="http://linkedin.com/in/johnsylvain" target="_blank">LinkedIn</a>
+									<a href="mailto:jsylvain007@gmail.com" target="_blank">Email</a>
+								</p>
+							</div>
 						</div>
-						<div class="col-1-2 align-right">
-							<p>
-								&copy; John Sylvain <span id="date"></span>
-							</p>
-							<p>
-								<a href="http://github.com/johnsylvain" target="_blank">GitHub</a>
-								<a href="http://linkedin.com/in/johnsylvain" target="_blank">LinkedIn</a>
-								<a href="mailto:jsylvain007@gmail.com" target="_blank">Email</a>
-							</p>
-
-						</div>
-
 					</footer>
 				</div>
 			</div>

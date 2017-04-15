@@ -1,4 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700);
 @import url("https://fonts.googleapis.com/css?family=Karla:400,700");
 @font-face {
   font-family: "Ubuntu Mono";
@@ -7,28 +6,18 @@
   font-style: normal;
 }
 
-@-webkit-keyframes typing {
-  from {
-    width: 0;
-  }
+@font-face {
+  font-family: "Karla";
+  src: url("./fonts/Karla-Regular.ttf") format("truetype"), url("./fonts/karla-regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
-}
-
-@-webkit-keyframes blink-caret {
-  50% {
-    border-color: rgba(255, 255, 255, 0);
-  }
-}
-
-@keyframes blink-caret {
-  50% {
-    border-color: rgba(255, 255, 255, 0);
-  }
+@font-face {
+  font-family: "Karla";
+  src: url("./fonts/Karla-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
 }
 
 @-webkit-keyframes fade-in {
@@ -108,6 +97,68 @@
   from {
     -webkit-transform: scale(0.9);
     transform: scale(0.9);
+  }
+}
+
+@-webkit-keyframes wiggle {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
+  }
+  25% {
+    -webkit-transform: rotateZ(30deg);
+    transform: rotateZ(30deg);
+  }
+  50% {
+    -webkit-transform: rotateZ(-25deg);
+    transform: rotateZ(-25deg);
+  }
+  75% {
+    -webkit-transform: rotateZ(15deg);
+    transform: rotateZ(15deg);
+  }
+  90% {
+    -webkit-transform: rotateZ(-5deg);
+    transform: rotateZ(-5deg);
+  }
+  95% {
+    -webkit-transform: rotateZ(2deg);
+    transform: rotateZ(2deg);
+  }
+  100% {
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
+  }
+  25% {
+    -webkit-transform: rotateZ(30deg);
+    transform: rotateZ(30deg);
+  }
+  50% {
+    -webkit-transform: rotateZ(-25deg);
+    transform: rotateZ(-25deg);
+  }
+  75% {
+    -webkit-transform: rotateZ(15deg);
+    transform: rotateZ(15deg);
+  }
+  90% {
+    -webkit-transform: rotateZ(-5deg);
+    transform: rotateZ(-5deg);
+  }
+  95% {
+    -webkit-transform: rotateZ(2deg);
+    transform: rotateZ(2deg);
+  }
+  100% {
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
   }
 }
 
@@ -468,7 +519,7 @@ html, body {
 
 header {
   padding: 40px 0;
-  font-family: 'Karla';
+  font-family: "Karla", "Helvetica Neue", Helvetica, sans-serif;
   color: #555;
 }
 
@@ -495,11 +546,13 @@ header #toggle-interactive {
   height: 60px;
   opacity: 0.8;
   margin-top: 10px;
-  -webkit-transition: background-image 0.5s, -webkit-transform 0.5s;
-  transition: background-image 0.5s, -webkit-transform 0.5s;
-  transition: transform 0.5s, background-image 0.5s;
-  transition: transform 0.5s, background-image 0.5s, -webkit-transform 0.5s;
+  -webkit-transition: background-image 0.5s, opacity 0.2s, -webkit-transform 0.5s;
+  transition: background-image 0.5s, opacity 0.2s, -webkit-transform 0.5s;
+  transition: transform 0.5s, background-image 0.5s, opacity 0.2s;
+  transition: transform 0.5s, background-image 0.5s, opacity 0.2s, -webkit-transform 0.5s;
   background-image: url(../img/code.svg);
+  -webkit-animation: wiggle 1s;
+  animation: wiggle 1s;
 }
 
 header #toggle-interactive.interactiveMode {
@@ -517,9 +570,10 @@ header #toggle-interactive:hover {
 }
 
 footer {
-  padding: 80px 0 40px;
-  font-size: 0.825rem;
+  padding: 40px 0;
+  font-size: 1rem;
   color: #555;
+  font-family: "Karla", "Helvetica Neue", Helvetica, sans-serif;
 }
 
 footer p {
@@ -529,14 +583,21 @@ footer p {
 footer a {
   text-decoration: none;
   color: #27ae60;
-  font-size: 9pt;
   padding-bottom: 2px;
   border-bottom: 2px solid rgba(39, 174, 96, 0.3);
-  margin-right: 4px;
+  margin: 12px;
 }
 
 footer a:hover {
   border-bottom: 2px solid rgba(39, 174, 96, 0.8);
+}
+
+footer a:last-of-type {
+  margin: 0;
+}
+
+footer a:first-of-type {
+  margin: 0;
 }
 
 .menu-bar {
@@ -554,6 +615,26 @@ footer a:hover {
   float: left;
   margin: 3px;
   margin-top: 4px;
+  opacity: 0.7;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.menu-bar .circle:nth-child(1) {
+  background-color: #e74c3c;
+  cursor: pointer;
+}
+
+.menu-bar .circle:nth-child(2) {
+  background-color: #f1c40f;
+}
+
+.menu-bar .circle:nth-child(3) {
+  background-color: #2ecc71;
+}
+
+.menu-bar:hover .circle {
+  opacity: 1;
 }
 
 .menu-bar span {
@@ -564,7 +645,7 @@ footer a:hover {
 }
 
 #landing-wrapper {
-  font-family: 'Karla';
+  font-family: "Karla", "Helvetica Neue", Helvetica, sans-serif;
   color: #555;
   font-size: 14pt;
   line-height: 140%;
@@ -572,6 +653,23 @@ footer a:hover {
   -webkit-transition: visbility 0s, opacity 0.5s;
   transition: visbility 0s, opacity 0.5s;
   z-index: 1000;
+}
+
+#landing-wrapper .section {
+  margin-bottom: 50px;
+}
+
+#landing-wrapper .section.about p {
+  margin-bottom: 20px;
+}
+
+#landing-wrapper .section.about a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+#landing-wrapper .section.about a:hover {
+  text-decoration: underline;
 }
 
 #landing-wrapper #projects {
@@ -657,11 +755,11 @@ footer a:hover {
 }
 
 #resume-wrapper {
-  font-family: 'Ubuntu Mono', monospace;
+  font-family: "Ubuntu Mono", monospace;
   position: absolute;
   border-radius: 4px;
   background-color: #555;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 40px rgba(131, 131, 131, 0.1);
   color: #95a5a6;
   position: relative;
   top: 0;
@@ -679,6 +777,7 @@ footer a:hover {
   opacity: 1;
   height: auto;
   z-index: 1000;
+  margin-bottom: 50px;
 }
 
 #resume-wrapper.nonInteractiveMode {
@@ -687,6 +786,7 @@ footer a:hover {
   height: 0;
   overflow: hidden;
   z-index: 0;
+  margin: 0;
 }
 
 #resume-wrapper #resume-content {
@@ -694,11 +794,11 @@ footer a:hover {
 }
 
 #resume-wrapper #resume-content #resume-code {
-  font-family: 'Ubuntu Mono', monospace;
+  font-family: "Ubuntu Mono", monospace;
 }
 
 #console-wrapper {
-  font-family: 'Ubuntu Mono', monospace;
+  font-family: "Ubuntu Mono", monospace;
   position: fixed;
   width: 27%;
   max-width: 450px;
@@ -770,7 +870,7 @@ footer a:hover {
 
 #console form input {
   background-color: transparent;
-  font-family: 'Ubuntu Mono', monospace;
+  font-family: "Ubuntu Mono", monospace;
   outline: none;
   border: none;
   font-size: 11pt;
@@ -830,22 +930,12 @@ pre a:hover {
   border-bottom: 2px solid rgba(39, 174, 96, 0.8);
 }
 
-#mobile-message {
+.mobile-show {
   display: none;
-  opacity: 0;
-  -webkit-animation: zoom-in 0.5s, fade-in 0.5s forwards;
-  animation: zoom-in 0.5s, fade-in 0.5s forwards;
 }
 
-#mobile-message p {
-  color: white;
-  font-weight: 300;
-  font-smoothing: none;
-  margin-bottom: 10px;
-}
-
-#mobile-message p a {
-  color: #27ae60;
+.mobile-hide {
+  display: block;
 }
 
 @media (max-width: 768px) {
@@ -854,6 +944,9 @@ pre a:hover {
   }
   #toggle-interactive {
     display: none;
+  }
+  #landing-wrapper h2 {
+    font-size: 20pt;
   }
   [class*='col-'] {
     width: 100%;
@@ -873,8 +966,8 @@ pre a:hover {
   header p {
     font-size: 10pt;
   }
-  footer [class*='col-'] {
-    margin-top: 25px;
+  footer {
+    text-align: center;
   }
   footer .align-right {
     text-align: center;
@@ -883,6 +976,12 @@ pre a:hover {
     display: none;
   }
   .trash {
+    display: none;
+  }
+  .mobile-show {
+    display: block;
+  }
+  .mobile-hide {
     display: none;
   }
 }

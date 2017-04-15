@@ -8,13 +8,27 @@
 	font-style:normal;
 }
 
+@font-face {
+	font-family:"Karla";
+	src:url("./fonts/Karla-Regular.ttf") format("truetype"),
+		url("./fonts/karla-regular.woff") format("woff");
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"Karla";
+	src:url("./fonts/Karla-Bold.ttf") format("truetype");
+	font-weight:bold;
+	font-style:normal;
+}
+
 // Variables
-$font: 'Ubuntu Mono', monospace;
-// $font: 'Karla', monospace;
+$font-mono: 'Ubuntu Mono', monospace;
+$font-sans-serif: 'Karla', "Helvetica Neue", Helvetica, sans-serif;
 $green: #27ae60;
 
 
-@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700);
+// @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700);
 @import url('https://fonts.googleapis.com/css?family=Karla:400,700');
 @import 'partials/animations';
 @import 'partials/reset';
@@ -59,7 +73,7 @@ $green: #27ae60;
 
 header{
 	padding: 40px 0;
-	font-family: 'Karla';
+	font-family: $font-sans-serif;
 	color: #555;
 	h1{
 		font-size: 3rem;
@@ -88,8 +102,9 @@ header{
 		height: 60px;
 		opacity: 0.8;
 		margin-top: 10px;
-		transition: transform 0.5s, background-image 0.5s;
+		transition: transform 0.5s, background-image 0.5s, opacity 0.2s;
 		background-image: url(../img/code.svg);
+		animation: wiggle 1s;
 		&.interactiveMode {
 			background-image: url(../img/close.svg);
 			transform: rotateZ(360deg);
@@ -106,22 +121,28 @@ header{
 }
 
 footer{
-	padding: 80px 0 40px;
-	font-size: 0.825rem;
+	padding: 40px 0;
+	font-size: 1rem;
 	color: #555;
+	font-family: $font-sans-serif;
 	p {
 		margin-bottom: 10px;
 	}
 	a{
 		text-decoration:none;
 		color:$green;
-		font-size:9pt;
 		padding-bottom: 2px;
 		border-bottom: 2px solid rgba($green, 0.3);
-		margin-right: 4px;
+		margin: 12px;
 		&:hover{
 			border-bottom: 2px solid rgba($green, 0.8);
 
+		}
+		&:last-of-type {
+			margin: 0;
+		}
+		&:first-of-type {
+			margin: 0;
 		}
 	}
 }
@@ -139,9 +160,23 @@ footer{
 		border-radius: 50%;
 		background-color: #95a5a6;
 		float: left;
-		// margin-right: 5px;
 		margin: 3px;
 		margin-top: 4px;
+		opacity: 0.7;
+		transition: opacity 0.2s;
+		&:nth-child(1){
+			background-color: #e74c3c;
+			cursor: pointer;
+		}
+		&:nth-child(2){
+			background-color: #f1c40f;
+		}
+		&:nth-child(3){
+			background-color: #2ecc71;
+		}
+	}
+	&:hover .circle{
+		opacity: 1;
 	}
 	span{
 		font-size: 0.8rem;
@@ -153,13 +188,21 @@ footer{
 }
 
 #landing-wrapper {
-	font-family: 'Karla';
+	font-family: $font-sans-serif;
 	color: #555;
 	font-size: 14pt;
 	line-height: 140%;
 	margin-top: 30px;
 	transition: visbility 0s, opacity 0.5s;
 	z-index: 1000;
+	.section {
+		margin-bottom: 50px;
+		&.about {
+			p {margin-bottom: 20px;}
+			a {color:#3498db; text-decoration: none;}
+			a:hover {text-decoration: underline;}
+		}
+	}
 	#projects {
 		margin-top: 10px;
 		.placeholder{
@@ -236,13 +279,13 @@ footer{
 	}
 }
 #resume-wrapper{
-	font-family: 'Ubuntu Mono', monospace;
+	font-family: $font-mono;
 	position: absolute;
 	border-radius: 4px;
   background-color: #555;
 	// background-color: #2C3642;
 	// background-color: #263647;
-	box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+	box-shadow: 0 8px 40px rgba(131,131,131,0.1);
 	color:#95a5a6;
 	position: relative;
 	top: 0;
@@ -259,6 +302,7 @@ footer{
 		height: auto;
 		z-index: 1000;
 		// display: block;
+		margin-bottom: 50px;
 	}
 	&.nonInteractiveMode{
 		opacity: 0;
@@ -267,12 +311,13 @@ footer{
 		overflow: hidden;
 		z-index: 0;
 		// display: none;
+		margin: 0;
 	}
 
 	#resume-content{
 		padding: 20px;
 		#resume-code {
-			font-family: 'Ubuntu Mono', monospace;
+			font-family: $font-mono;
 
 		}
 
@@ -280,7 +325,7 @@ footer{
 }
 
 #console-wrapper{
-	font-family: 'Ubuntu Mono', monospace;
+	font-family: $font-mono;
 	position: fixed;
 	width: 27%;
 	max-width: 450px;
@@ -343,12 +388,12 @@ footer{
 		margin: 0;
 		padding: 0;
 		.command-prompt-container{
-			// font-family: $font;
+			// font-family: $font-mono;
 			font-size: 11pt;
 		}
 		input{
 			background-color: transparent;
-			font-family: 'Ubuntu Mono', monospace;
+			font-family: $font-mono;
 			outline: none;
 			border:none;
 			font-size: 11pt;
@@ -369,7 +414,7 @@ pre {
 	white-space: -o-pre-wrap;    /* Opera 7 */
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	line-height:150%;
-	font-family: $font;
+	font-family: $font-mono;
 	font-size: 11pt;
 	margin: 0;
 	padding: 0;
@@ -394,21 +439,13 @@ pre {
 }
 
 
-
-#mobile-message {
-	display:none;
-	opacity: 0;
-	animation: zoom-in 0.5s, fade-in 0.5s forwards;
-	p{
-		color:white;
-		font-weight:300;
-		font-smoothing: none;
-		margin-bottom: 10px;
-		a {
-			color: $green;
-		}
-	}
+.mobile-show{
+	display: none;
 }
+.mobile-hide{
+	display: block;
+}
+
 @media (max-width: 768px) {
 
 	#page-wrap{
@@ -417,6 +454,12 @@ pre {
 
 	#toggle-interactive{
 		display: none;
+	}
+
+	#landing-wrapper {
+		h2 {
+			font-size: 20pt;
+		}
 	}
 
 	[class*='col-'] {
@@ -440,8 +483,9 @@ pre {
 	}
 
 	footer {
+		text-align: center;
 		[class*='col-'] {
-			margin-top: 25px;
+			// margin-top: 25px;
 		}
 		.align-right {
 			text-align: center;
@@ -454,5 +498,11 @@ pre {
 
 	.trash{
 		display:none;
+	}
+	.mobile-show{
+		display: block
+	}
+	.mobile-hide{
+		display: none;
 	}
 }

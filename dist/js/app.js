@@ -7,10 +7,13 @@ var app = {
 		var _this = this;
 		controller.init();
 		window.addEventListener('keyup', this.handleKeypress.bind(this));
-		document.getElementById('toggle-interactive').addEventListener('click', function() {
-			_this.switchModes();
-		});
 
+		Array.from(document.getElementsByClassName('toggle-btn')).forEach(function(btn) {
+			btn.addEventListener('click', function() {
+				_this.switchModes();
+			});
+
+		})
 		window.addEventListener('resize', function(event) {
 			if(window.innerWidth <= _this.breakpoint) {
 				_this.switchModes(true);
@@ -97,8 +100,8 @@ var model = {
 	],
 	defaultMessage: {
 		welcomeMessage: [
-			"to view my resume, enter 'open resume' in the terminal to the left",
-			"to view a pdf resume, http://johnsylvain.me/resume.pdf",
+			"welcome to my interactive resume!",
+			"to view my resume, type 'open resume' in the terminal to the left",
 			"type 'help' to view other commands"
 		]
 	},
