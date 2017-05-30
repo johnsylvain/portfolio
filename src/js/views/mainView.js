@@ -6,11 +6,11 @@ events.on('viewInit', function(data) {
 })
 
 var view = {
-	init: function() {
-		this.dateElem = document.getElementById('date');
+  init: function() {
+    this.dateElem = document.getElementById('date');
     this.dateElem.innerHTML = controller.getDate();
 
-	}
+  }
 }
 
 module.exports = view;

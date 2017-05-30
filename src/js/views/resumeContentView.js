@@ -4,24 +4,24 @@ var filters = require('../utils/filters');
 
 
 events.on('resumeContentViewInit', function(data) {
-	resumeContentView.init();
+  resumeContentView.init();
 })
 events.on('resumeContentViewRender', function(data) {
-	resumeContentView.render();
+  resumeContentView.render();
 })
 
 var resumeContentView = {
-	init: function(){
-		this.resumeContainerElem = document.getElementById('resume-code');
-		this.render();
-	},
+  init: function(){
+    this.resumeContainerElem = document.getElementById('resume-code');
+    this.render();
+  },
 
-	render: function(){
-		var data = controller.getCurrentOutput();
-		var json = filters.textToJSON(JSON.stringify(data,null,'   '));
-		json = filters.findUrls(json);
-		this.resumeContainerElem.innerHTML = json;
-	}
+  render: function(){
+    var data = controller.getCurrentOutput();
+    var json = filters.textToJSON(JSON.stringify(data,null,'   '));
+    json = filters.findUrls(json);
+    this.resumeContainerElem.innerHTML = json;
+  }
 }
 
 module.exports = resumeContentView;

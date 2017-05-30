@@ -1,9 +1,11 @@
 var events = {
   events: {},
+
   on: function (eventName, fn) {
     this.events[eventName] = this.events[eventName] || [];
     this.events[eventName].push(fn);
   },
+
   off: function(eventName, fn) {
     if (this.events[eventName]) {
       for (var i = 0; i < this.events[eventName].length; i++) {
@@ -14,6 +16,7 @@ var events = {
       };
     }
   },
+  
   emit: function (eventName, data) {
     if (this.events[eventName]) {
       this.events[eventName].forEach(function(fn) {
