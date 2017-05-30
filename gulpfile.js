@@ -3,9 +3,11 @@ var gulp = require('gulp'),
   browserSync = require('browser-sync'),
   browserify = require('browserify'),
   source = require('vinyl-source-stream'),
+  buffer = require('vinyl-buffer'),
   autoprefix = require('gulp-autoprefixer'),
   gutil = require('gulp-util'),
-  imagemin = require('gulp-imagemin');
+  imagemin = require('gulp-imagemin'),
+  sourcemaps = require('gulp-sourcemaps');
 
 var paths = {
   js: './src/js/**/*.js',
@@ -13,15 +15,18 @@ var paths = {
 };
 
 gulp.task('js', () => {
-  //return browserify('./src/js/app.js')
-  //  .bundle()
-  //  .on('error', (e) => {
-  //    gutil.log(e);
-  //  })
-  //  .pipe(source('bundle.js'))
-  //  .pipe(gulp.dest('./dist/js/'));
-  gulp.src(paths.js)
-    .pipe( gulp.dest('./dist/js/'))
+  return browserify('./src/js/app.js')
+    .bundle()
+    .on('error', (e) => {
+     gutil.log(e);
+    })
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./dist/js/'));
+  // gulp.src(paths.js)
+  //   .pipe( gulp.dest('./dist/js/'))
 });
 
 gulp.task('css', () => {
