@@ -2,7 +2,6 @@ var app = {
 	pageWidth: window.innerWidth,
 	breakpoint: 768,
 	interactiveMode: false,
-	routes: {},
 
 	init: function(){
 		var _this = this;
@@ -14,16 +13,13 @@ var app = {
 		Array.from(document.getElementsByClassName('toggle-btn')).forEach(function(btn) {
 			btn.addEventListener('click', function(e) {
 				e.preventDefault();
-
-				history.replaceState(undefined, undefined, e.target.href);
-				router.exec();
-
+				router.exec({route: e.target.href});
 			});
 		});
 
 		window.addEventListener('resize', function(event) {
 			if(window.innerWidth <= _this.breakpoint) {
-				_this.switchModes(true);
+				router.exec({route: '#/'});
 			}
 		});
 
@@ -91,18 +87,18 @@ var router = {
 			app.switchModes(false);
 		});
 
-
 		window.addEventListener('hashchange', this.exec.bind(this));
 		window.addEventListener('load', this.exec.bind(this));
 	},
 
-	exec: function() {
+	exec: function(path) {
+		if (path.route) history.replaceState(undefined, undefined, path.route)
+
 		var url = location.hash.slice(1) || '/';
 		var route = this.routes[url];
 
-		if (route.controller) {
-			route.controller();
-		} else {
+		if (route.controller) route.controller();
+		else {
 			this.routes['/'].controller();
 			history.replaceState(undefined, undefined, '#/')
 		}
@@ -153,7 +149,7 @@ var model = {
 		]
 	},
 	data: {},
-    date: new Date().getFullYear()
+	date: new Date().getFullYear()
 };
 
 var controller = {
@@ -162,24 +158,24 @@ var controller = {
 
 		resumeContentView.init();
 		consoleView.init();
-    view.init();
+		view.init();
 
 		this.loadResumeData()
-			.then(function(res) {
+		.then(function(res) {
 
-				model.data = res;
-				model.socialProfiles = Object.keys(model.data.contact.social)
+			model.data = res;
+			model.socialProfiles = Object.keys(model.data.contact.social)
 
-				var socialCommand = model.commands.filter(function(command) {
-					return command.text === 'social'
-				})[0];
+			var socialCommand = model.commands.filter(function(command) {
+				return command.text === 'social'
+			})[0];
 
-				socialCommand.params = model.socialProfiles
+			socialCommand.params = model.socialProfiles
 
-			})
-			.catch(function(err) {
-				console.error(err);
-			})
+		})
+		.catch(function(err) {
+			console.error(err);
+		})
 
 	},
 
@@ -226,18 +222,18 @@ var controller = {
 		var _this = this;
 		return new Promise(function(resolve, reject) {
 			_this.fetchData('GET', './data.json')
-				.then(function(res) {
-					resolve(res.data)
-				})
-				.catch(function(err) {
-					reject(err);
-				});
+			.then(function(res) {
+				resolve(res.data)
+			})
+			.catch(function(err) {
+				reject(err);
+			});
 		});
 	},
 
-    getDate: function() {
-        return model.date;
-    },
+	getDate: function() {
+		return model.date;
+	},
 
 	getResumeData: function(){
 		return model.data;
@@ -261,7 +257,7 @@ var controller = {
 	executeKeypress: function(key) {
 		if (key === 'UP' || key === 'DOWN') {
 			if(key === 'UP' &&
-				model.enteredCommands.pointer < model.enteredCommands.data.length) {
+			model.enteredCommands.pointer < model.enteredCommands.data.length) {
 				model.enteredCommands.pointer += 1;
 			}
 			if(key === 'DOWN' && model.enteredCommands.pointer > 0) {
@@ -549,18 +545,18 @@ var controller = {
 					return new Promise(function(resolve, reject) {
 
 						_this.fetchData('GET', 'http://ip-api.com/json')
-							.then(function(res) {
-								var crd = {
-									lat: res.data.lat,
-									lon: res.data.lon,
-									name: res.data.city,
-									country: res.data.countryCode
-								}
-								resolve(crd);
-							})
-							.catch(function(err) {
-								reject(err);
-							})
+						.then(function(res) {
+							var crd = {
+								lat: res.data.lat,
+								lon: res.data.lon,
+								name: res.data.city,
+								country: res.data.countryCode
+							}
+							resolve(crd);
+						})
+						.catch(function(err) {
+							reject(err);
+						})
 					})
 				}
 
@@ -568,15 +564,15 @@ var controller = {
 					return new Promise(function(resolve, reject) {
 						var key = '2f4d666f6f04dbad2164175736a5a2dc';
 						var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' +
-							lat + '&lon=' + lon + '&APPID=' + key;
+						lat + '&lon=' + lon + '&APPID=' + key;
 
 						_this.fetchData('GET', url)
-							.then(function(res) {
-								resolve(res.data);
-							})
-							.catch(function(err) {
-								reject(err);
-							});
+						.then(function(res) {
+							resolve(res.data);
+						})
+						.catch(function(err) {
+							reject(err);
+						});
 					})
 				}
 
@@ -669,10 +665,10 @@ var controller = {
 }
 
 var view = {
-    init: function() {
-        this.dateElem = document.getElementById('date');
-        this.dateElem.innerHTML = controller.getDate();
-    }
+	init: function() {
+		this.dateElem = document.getElementById('date');
+		this.dateElem.innerHTML = controller.getDate();
+	}
 }
 
 var resumeContentView = {
@@ -781,15 +777,15 @@ var filters = {
 				}
 				return '<span class="' + cls + '">' + match + '</span>';
 			});
-	},
+		},
 
-	findUrls: function(text) {
-		var reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
-		return text.replace(reg, function(match){
-			url = match.replace('</span>', String.empty);
-			return '<a href="' + url + '" target="_blank">' + match + '</a>';
-		})
+		findUrls: function(text) {
+			var reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
+			return text.replace(reg, function(match){
+				url = match.replace('</span>', String.empty);
+				return '<a href="' + url + '" target="_blank">' + match + '</a>';
+			})
+		}
 	}
-}
 
-app.init();
+	app.init();
