@@ -2,23 +2,31 @@ var app = {
 	pageWidth: window.innerWidth,
 	breakpoint: 768,
 	interactiveMode: false,
+	routes: {},
 
 	init: function(){
 		var _this = this;
 		controller.init();
+		router.init();
+
 		window.addEventListener('keyup', this.handleKeypress.bind(this));
 
 		Array.from(document.getElementsByClassName('toggle-btn')).forEach(function(btn) {
-			btn.addEventListener('click', function() {
-				_this.switchModes();
-			});
+			btn.addEventListener('click', function(e) {
+				e.preventDefault();
 
-		})
+				history.replaceState(undefined, undefined, e.target.href);
+				router.exec();
+
+			});
+		});
+
 		window.addEventListener('resize', function(event) {
 			if(window.innerWidth <= _this.breakpoint) {
 				_this.switchModes(true);
 			}
-		})
+		});
+
 	},
 	handleKeypress: function(e) {
 		var availableKeys = model.keyCommands;
@@ -34,6 +42,8 @@ var app = {
 	},
 
 	switchModes: function(flag) {
+		var btn = document.getElementById('toggle-interactive');
+
 		var targets = [
 			document.getElementById('page-wrap'),
 			document.getElementById('landing-wrapper'),
@@ -49,6 +59,7 @@ var app = {
 				t.classList.add('nonInteractiveMode');
 			});
 			this.interactiveMode = false;
+			btn.setAttribute('href', '#/resume');
 			return;
 		}
 		if (!this.interactiveMode) {
@@ -56,13 +67,49 @@ var app = {
 				t.classList.add('interactiveMode');
 				t.classList.remove('nonInteractiveMode');
 			})
+			btn.setAttribute('href', '#/');
 		} else {
 			targets.forEach(function(t) {
 				t.classList.remove('interactiveMode');
 				t.classList.add('nonInteractiveMode');
 			})
+			btn.setAttribute('href', '#/resume');
+
 		}
 		this.interactiveMode = !this.interactiveMode;
+	}
+};
+
+var router = {
+	routes: {},
+
+	init: function() {
+		this.addRoute('/', function() {
+			app.switchModes(true);
+		});
+		this.addRoute('/resume', function() {
+			app.switchModes(false);
+		});
+
+
+		window.addEventListener('hashchange', this.exec.bind(this));
+		window.addEventListener('load', this.exec.bind(this));
+	},
+
+	exec: function() {
+		var url = location.hash.slice(1) || '/';
+		var route = this.routes[url];
+
+		if (route.controller) {
+			route.controller();
+		} else {
+			this.routes['/'].controller();
+			history.replaceState(undefined, undefined, '#/')
+		}
+	},
+
+	addRoute: function(path, controller) {
+		this.routes[path] = {controller: controller}
 	}
 }
 
@@ -107,7 +154,7 @@ var model = {
 	},
 	data: {},
     date: new Date().getFullYear()
-}
+};
 
 var controller = {
 	init: function(){

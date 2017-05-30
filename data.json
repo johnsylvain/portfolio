@@ -1,8 +1,8 @@
 {
    "name": "John Sylvain",
-   "position": "Full Stack Developer",
+   "title": "Full Stack Developer",
    "contact": {
-      "email": "jsylvain007@gmail.com",
+      "email": "john.n.sylvain@gmail.com",
       "phone": 3136180632,
       "social": {
          "github": "http://github.com/johnsylvain",
@@ -12,7 +12,7 @@
    "education": {
       "school": "Purdue University",
       "gradutionDate": "May 2017",
-      "gpa": 3.98,
+      "gpa": 3.93,
       "study": {
          "major": "Computer Graphics Technology",
          "minor": "Computer Information Technology"
@@ -64,6 +64,13 @@
          }
       },
       {
+         "title": "I'm Feeling Lucky",
+         "description": "Chrome Extension that bring back I'm Feeling Lucky",
+         "links": {
+            "github": "http://github.com/johnsylvain/im-feeling-lucky-chrome"
+         }
+      },
+      {
          "title": "JS Link Shortener",
          "description": "Short link generator",
          "links": {
@@ -95,7 +102,7 @@
          "Slim"
       ],
       "database": [
-         "MySQL",
+         "SQL",
          "MongoDB"
       ],
       "other": [
