@@ -1,44 +1,58 @@
-var router = require('./utils/router');
-var events = require('./utils/events');
+import Router from './utils/router';
+import events from './utils/events';
 
-var controller = require('./controller');
-var resumeContentView = require('./views/resumeContentView');
-var consoleView = require('./views/consoleView');
-var view = require('./views/mainView');
+import controller from './controller';
+import resumeContentView from './views/resumeContentView';
+import consoleView from './views/consoleView';
+import view from './views/mainView';
 
 var app = {
   pageWidth: window.innerWidth,
   breakpoint: 768,
   interactiveMode: false,
 
-  init: function(){
-    var _this = this;
+  init() {
     controller.init();
-    router.init();
+
+    let routes = [
+      {
+        path: '/',
+        controller: () => {
+          events.emit('switchModes', {flag: true});
+        }
+      },
+      {
+        path: '/resume',
+        controller: () => {
+          events.emit('switchModes', {flag: false});
+        }
+      }
+    ]
+    let router = new Router(routes);
 
     window.addEventListener('keyup', this.handleKeypress.bind(this));
 
     Array.from(document.getElementsByClassName('toggle-btn')).forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
-        router.exec({route: e.target.href});
+        router.go({route: e.target.href});
       });
     });
 
-    window.addEventListener('resize', function(event) {
-      if(window.innerWidth <= _this.breakpoint) {
-        router.exec({route: '#/'});
+    window.addEventListener('resize', event => {
+      if(window.innerWidth <= this.breakpoint) {
+        router.go({route: '#/'});
       }
     });
 
-    events.on('switchModes', function(data) {
-      _this.switchModes(data.flag);
+    events.on('switchModes', data => {
+      this.switchModes(data.flag);
     })
 
   },
-  handleKeypress: function(e) {
-    var availableKeys = controller.getKeyCommands();
-    var keyPress = availableKeys.filter(function(key) {
+  handleKeypress(e) {
+    let availableKeys = controller.getKeyCommands();
+    let keyPress = availableKeys.filter(key => {
       if(key.shortcut){
         return key.code === e.which && e[key.shortcut];
       } else if (!key.shourcut){
@@ -49,8 +63,8 @@ var app = {
     if(keyPress) { controller.executeKeypress(keyPress.action); }
   },
 
-  switchModes: function(flag) {
-    var btn = document.getElementById('toggle-interactive');
+  switchModes(flag) {
+    const btn = document.getElementById('toggle-interactive');
 
     var targets = [
       document.getElementById('page-wrap'),
@@ -62,7 +76,7 @@ var app = {
     ];
 
     if (flag){
-      targets.forEach(function(t) {
+      targets.forEach(t => {
         t.classList.remove('interactiveMode');
         t.classList.add('nonInteractiveMode');
       });
@@ -71,13 +85,13 @@ var app = {
       return;
     }
     if (!this.interactiveMode) {
-      targets.forEach(function(t) {
+      targets.forEach(t => {
         t.classList.add('interactiveMode');
         t.classList.remove('nonInteractiveMode');
       })
       btn.setAttribute('href', '#/');
     } else {
-      targets.forEach(function(t) {
+      targets.forEach(t => {
         t.classList.remove('interactiveMode');
         t.classList.add('nonInteractiveMode');
       })

@@ -1,17 +1,16 @@
-var controller = require('../controller');
-var events = require('../utils/events');
+import controller from '../controller';
+import events from '../utils/events';
 
-events.on('consoleViewInit', function(data) {
+events.on('consoleViewInit', data => {
   consoleView.init();
 });
 
-events.on('consoleViewRender', function(data) {
+events.on('consoleViewRender', data => {
   consoleView.render();
 });
 
 var consoleView = {
-  init: function(){
-    var _this = this;
+  init(){
 
     this.promptElem = document.getElementById('command-prompt');
     this.prevElem = document.getElementById('commands');
@@ -21,24 +20,22 @@ var consoleView = {
     this.commandInput = document.getElementById('command-input');
     this.commandInput.focus();
 
-    this.consoleElem.addEventListener('click', function(){
-      _this.commandInput.focus();
+    this.consoleElem.addEventListener('click', () => {
+      this.commandInput.focus();
     })
 
-    this.promptElem.addEventListener('submit', function(e){
+    this.promptElem.addEventListener('submit', e => {
       e.preventDefault();
-      var command = e.target.prompt.value;
+      let command = e.target.prompt.value;
       e.target.prompt.value = '';
       controller.enterCommand(command);
     })
     this.render();
   },
 
-  render: function(){
-    var _this = this;
-
+  render(){
     this.prevElem.innerHTML = '';
-    var commands = controller.getPreviousCommands();
+    let commands = controller.getPreviousCommands();
 
     this.fileNameElem.textContent = controller.getFileName();
 
@@ -50,8 +47,8 @@ var consoleView = {
       this.commandInput.value = '';
     }
 
-    commands.forEach(function(command, i) {
-      var elem = document.createElement('li');
+    commands.forEach((command, i) => {
+      let elem = document.createElement('li');
 
       if (command.type === 'command') {
         elem.textContent = '$ ' + command.text;
@@ -69,7 +66,7 @@ var consoleView = {
         elem.className = 'commandWarning';
       }
 
-      _this.prevElem.appendChild(elem);
+      this.prevElem.appendChild(elem);
 
     })
 
@@ -77,4 +74,4 @@ var consoleView = {
   }
 }
 
-module.exports = consoleView;
+export default consoleView;

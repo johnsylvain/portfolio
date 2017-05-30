@@ -1,4 +1,4 @@
-var model = {
+let model = {
   keyCommands: [
     { code: 38, shortcut: null, action: 'UP' },
     { code: 40, shortcut: null, action: 'DOWN' },
@@ -41,4 +41,4 @@ var model = {
   date: new Date().getFullYear()
 };
 
-module.exports = model;
+export default model;

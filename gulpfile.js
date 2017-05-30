@@ -7,7 +7,14 @@ var gulp = require('gulp'),
   autoprefix = require('gulp-autoprefixer'),
   gutil = require('gulp-util'),
   imagemin = require('gulp-imagemin'),
+  babelify = require('babelify'),
+  uglify = require('gulp-uglify'),
+  gulpif = require('gulp-if'),
   sourcemaps = require('gulp-sourcemaps');
+
+var config = {
+  sourceMaps: !process.env.production
+}
 
 var paths = {
   js: './src/js/**/*.js',
@@ -16,17 +23,17 @@ var paths = {
 
 gulp.task('js', () => {
   return browserify('./src/js/app.js')
+    .transform(babelify, {presets: ["es2015"]})
     .bundle()
     .on('error', (e) => {
      gutil.log(e);
     })
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-    .pipe(sourcemaps.write())
+    // .pipe(gulpif(config.sourceMaps, sourcemaps.init()))
+      .pipe(uglify())
+    // .pipe(gulpif(config.sourceMaps, sourcemaps.write()))
     .pipe(gulp.dest('./dist/js/'));
-  // gulp.src(paths.js)
-  //   .pipe( gulp.dest('./dist/js/'))
 });
 
 gulp.task('css', () => {
@@ -67,5 +74,9 @@ gulp.task('images', () => {
     .pipe(imagemin())
     .pipe(gulp.dest('./dist/img/'));
 });
+
+gulp.task('build', ['js'], () => {
+  console.log('building...')
+})
 
 gulp.task('default', ['js','css','move', 'watch', 'serve']);

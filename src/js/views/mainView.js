@@ -1,16 +1,16 @@
-var controller = require('../controller');
-var events = require('../utils/events');
+import controller from '../controller';
+import events from '../utils/events';
 
-events.on('viewInit', function(data) {
+events.on('viewInit', data => {
   view.init();
 })
 
 var view = {
-  init: function() {
+  init() {
     this.dateElem = document.getElementById('date');
     this.dateElem.innerHTML = controller.getDate();
 
   }
 }
 
-module.exports = view;
+export default view;

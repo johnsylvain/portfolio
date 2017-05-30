@@ -1,22 +1,15 @@
-var events = require('../utils/events');
-var model = require('../data');
+import events from '../utils/events';
+import model from '../data';
 
 var controller = {
-  init: function(){
+  init(){
     model.currentOutput = model.defaultMessage;
-
-    // resumeContentView.init();
-    // consoleView.init();
-    // view.init();
 
     events.emit('resumeContentViewInit', null);
     events.emit('consoleViewInit', null);
     events.emit('viewInit', null);
 
-
-    this.loadResumeData()
-    .then(function(res) {
-
+    this.loadResumeData().then(res => {
       model.data = res;
       model.socialProfiles = Object.keys(model.data.contact.social)
 
@@ -33,7 +26,7 @@ var controller = {
 
   },
 
-  fetchData: function(method, url) {
+  fetchData(method, url) {
     var xhr;
 
     if (window.XMLHttpRequest) { // Mozilla, Safari, ...
@@ -72,43 +65,42 @@ var controller = {
     });
   },
 
-  loadResumeData: function() {
-    var _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.fetchData('GET', './data.json')
-      .then(function(res) {
+  loadResumeData() {
+    return new Promise((resolve, reject) => {
+      this.fetchData('GET', './data.json')
+      .then(res => {
         resolve(res.data)
       })
-      .catch(function(err) {
+      .catch(err => {
         reject(err);
       });
     });
   },
 
-  getDate: function() {
+  getDate() {
     return model.date;
   },
 
-  getResumeData: function(){
+  getResumeData() {
     return model.data;
   },
 
-  getDefaultData: function(){
+  getDefaultData() {
     return model.defaultMessage;
   },
 
-  getCurrentOutput: function(){
+  getCurrentOutput() {
     return model.currentOutput;
   },
 
-  updateOutput: function(newOutput) {
-    return new Promise(function(resolve, reject) {
+  updateOutput(newOutput) {
+    return new Promise((resolve, reject) => {
       model.currentOutput = newOutput;
       resolve();
     })
   },
 
-  executeKeypress: function(key) {
+  executeKeypress(key) {
     if (key === 'UP' || key === 'DOWN') {
       if(key === 'UP' &&
       model.enteredCommands.pointer < model.enteredCommands.data.length) {
@@ -118,7 +110,7 @@ var controller = {
         model.enteredCommands.pointer -= 1;
       }
 
-      var pos = model.enteredCommands.data.length - model.enteredCommands.pointer;
+      let pos = model.enteredCommands.data.length - model.enteredCommands.pointer;
       model.enteredCommands.currentCommand = model.enteredCommands.data[pos];
 
     }
@@ -133,32 +125,32 @@ var controller = {
 
   },
 
-  getKeyCommands: function() {
+  getKeyCommands() {
     return model.keyCommands;
   },
 
-  getEnteredCommands: function(){
+  getEnteredCommands() {
     return model.enteredCommands.currentCommand;
   },
 
-  getCommand: function(text){
-    return model.commands.filter(function(c) {
+  getCommand(text) {
+    return model.commands.filter(c => {
       return c.text === text;
     })
   },
 
-  enterCommand: function(command){
+  enterCommand(command) {
     command = command.trim();
 
-    var flag = false;
-    var args = command.split(' ');
+    let flag = false;
+    let args = command.split(' ');
     if (args[0] !== '') {
       model.previousCommands.push({
         text: command,
         type: 'command'
       });
 
-      var lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1];
+      let lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1];
       if (lastCommand) {
         if(command !== lastCommand.text){
           model.enteredCommands.data.push({
@@ -178,7 +170,7 @@ var controller = {
 
     }
 
-    var flag = model.commands.filter(function(o) {
+    flag = model.commands.filter(o => {
       return o.text === args[0]
     })
 
@@ -198,12 +190,12 @@ var controller = {
     events.emit('consoleViewRender', null);
   },
 
-  executeCommand: function(command){
-    var _this = this;
-    var comArgs = command.split(' ');
+  executeCommand(command) {
+    let _this = this;
+    let comArgs = command.split(' ');
 
-    var commands = {
-      pwd: function() {
+    let commands = {
+      pwd() {
         if(comArgs.length !== 1) {
           model.previousCommands.push({
             text: "'pwd' does not need any arguments",
@@ -220,7 +212,7 @@ var controller = {
           type: 'response-bold'
         })
       },
-      ls: function() {
+      ls() {
         if(comArgs.length !== 1) {
           model.previousCommands.push({
             text: "'ls' does not need any arguments",
@@ -240,7 +232,7 @@ var controller = {
         )
 
       },
-      clear: function(){
+      clear(){
         if (comArgs.length !== 1){
           model.previousCommands.push({
             text: "'clear' does not need any arguments",
@@ -251,7 +243,7 @@ var controller = {
 
         model.previousCommands = [];
       },
-      help: function(){
+      help(){
         var commands = model.commands;
         model.previousCommands.push(
           { text: 'Available Commands:', type: 'response-bold'}
@@ -271,9 +263,9 @@ var controller = {
           }
         })
       },
-      open: function(){
+      open(){
 
-        var openResume = function(){
+        let openResume = () => {
           _this.updateOutput({resume: model.data}).then(function(res){
             // resumeContentView.render();
             events.emit('resumeContentViewRender', null);
@@ -281,7 +273,7 @@ var controller = {
           });
         };
 
-        var pdf = function() {
+        let pdf = () => {
           window.open("http://johnsylvain.me/resume.pdf");
         }
         if (comArgs.length === 1) {
@@ -296,8 +288,8 @@ var controller = {
           }
         }
       },
-      show: function(){
-        var showSection = function(section) {
+      show(){
+        let showSection = (section) => {
           return function() {
             var obj = {};
             obj[section] = model.data[section];
@@ -323,17 +315,17 @@ var controller = {
           }
         }
       },
-      email: function(){
-        var subject = '';
+      email(){
+        let subject = '';
         for (var i = 1; i < comArgs.length; i++) {
           subject += (' ' + comArgs[i])
         };
         var link = 'mailto:jsylvain007@gmail.com?subject=' + subject;
         window.open(link);
       },
-      social: function(){
+      social(){
 
-        var openLink = function(site){
+        let openLink = function(site){
           return function(){
             window.open(model.data.contact.social[site])
           }
@@ -351,8 +343,8 @@ var controller = {
           }
         }
       },
-      rm: function() {
-        var rf = function() {
+      rm() {
+        let rf = () => {
           var targets = [
             document.getElementById('wrapper'),
             document.getElementsByClassName('trash'),
@@ -400,7 +392,7 @@ var controller = {
         }
       },
 
-      weather: function() {
+      weather() {
 
         if (comArgs.length !== 1) {
           model.previousCommands.push({
@@ -411,10 +403,9 @@ var controller = {
         }
 
         function getUserLocationPromise() {
-          return new Promise(function(resolve, reject) {
+          return new Promise((resolve, reject) => {
 
-            _this.fetchData('GET', 'http://ip-api.com/json')
-            .then(function(res) {
+            _this.fetchData('GET', 'http://ip-api.com/json').then(res => {
               var crd = {
                 lat: res.data.lat,
                 lon: res.data.lon,
@@ -423,14 +414,14 @@ var controller = {
               }
               resolve(crd);
             })
-            .catch(function(err) {
+            .catch(err => {
               reject(err);
             })
           })
         }
 
         function getUserWeatherPromise(lat, lon) {
-          return new Promise(function(resolve, reject) {
+          return new Promise((resolve, reject) => {
             var key = '2f4d666f6f04dbad2164175736a5a2dc';
             var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' +
             lat + '&lon=' + lon + '&APPID=' + key;
@@ -439,21 +430,21 @@ var controller = {
             .then(function(res) {
               resolve(res.data);
             })
-            .catch(function(err) {
+            .catch(err => {
               reject(err);
             });
           })
         }
 
-        var prompt = document.getElementById('command-prompt');
-        var input = document.getElementById('command-input');
+        let prompt = document.getElementById('command-prompt');
+        let input = document.getElementById('command-input');
 
         model.previousCommands.push(
           { text: 'Getting IP Address...',	type: 'response-bold'}
         )
         prompt.style.display = 'none'
 
-        getUserLocationPromise().then(function(crd) {
+        getUserLocationPromise().then(crd => {
 
           model.previousCommands.push({
             text: 'Latitude: ' + crd.lat,
@@ -466,7 +457,7 @@ var controller = {
           events.emit('consoleViewRender', null);
 
 
-          getUserWeatherPromise(crd.lat, crd.lon).then(function(res) {
+          getUserWeatherPromise(crd.lat, crd.lon).then(res => {
             model.previousCommands.push(
               {text: '------', type: 'response'},
               {text: 'Getting weather data...', type: 'response-bold'},
@@ -486,7 +477,7 @@ var controller = {
             // console.error(err);
           })
         })
-        .catch(function(err) {
+        .catch(err => {
           console.log("Error: " + err)
           model.previousCommands.push(
             { text: "Error: Could not retrieve IP", type: 'error'},
@@ -529,16 +520,16 @@ var controller = {
 
   },
 
-  getPreviousCommands: function(){
+  getPreviousCommands(){
     return model.previousCommands;
   },
 
-  getFileName: function(){
-    var current = model.currentOutput;
-    var fileName = Object.keys(current)[0];
+  getFileName(){
+    let current = model.currentOutput;
+    let fileName = Object.keys(current)[0];
     return fileName;
   }
 
 }
 
-module.exports = controller;
+export default controller;

@@ -1,14 +1,14 @@
-var filters = {
-  textToJSON: function(json){
+const filters = {
+  textToJSON(json) {
     if (typeof json != 'string') {
       json = JSON.stringify(json, null, 2);
     }
     json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-    var reg = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
+    const reg = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
     return json.replace(reg,
       function (match) {
-        var cls = 'number';
+        let cls = 'number';
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
             cls = 'key';
@@ -24,13 +24,13 @@ var filters = {
     });
   },
 
-  findUrls: function(text) {
-    var reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
+  findUrls(text) {
+    let reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
     return text.replace(reg, function(match){
-      url = match.replace('</span>', String.empty);
+      let url = match.replace('</span>', String.empty);
       return '<a href="' + url + '" target="_blank">' + match + '</a>';
     })
   }
 }
 
-module.exports = filters;
+export default filters
