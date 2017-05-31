@@ -440,11 +440,6 @@ html, body {
   padding-right: 10px;
 }
 
-.grid [class*='col-']:last-of-type {
-  padding-left: 10px;
-  padding-right: 0;
-}
-
 .col-2-3 {
   width: 66.66%;
 }
@@ -618,7 +613,6 @@ footer a:first-of-type {
 
 .menu-bar .circle:nth-child(1) {
   background-color: #e74c3c;
-  cursor: pointer;
 }
 
 .menu-bar .circle:nth-child(2) {
