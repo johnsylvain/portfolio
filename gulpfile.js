@@ -31,7 +31,7 @@ gulp.task('js', () => {
     .pipe(source('bundle.js'))
     .pipe(buffer())
     // .pipe(gulpif(config.sourceMaps, sourcemaps.init()))
-      .pipe(uglify())
+      // .pipe(uglify())
     // .pipe(gulpif(config.sourceMaps, sourcemaps.write()))
     .pipe(gulp.dest('./dist/js/'));
 });

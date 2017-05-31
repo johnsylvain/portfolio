@@ -1,115 +1,115 @@
 {
-   "name": "John Sylvain",
-   "title": "Full Stack Developer",
-   "contact": {
-      "email": "john.n.sylvain@gmail.com",
-      "phone": 3136180632,
-      "social": {
-         "github": "http://github.com/johnsylvain",
-         "linkedin": "http://linkedin.com/in/johnsylvain"
-      }
-   },
-   "education": {
-      "school": "Purdue University",
-      "gradutionDate": "May 2017",
-      "gpa": 3.93,
-      "study": {
-         "major": "Computer Graphics Technology",
-         "minor": "Computer Information Technology"
-      }
-   },
-   "experience": [
-      {
-         "title": "USAA",
-         "position": "Software Development Intern",
-         "date": "Summer 2016",
-         "description": [
-            "Developed an AngularJS application to manage business rules for all employees",
-            "Analyzed data and created visualizations for the Enterprise Systems Division."
-         ]
-      },
-      {
-         "title": "Blast Radius",
-         "position": "Web Development Intern",
-         "date": "Summer 2015",
-         "description": [
-            "Developed websites and dynamic emails for a number of blue chip clients.",
-            "Aided in the relaunch of the global Blast Radius website"
-         ]
-      },
-      {
-         "title": "Freelance Web Development and Design",
-         "date": "August 2014 - Present",
-         "description": [
-            "Developed websites and graphics while building relationships with clients.",
-            "Clients include: university organizations, professors, and career fairs."
-         ]
-      },
-      {
-         "title": "Eagle Scout",
-         "date": "June 2013",
-         "description": [
-            "Oversaw the development and conducted a community service project.",
-            "Resulted in more than 150 hours of service."
-         ]
-      }
-   ],
-   "projects": [
-      {
-         "title": "Reddit TV",
-         "description": "Reddit Video Streaming App",
-         "links": {
-            "github": "http://github.com/johnsylvain/reddit-tv",
-            "demo": "http://johnsylvain.github.io/reddit-tv"
-         }
-      },
-      {
-         "title": "I'm Feeling Lucky",
-         "description": "Chrome Extension that bring back I'm Feeling Lucky",
-         "links": {
-            "github": "http://github.com/johnsylvain/im-feeling-lucky-chrome"
-         }
-      },
-      {
-         "title": "JS Link Shortener",
-         "description": "Short link generator",
-         "links": {
-            "github": "http://github.com/johnsylvain/link-shortener",
-            "demo": "http://johnsylva.in"
-         }
-      },
-      {
-         "title": "Spott",
-         "description": "Simple music discovery",
-         "links": {
-            "github": "http://github.com/johnsylvain/spott",
-            "demo": "http://spott.johnsylvain.me/"
-         }
-      }
-   ],
-   "skills": {
-      "JavaScript": [
-         "Angular",
-         "React.js",
-         "ES6",
-         "Node.js",
-         "Vue.js"
-      ],
-      "HTML/CSS": [
-         "Sass"
-      ],
-      "PHP": [
-         "Slim"
-      ],
-      "database": [
-         "SQL",
-         "MongoDB"
-      ],
-      "other": [
-         "git",
-         "gulp",
-         "webpack",
-         "linux"
+  "name": "John Sylvain",
+  "title": "Full Stack Developer",
+  "contact": {
+    "email": "john.n.sylvain@gmail.com",
+    "phone": 3136180632,
+    "social": {
+      "github": "http://github.com/johnsylvain",
+      "linkedin": "http://linkedin.com/in/johnsylvain"
+    }
+  },
+  "education": {
+    "school": "Purdue University",
+    "gradutionDate": "May 2017",
+    "gpa": 3.93,
+    "study": {
+      "major": "Computer Graphics Technology",
+      "minor": "Computer Information Technology"
+    }
+  },
+  "experience": [
+    {
+      "title": "USAA",
+      "position": "Software Development Intern",
+      "date": "Summer 2016",
+      "description": [
+        "Developed an AngularJS application to manage business rules for all employees",
+        "Analyzed data and created visualizations for the Enterprise Systems Division."
       ]
-   }
+    },
+    {
+      "title": "Blast Radius",
+      "position": "Web Development Intern",
+      "date": "Summer 2015",
+      "description": [
+        "Developed websites and dynamic emails for a number of blue chip clients.",
+        "Aided in the relaunch of the global Blast Radius website"
+      ]
+    },
+    {
+      "title": "Freelance Web Development and Design",
+      "date": "August 2014 - Present",
+      "description": [
+        "Developed websites and graphics while building relationships with clients.",
+        "Clients include: university organizations, professors, and career fairs."
+      ]
+    },
+    {
+      "title": "Eagle Scout",
+      "date": "June 2013",
+      "description": [
+        "Oversaw the development and conducted a community service project.",
+        "Resulted in more than 150 hours of service."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Reddit TV",
+      "description": "Reddit Video Streaming App",
+      "links": {
+        "github": "http://github.com/johnsylvain/reddit-tv",
+        "demo": "http://johnsylvain.github.io/reddit-tv"
+      }
+    },
+    {
+      "title": "I'm Feeling Lucky",
+      "description": "Chrome Extension that bring back I'm Feeling Lucky",
+      "links": {
+        "github": "http://github.com/johnsylvain/im-feeling-lucky-chrome"
+      }
+    },
+    {
+      "title": "JS Link Shortener",
+      "description": "Short link generator",
+      "links": {
+        "github": "http://github.com/johnsylvain/link-shortener",
+        "demo": "http://johnsylva.in"
+      }
+    },
+    {
+      "title": "Spott",
+      "description": "Simple music discovery",
+      "links": {
+        "github": "http://github.com/johnsylvain/spott",
+        "demo": "http://spott.johnsylvain.me/"
+      }
+    }
+  ],
+  "skills": {
+    "JavaScript": [
+      "Angular",
+      "React.js",
+      "ES6",
+      "Node.js",
+      "Vue.js"
+    ],
+    "HTML/CSS": [
+      "Sass"
+    ],
+    "PHP": [
+      "Slim"
+    ],
+    "database": [
+      "SQL",
+      "MongoDB"
+    ],
+    "other": [
+      "git",
+      "gulp",
+      "webpack",
+      "linux"
+    ]
+  }
 }

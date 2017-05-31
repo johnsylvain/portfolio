@@ -17,13 +17,13 @@ var app = {
     let routes = [
       {
         path: '/',
-        controller: () => {
+        controller: function() {
           events.emit('switchModes', {flag: true});
         }
       },
       {
         path: '/resume',
-        controller: () => {
+        controller: function() {
           events.emit('switchModes', {flag: false});
         }
       }
