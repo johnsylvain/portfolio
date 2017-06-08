@@ -79,11 +79,11 @@
       }
     },
     {
-      "title": "Spott",
-      "description": "Simple music discovery",
+      "title": "Personal Portfolio",
+      "description": "My personal portfolio featuring a CLI resume",
       "links": {
-        "github": "http://github.com/johnsylvain/spott",
-        "demo": "http://spott.johnsylvain.me/"
+        "github": "http://github.com/johnsylvain/cli-resume",
+        "demo": "http://johnsylvain.me"
       }
     }
   ],

@@ -16,7 +16,7 @@ class Router {
     const url = location.hash.slice(1) || '/';
     const route = this.routes[url];
 
-    if (route.controller) route.controller();
+    if (route) route.controller();
     else {
       this.routes['/'].controller();
       history.replaceState(undefined, undefined, '#/')

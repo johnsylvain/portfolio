@@ -82,6 +82,7 @@ var app = {
       });
       this.interactiveMode = false;
       btn.setAttribute('href', '#/resume');
+      btn.setAttribute('data-tooltip', 'CLI Resume');
       return;
     }
     if (!this.interactiveMode) {
@@ -90,6 +91,7 @@ var app = {
         t.classList.remove('nonInteractiveMode');
       })
       btn.setAttribute('href', '#/');
+      btn.setAttribute('data-tooltip', 'Close CLI Resume');
     } else {
       targets.forEach(t => {
         t.classList.remove('interactiveMode');
