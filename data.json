@@ -24,6 +24,7 @@
       "position": "Software Development Intern",
       "date": "Summer 2016",
       "description": [
+        "Worked on a small, agile team primarily focused on enterprise applications",
         "Developed an AngularJS application to manage business rules for all employees",
         "Analyzed data and created visualizations for the Enterprise Systems Division."
       ]
@@ -41,32 +42,36 @@
       "title": "Freelance Web Development and Design",
       "date": "August 2014 - Present",
       "description": [
-        "Developed websites and graphics while building relationships with clients.",
-        "Clients include: university organizations, professors, and career fairs."
-      ]
-    },
-    {
-      "title": "Eagle Scout",
-      "date": "June 2013",
-      "description": [
-        "Oversaw the development and conducted a community service project.",
-        "Resulted in more than 150 hours of service."
+        "Developed applications and websites for a variety of clients."
+      ],
+      "clients": [
+        "Purdue Department of Psychological Sciences",
+        "Phase Four - Spacecraft Propulsion"
       ]
     }
   ],
   "projects": [
     {
+      "title": "PlaceMorty",
+      "description": "Placeholder Image Generator",
+      "links": {
+        "demo": "http://www.placemorty.us",
+        "github": "http://github.com/johnsylvain/placemorty"
+      }
+    },
+    {
       "title": "Reddit TV",
       "description": "Reddit Video Streaming App",
       "links": {
-        "github": "http://github.com/johnsylvain/reddit-tv",
-        "demo": "http://johnsylvain.github.io/reddit-tv"
+        "demo": "http://johnsylvain.github.io/reddit-tv",
+        "github": "http://github.com/johnsylvain/reddit-tv"
       }
     },
     {
       "title": "I'm Feeling Lucky",
       "description": "Chrome Extension that bring back I'm Feeling Lucky",
       "links": {
+        "download": "http://bit.ly/2sZ9G1j",
         "github": "http://github.com/johnsylvain/im-feeling-lucky-chrome"
       }
     },
@@ -74,42 +79,32 @@
       "title": "JS Link Shortener",
       "description": "Short link generator",
       "links": {
-        "github": "http://github.com/johnsylvain/link-shortener",
-        "demo": "http://johnsylva.in"
+        "github": "http://github.com/johnsylvain/link-shortener"
       }
     },
     {
       "title": "Personal Portfolio",
       "description": "My personal portfolio featuring a CLI resume",
       "links": {
-        "github": "http://github.com/johnsylvain/cli-resume",
-        "demo": "http://johnsylvain.me"
+        "demo": "http://johnsylvain.me",
+        "github": "http://github.com/johnsylvain/cli-resume"
       }
     }
   ],
   "skills": {
-    "JavaScript": [
-      "Angular",
-      "React.js",
-      "ES6",
-      "Node.js",
-      "Vue.js"
+    "languages": [
+      "JavaScript (ES6)", "HTML/CSS", "PHP", "C", "C#"
     ],
-    "HTML/CSS": [
-      "Sass"
+    "frameworks-and-libraries": [
+      "React", "Redux", "Express", "Angular", "Node"
     ],
-    "PHP": [
-      "Slim"
+    "web-tooling": [
+      "git", "gulp", "webpack", "ssh", "CSS preprocessors"
     ],
     "database": [
       "SQL",
-      "MongoDB"
-    ],
-    "other": [
-      "git",
-      "gulp",
-      "webpack",
-      "linux"
+      "MongoDB",
+      "Mongoose"
     ]
   }
 }
