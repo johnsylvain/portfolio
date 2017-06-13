@@ -25,7 +25,7 @@
 // Variables
 $font-mono: 'Ubuntu Mono', monospace;
 $font-sans-serif: 'Karla', "Helvetica Neue", Helvetica, sans-serif;
-$green: #27ae60;
+$green: #3cb66f;
 
 
 // @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700);
@@ -414,6 +414,7 @@ pre {
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	line-height:150%;
 	font-family: $font-mono;
+	font-weight: 100;
 	font-size: 11pt;
 	margin: 0;
 	padding: 0;
