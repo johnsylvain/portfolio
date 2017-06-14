@@ -69,7 +69,7 @@ var controller = {
     return new Promise((resolve, reject) => {
       this.fetchData('GET', './data.json')
       .then(res => {
-        resolve(res.data)
+        resolve(res.data.resumeData)
       })
       .catch(err => {
         reject(err);

@@ -1,110 +1,110 @@
 {
-  "name": "John Sylvain",
-  "title": "Full Stack Developer",
-  "contact": {
-    "email": "john.n.sylvain@gmail.com",
-    "phone": 3136180632,
-    "social": {
-      "github": "http://github.com/johnsylvain",
-      "linkedin": "http://linkedin.com/in/johnsylvain"
-    }
-  },
-  "education": {
-    "school": "Purdue University",
-    "gradutionDate": "May 2017",
-    "gpa": 3.93,
-    "study": {
-      "major": "Computer Graphics Technology",
-      "minor": "Computer Information Technology"
-    }
-  },
-  "experience": [
-    {
-      "title": "USAA",
-      "position": "Software Development Intern",
-      "date": "Summer 2016",
-      "description": [
-        "Worked on a small, agile team primarily focused on enterprise applications",
-        "Developed an AngularJS application to manage business rules for all employees",
-        "Analyzed data and created visualizations for the Enterprise Systems Division."
-      ]
+  "resumeData": {
+    "name": "John Sylvain",
+    "title": "Full Stack Developer",
+    "contact": {
+      "email": "john.n.sylvain@gmail.com",
+      "social": {
+        "github": "http://github.com/johnsylvain",
+        "linkedin": "http://linkedin.com/in/johnsylvain"
+      }
     },
-    {
-      "title": "Blast Radius",
-      "position": "Web Development Intern",
-      "date": "Summer 2015",
-      "description": [
-        "Developed websites and dynamic emails for a number of blue chip clients.",
-        "Aided in the relaunch of the global Blast Radius website"
-      ]
+    "education": {
+      "school": "Purdue University",
+      "gradutionDate": "May 2017",
+      "study": {
+        "major": "Computer Graphics Technology",
+        "minor": "Computer Information Technology"
+      }
     },
-    {
-      "title": "Freelance Web Development and Design",
-      "date": "August 2014 - Present",
-      "description": [
-        "Developed applications and websites for a variety of clients."
+    "experience": [
+      {
+        "title": "USAA",
+        "position": "Software Development Intern",
+        "date": "Summer 2016",
+        "description": [
+          "Worked on a small, agile team primarily focused on enterprise applications.",
+          "Developed an AngularJS application to manage business rules.",
+          "Analyzed data and created visualizations for the Enterprise Systems Division."
+        ]
+      },
+      {
+        "title": "Blast Radius",
+        "position": "Web Development Intern",
+        "date": "Summer 2015",
+        "description": [
+          "Developed websites and dynamic emails for a number of blue chip clients.",
+          "Aided in the relaunch of the global Blast Radius website"
+        ]
+      },
+      {
+        "title": "Freelance Web Development and Design",
+        "date": "August 2014 - Present",
+        "description": [
+          "Developed applications and websites for a variety of clients."
+        ],
+        "clients": [
+          "Purdue Department of Psychological Sciences",
+          "Phase Four - Spacecraft Propulsion"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "title": "PlaceMorty",
+        "description": "Placeholder Image Generator",
+        "links": {
+          "demo": "http://www.placemorty.us",
+          "github": "http://github.com/johnsylvain/placemorty"
+        }
+      },
+      {
+        "title": "Reddit TV",
+        "description": "Reddit Video Streaming App",
+        "links": {
+          "demo": "http://johnsylvain.github.io/reddit-tv",
+          "github": "http://github.com/johnsylvain/reddit-tv"
+        }
+      },
+      {
+        "title": "I'm Feeling Lucky",
+        "description": "Chrome Extension that bring back I'm Feeling Lucky",
+        "links": {
+          "download": "http://bit.ly/2sZ9G1j",
+          "github": "http://github.com/johnsylvain/im-feeling-lucky-chrome"
+        }
+      },
+      {
+        "title": "JS Link Shortener",
+        "description": "URL shortener",
+        "links": {
+          "github": "http://github.com/johnsylvain/link-shortener"
+        }
+      },
+      {
+        "title": "Personal Portfolio",
+        "description": "My personal portfolio featuring a CLI resume",
+        "links": {
+          "demo": "http://johnsylvain.me",
+          "github": "http://github.com/johnsylvain/cli-resume"
+        }
+      }
+    ],
+    "skills": {
+      "languages": [
+        "JavaScript (ES6)", "HTML/CSS", "PHP", "C", "C#"
       ],
-      "clients": [
-        "Purdue Department of Psychological Sciences",
-        "Phase Four - Spacecraft Propulsion"
+      "frameworks-and-libraries": [
+        "React", "Redux", "Express", "Angular", "Node"
+      ],
+      "web-tooling": [
+        "git", "gulp", "webpack", "ssh", "CSS preprocessors"
+      ],
+      "database": [
+        "SQL",
+        "MongoDB",
+        "Mongoose"
       ]
     }
-  ],
-  "projects": [
-    {
-      "title": "PlaceMorty",
-      "description": "Placeholder Image Generator",
-      "links": {
-        "demo": "http://www.placemorty.us",
-        "github": "http://github.com/johnsylvain/placemorty"
-      }
-    },
-    {
-      "title": "Reddit TV",
-      "description": "Reddit Video Streaming App",
-      "links": {
-        "demo": "http://johnsylvain.github.io/reddit-tv",
-        "github": "http://github.com/johnsylvain/reddit-tv"
-      }
-    },
-    {
-      "title": "I'm Feeling Lucky",
-      "description": "Chrome Extension that bring back I'm Feeling Lucky",
-      "links": {
-        "download": "http://bit.ly/2sZ9G1j",
-        "github": "http://github.com/johnsylvain/im-feeling-lucky-chrome"
-      }
-    },
-    {
-      "title": "JS Link Shortener",
-      "description": "Short link generator",
-      "links": {
-        "github": "http://github.com/johnsylvain/link-shortener"
-      }
-    },
-    {
-      "title": "Personal Portfolio",
-      "description": "My personal portfolio featuring a CLI resume",
-      "links": {
-        "demo": "http://johnsylvain.me",
-        "github": "http://github.com/johnsylvain/cli-resume"
-      }
-    }
-  ],
-  "skills": {
-    "languages": [
-      "JavaScript (ES6)", "HTML/CSS", "PHP", "C", "C#"
-    ],
-    "frameworks-and-libraries": [
-      "React", "Redux", "Express", "Angular", "Node"
-    ],
-    "web-tooling": [
-      "git", "gulp", "webpack", "ssh", "CSS preprocessors"
-    ],
-    "database": [
-      "SQL",
-      "MongoDB",
-      "Mongoose"
-    ]
   }
 }

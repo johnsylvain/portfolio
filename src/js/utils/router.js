@@ -16,15 +16,15 @@ class Router {
     const url = location.hash.slice(1) || '/';
     const route = this.routes[url];
 
-    if (route) route.controller();
+    if (route && route.controller) route.controller();
     else {
       this.routes['/'].controller();
-      history.replaceState(undefined, undefined, '#/')
+      history.replaceState(undefined, undefined, '#/');
     }
   }
 
   addRoute(path, controller) {
-    this.routes[path] = { controller }
+    this.routes[path] = { controller };
   }
 }
 

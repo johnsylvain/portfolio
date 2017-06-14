@@ -199,7 +199,7 @@ var controller = {
 
     return new Promise(function (resolve, reject) {
       _this2.fetchData('GET', './data.json').then(function (res) {
-        resolve(res.data);
+        resolve(res.data.resumeData);
       }).catch(function (err) {
         reject(err);
       });
@@ -740,7 +740,7 @@ var Router = function () {
       var url = location.hash.slice(1) || '/';
       var route = this.routes[url];
 
-      if (route) route.controller();else {
+      if (route && route.controller) route.controller();else {
         this.routes['/'].controller();
         history.replaceState(undefined, undefined, '#/');
       }

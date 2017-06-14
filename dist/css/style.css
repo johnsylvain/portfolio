@@ -693,10 +693,18 @@ footer a:first-of-type {
 
 #landing-wrapper #projects .project .caption h3 {
   font-size: 14pt;
+  font-weight: bold;
+  margin-bottom: 0.2em;
 }
 
 #landing-wrapper #projects .project .caption p {
   font-size: 11pt;
+}
+
+#landing-wrapper #projects .project .caption p.description {
+  line-height: 140%;
+  color: #626262;
+  margin-bottom: 0.8em;
 }
 
 #landing-wrapper #projects .project .caption .links {
@@ -892,7 +900,7 @@ pre .number {
 }
 
 pre .boolean {
-  color: blue;
+  color: #f1c40f;
 }
 
 pre .null {
