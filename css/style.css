@@ -929,6 +929,10 @@ pre a:hover {
   display: block;
 }
 
+a.mobile-hide-link {
+  visibility: visible;
+}
+
 [data-tooltip] {
   position: relative;
   z-index: 2;
@@ -1029,6 +1033,10 @@ pre a:hover {
     display: block;
   }
   .mobile-hide {
+    display: none;
+  }
+  a.mobile-hide-link {
+    visibility: collapse;
     display: none;
   }
 }
