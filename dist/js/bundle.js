@@ -792,7 +792,7 @@ var consoleView = {
 
     this.consoleElem = document.getElementById('console');
     this.commandInput = document.getElementById('command-input');
-    this.commandInput.focus();
+    // this.commandInput.focus();
 
     this.consoleElem.addEventListener('click', function () {
       _this.commandInput.focus();
