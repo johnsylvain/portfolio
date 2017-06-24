@@ -320,7 +320,7 @@ var controller = {
         for (var i = 1; i < comArgs.length; i++) {
           subject += (' ' + comArgs[i])
         };
-        var link = 'mailto:jsylvain007@gmail.com?subject=' + subject;
+        var link = 'mailto:hi@johnsylvain.me?subject=' + subject;
         window.open(link);
       },
       social(){
