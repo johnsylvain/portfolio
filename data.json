@@ -38,11 +38,8 @@
         ]
       },
       {
-        "title": "Freelance Web Development and Design",
+        "title": "Independent Contract Work",
         "date": "August 2014 - Present",
-        "description": [
-          "Developed applications and websites for a variety of clients."
-        ],
         "clients": [
           "Purdue Department of Psychological Sciences",
           "Phase Four - Spacecraft Propulsion"
@@ -59,36 +56,29 @@
         }
       },
       {
-        "title": "Reddit TV",
-        "description": "Reddit Video Streaming App",
-        "links": {
-          "demo": "http://johnsylvain.github.io/reddit-tv",
-          "github": "http://github.com/johnsylvain/reddit-tv"
-        }
-      },
-      {
-        "title": "I'm Feeling Lucky",
-        "description": "Chrome Extension that bring back I'm Feeling Lucky",
-        "links": {
-          "download": "http://bit.ly/2sZ9G1j",
-          "github": "http://github.com/johnsylvain/im-feeling-lucky-chrome"
-        }
-      },
-      {
-        "title": "JS Link Shortener",
-        "description": "URL shortener",
-        "links": {
-          "github": "http://github.com/johnsylvain/link-shortener"
-        }
-      },
-      {
         "title": "Personal Portfolio",
         "description": "My personal portfolio featuring a CLI resume",
         "links": {
           "demo": "http://johnsylvain.me",
           "github": "http://github.com/johnsylvain/cli-resume"
         }
-      }
+      },
+      {
+        "title": "Reddit Showerthoughts Newtab" ,
+        "description": "Chrome Extension",
+        "links": {
+          "download": "http://bit.ly/2rNNVAF",
+          "github": "http://github.com/johnsylvain/reddit-showerthoughts-newtab"
+        }
+      },
+      {
+        "title": "Reddit TV",
+        "description": "Reddit Video Streaming App",
+        "links": {
+          "demo": "http://johnsylvain.github.io/reddit-tv",
+          "github": "http://github.com/johnsylvain/reddit-tv"
+        }
+      }      
     ],
     "skills": {
       "languages": [
