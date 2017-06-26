@@ -336,14 +336,14 @@ footer{
 	width: 27%;
 	max-width: 450px;
 	opacity: 0;
-	left: -200px;
-	transition: 0.5s;
+	transform: translateX(-200px);
+	transition: transform 0.5s ease, opacity 0.5s ease;
 	&.interactiveMode{
-		left: 0px;
+		transform: translateX(0px);
 		opacity: 1;
 	}
 	&.nonInteractiveMode{
-		left: -200px;
+		transform: translateX(-200px);
 		opacity: 0;
 	}
 }
