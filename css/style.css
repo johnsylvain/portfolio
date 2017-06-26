@@ -794,17 +794,22 @@ footer a:first-of-type {
   width: 27%;
   max-width: 450px;
   opacity: 0;
-  left: -200px;
-  transition: 0.5s;
+  -webkit-transform: translateX(-200px);
+  transform: translateX(-200px);
+  transition: opacity 0.5s ease, -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease, -webkit-transform 0.5s ease;
 }
 
 #console-wrapper.interactiveMode {
-  left: 0px;
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
   opacity: 1;
 }
 
 #console-wrapper.nonInteractiveMode {
-  left: -200px;
+  -webkit-transform: translateX(-200px);
+  transform: translateX(-200px);
   opacity: 0;
 }
 
