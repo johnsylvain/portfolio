@@ -56,11 +56,10 @@
         }
       },
       {
-        "title": "Personal Portfolio",
-        "description": "My personal portfolio featuring a CLI resume",
+        "title": "URL Shortener",
+        "description": "Personal URL shortener",
         "links": {
-          "demo": "http://johnsylvain.me",
-          "github": "http://github.com/johnsylvain/cli-resume"
+          "github": "http://github.com/johnsylvain/url-shortener-node"
         }
       },
       {
@@ -72,11 +71,11 @@
         }
       },
       {
-        "title": "Reddit TV",
-        "description": "Reddit Video Streaming App",
+        "title": "Personal Portfolio",
+        "description": "My personal portfolio featuring a CLI resume",
         "links": {
-          "demo": "http://johnsylvain.github.io/reddit-tv",
-          "github": "http://github.com/johnsylvain/reddit-tv"
+          "demo": "http://johnsylvain.me",
+          "github": "http://github.com/johnsylvain/cli-resume"
         }
       }
     ],
