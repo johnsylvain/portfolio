@@ -9,6 +9,10 @@ var _events = require('./utils/events');
 
 var _events2 = _interopRequireDefault(_events);
 
+var _throttle = require('./utils/throttle');
+
+var _throttle2 = _interopRequireDefault(_throttle);
+
 var _controller = require('./controller');
 
 var _controller2 = _interopRequireDefault(_controller);
@@ -46,6 +50,9 @@ var app = {
       path: '/resume',
       controller: function controller() {
         _events2.default.emit('switchModes', { flag: false });
+        if (window.innerWidth <= _this.breakpoint) {
+          router.go({ route: '#/' });
+        }
       }
     }];
     var router = new _router2.default(routes);
@@ -59,11 +66,11 @@ var app = {
       });
     });
 
-    window.addEventListener('resize', function (event) {
+    window.addEventListener('resize', (0, _throttle2.default)(function (event) {
       if (window.innerWidth <= _this.breakpoint) {
         router.go({ route: '#/' });
       }
-    });
+    }, 250, this));
 
     _events2.default.on('switchModes', function (data) {
       _this.switchModes(data.flag);
@@ -118,7 +125,7 @@ var app = {
 
 app.init();
 
-},{"./controller":2,"./utils/events":4,"./utils/router":6,"./views/consoleView":7,"./views/mainView":8,"./views/resumeContentView":9}],2:[function(require,module,exports){
+},{"./controller":2,"./utils/events":4,"./utils/router":6,"./utils/throttle":7,"./views/consoleView":8,"./views/mainView":9,"./views/resumeContentView":10}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -758,6 +765,28 @@ var Router = function () {
 exports.default = Router;
 
 },{}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function throttle(func, threshhold, scope) {
+  var wait = false;
+
+  return function () {
+    if (!wait) {
+      func.apply(scope, arguments);
+      wait = true;
+      setTimeout(function () {
+        wait = false;
+      }, threshhold);
+    }
+  };
+};
+
+exports.default = throttle;
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -848,7 +877,7 @@ var consoleView = {
 
 exports.default = consoleView;
 
-},{"../controller":2,"../utils/events":4}],8:[function(require,module,exports){
+},{"../controller":2,"../utils/events":4}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -878,7 +907,7 @@ var view = {
 
 exports.default = view;
 
-},{"../controller":2,"../utils/events":4}],9:[function(require,module,exports){
+},{"../controller":2,"../utils/events":4}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
