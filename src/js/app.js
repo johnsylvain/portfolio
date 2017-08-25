@@ -1,5 +1,6 @@
 import Router from './utils/router';
 import events from './utils/events';
+import throttle from './utils/throttle';
 
 import controller from './controller';
 import resumeContentView from './views/resumeContentView';
@@ -23,8 +24,11 @@ var app = {
       },
       {
         path: '/resume',
-        controller: function() {
+        controller: () => {
           events.emit('switchModes', {flag: false});
+          if(window.innerWidth <= this.breakpoint) {
+            router.go({route: '#/'});
+          }
         }
       }
     ]
@@ -39,11 +43,11 @@ var app = {
       });
     });
 
-    window.addEventListener('resize', event => {
+    window.addEventListener('resize', throttle((event) => {
       if(window.innerWidth <= this.breakpoint) {
         router.go({route: '#/'});
       }
-    });
+    }, 250, this));
 
     events.on('switchModes', data => {
       this.switchModes(data.flag);
