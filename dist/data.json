@@ -1,7 +1,7 @@
 {
   "resumeData": {
     "name": "John Sylvain",
-    "title": "Full Stack Developer",
+    "title": "Software Engineer",
     "contact": {
       "email": "hi@johnsylvain.me",
       "social": {
@@ -18,6 +18,11 @@
       }
     },
     "experience": [
+      {
+        "title": "Rocketmiles",
+        "position": "Software Engineer",
+        "date": "October 2017 - present"
+      },
       {
         "title": "USAA",
         "position": "Software Development Intern",
@@ -36,14 +41,6 @@
           "Developed websites and dynamic emails for a number of blue chip clients.",
           "Aided in the relaunch of the global Blast Radius website"
         ]
-      },
-      {
-        "title": "Independent Contract Work",
-        "date": "August 2014 - Present",
-        "clients": [
-          "Purdue Department of Psychological Sciences",
-          "Phase Four - Spacecraft Propulsion"
-        ]
       }
     ],
     "projects": [
@@ -53,6 +50,14 @@
         "links": {
           "demo": "http://www.placemorty.us",
           "github": "http://github.com/johnsylvain/placemorty"
+        }
+      },
+      {
+        "title": "Pagine",
+        "description": "Serverless Markdown website generator",
+        "links": {
+          "demo": "https://johnsylvain.github.io/pagine",
+          "github": "https://github.com/johnsylvain/pagine"
         }
       },
       {
@@ -68,14 +73,6 @@
         "links": {
           "download": "http://johnsylva.in/showerthoughts",
           "github": "http://github.com/johnsylvain/reddit-showerthoughts-newtab"
-        }
-      },
-      {
-        "title": "Personal Portfolio",
-        "description": "My personal portfolio featuring a CLI resume",
-        "links": {
-          "demo": "http://johnsylvain.me",
-          "github": "http://github.com/johnsylvain/cli-resume"
         }
       }
     ],
