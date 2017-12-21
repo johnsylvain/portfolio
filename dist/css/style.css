@@ -487,6 +487,7 @@ html, body {
   height: 50vw;
   -webkit-transform-origin: center;
   transform-origin: center;
+  display: none;
 }
 
 .trash img {
@@ -500,6 +501,7 @@ html, body {
 .trash.crash {
   -webkit-animation: trash-can 4s;
   animation: trash-can 4s;
+  display: block;
 }
 
 .trash.crash#trash-front {

@@ -28,7 +28,6 @@ $font-sans-serif: 'Karla', "Helvetica Neue", Helvetica, sans-serif;
 $green: #3cb66f;
 
 
-// @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700);
 @import url('https://fonts.googleapis.com/css?family=Karla:400,700');
 @import 'partials/animations';
 @import 'partials/reset';
@@ -46,6 +45,8 @@ $green: #3cb66f;
 	width:50vw;
 	height: 50vw;
 	transform-origin: center;
+	display: none;
+
 	img{
 		position: absolute;
 		top: 0;
@@ -53,11 +54,11 @@ $green: #3cb66f;
 		width:50vw;
 		height: auto;
 	}
+
 	&.crash {
 		animation: trash-can 4s;
+		display: block;
 		&#trash-front {
-			// position: absolute;
-
 			z-index: 9000;
 
 		}
@@ -71,10 +72,11 @@ $green: #3cb66f;
 
 
 
-header{
+header {
 	padding: 40px 0;
 	font-family: $font-sans-serif;
 	color: #555;
+
 	h1{
 		font-size: 3rem;
 		font-weight: 400;
@@ -82,18 +84,14 @@ header{
 		margin-bottom: 10px;
 		font-weight: bold;
 		padding-right: 0.3em;
-
 	}
+
 	p{
 		font-weight: 400;
 		text-transform: uppercase;
 		letter-spacing: 5px;
-		// opacity: 0;
-		// position: relative;
-		// left: 0;
-		// animation: fade-in 0.5s forwards, slide-left 0.5s;
-		// animation-delay: 0.5s;
 	}
+
 	#toggle-interactive{
 		float: right;
 		border-radius: 50%;
@@ -104,18 +102,17 @@ header{
 		margin-top: 10px;
 		transition: transform 0.5s, background-image 0.5s, opacity 0.2s;
 		background-image: url(../img/code.svg);
-		// animation: wiggle 1s;
+
 		&.interactiveMode {
 			background-image: url(../img/close.svg);
-			// transform: rotateZ(360deg);
 		}
+
 		&.nonInteractiveMode {
 			background-image: url(../img/code.svg);
-
 		}
+
 		&:hover{
 			opacity: 0.9;
-
 		}
 	}
 }
@@ -125,22 +122,26 @@ footer{
 	font-size: 1rem;
 	color: #555;
 	font-family: $font-sans-serif;
+
 	p {
 		margin-bottom: 10px;
 	}
+
 	a{
 		text-decoration:none;
 		color:$green;
 		padding-bottom: 2px;
 		border-bottom: 2px solid rgba($green, 0.3);
 		margin: 12px;
+		
 		&:hover{
 			border-bottom: 2px solid rgba($green, 0.8);
-
 		}
+		
 		&:last-of-type {
 			margin: 0;
 		}
+		
 		&:first-of-type {
 			margin: 0;
 		}

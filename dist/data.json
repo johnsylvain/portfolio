@@ -19,12 +19,12 @@
     },
     "experience": [
       {
-        "title": "Rocketmiles",
+        "company": "Rocketmiles",
         "position": "Software Engineer",
         "date": "October 2017 - present"
       },
       {
-        "title": "USAA",
+        "company": "USAA",
         "position": "Software Development Intern",
         "date": "Summer 2016",
         "description": [
@@ -34,7 +34,7 @@
         ]
       },
       {
-        "title": "Blast Radius",
+        "company": "Blast Radius",
         "position": "Web Development Intern",
         "date": "Summer 2015",
         "description": [
@@ -78,18 +78,16 @@
     ],
     "skills": {
       "languages": [
-        "JavaScript (ES6)", "HTML/CSS", "PHP", "C", "C#"
+        "JavaScript (ES Next)", "HTML/CSS", "PHP", "C", "C#"
       ],
       "frameworks-and-libraries": [
         "React", "Redux", "Express", "Angular", "Node"
       ],
       "web-tooling": [
-        "git", "gulp", "webpack", "ssh", "CSS preprocessors"
+        "git", "webpack", "gulp", "ssh", "CSS preprocessors"
       ],
       "database": [
-        "SQL",
-        "MongoDB",
-        "Mongoose"
+        "SQL", "MongoDB", "Mongoose"
       ]
     }
   }

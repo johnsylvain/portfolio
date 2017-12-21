@@ -15,7 +15,7 @@ var app = {
   init() {
     controller.init();
 
-    let routes = [
+    const routes = [
       {
         path: '/',
         controller: function() {
@@ -32,7 +32,7 @@ var app = {
         }
       }
     ]
-    let router = new Router(routes);
+    const router = new Router(routes);
 
     window.addEventListener('keyup', this.handleKeypress.bind(this));
 
