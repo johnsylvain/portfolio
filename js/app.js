@@ -44,7 +44,7 @@ var app = {
 			document.getElementById('page-wrap'),
 			document.getElementById('landing-wrapper'),
 			document.getElementById('resume-wrapper'),
-			document.getElementById('console-wrapper'),
+			document.getElementById('console-selector'),
 			document.getElementById('container'),
 			document.getElementById('toggle-interactive')
 		];
@@ -693,7 +693,7 @@ var consoleView = {
 		this.prevElem = document.getElementById('commands');
 		this.fileNameElem = document.getElementById('file-name');
 
-		this.consoleElem = document.getElementById('console');
+		this.consoleElem = document.getElementById('console-selector');
 		this.commandInput = document.getElementById('command-input');
 		this.commandInput.focus();
 

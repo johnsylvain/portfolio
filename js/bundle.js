@@ -93,7 +93,7 @@ var app = {
   switchModes: function switchModes(flag) {
     var btn = document.getElementById('toggle-interactive');
 
-    var targets = [document.getElementById('page-wrap'), document.getElementById('landing-wrapper'), document.getElementById('resume-wrapper'), document.getElementById('console-wrapper'), document.getElementById('container'), document.getElementById('toggle-interactive')];
+    var targets = [document.getElementById('page-wrap'), document.getElementById('landing-wrapper'), document.getElementById('resume-wrapper'), document.getElementById('console-selector'), document.getElementById('container'), document.getElementById('toggle-interactive')];
 
     if (flag) {
       targets.forEach(function (t) {
@@ -819,9 +819,8 @@ var consoleView = {
     this.prevElem = document.getElementById('commands');
     this.fileNameElem = document.getElementById('file-name');
 
-    this.consoleElem = document.getElementById('console');
+    this.consoleElem = document.getElementById('console-selector');
     this.commandInput = document.getElementById('command-input');
-    // this.commandInput.focus();
 
     this.consoleElem.addEventListener('click', function () {
       _this.commandInput.focus();
@@ -853,21 +852,23 @@ var consoleView = {
 
     commands.forEach(function (command, i) {
       var elem = document.createElement('li');
+      elem.classList.add('console__command-list-item');
+      console.log(elem);
 
       if (command.type === 'command') {
         elem.textContent = '$ ' + command.text;
       } else if (command.type === 'error') {
         elem.textContent = command.text;
-        elem.className = 'commandError';
+        elem.classList.add('console__command-list-item--error');
       } else if (command.type === 'response') {
         elem.textContent = command.text;
-        elem.className = 'commandResponse';
+        elem.classList.add('console__command-list-item--response');
       } else if (command.type === 'response-bold') {
         elem.textContent = command.text;
-        elem.className = 'commandResponseBold';
+        elem.classList.add('console__command-list-item--bold');
       } else if (command.type === 'warning') {
         elem.textContent = command.text;
-        elem.className = 'commandWarning';
+        elem.classList.add('console__command-list-item--warning');
       }
 
       _this2.prevElem.appendChild(elem);
