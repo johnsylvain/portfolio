@@ -74,7 +74,7 @@ var app = {
       document.getElementById('page-wrap'),
       document.getElementById('landing-wrapper'),
       document.getElementById('resume-wrapper'),
-      document.getElementById('console-wrapper'),
+      document.getElementById('console-selector'),
       document.getElementById('container'),
       document.getElementById('toggle-interactive')
     ];
