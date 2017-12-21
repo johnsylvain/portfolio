@@ -16,9 +16,8 @@ var consoleView = {
     this.prevElem = document.getElementById('commands');
     this.fileNameElem = document.getElementById('file-name');
 
-    this.consoleElem = document.getElementById('console');
+    this.consoleElem = document.getElementById('console-selector');
     this.commandInput = document.getElementById('command-input');
-    // this.commandInput.focus();
 
     this.consoleElem.addEventListener('click', () => {
       this.commandInput.focus();
@@ -49,21 +48,23 @@ var consoleView = {
 
     commands.forEach((command, i) => {
       let elem = document.createElement('li');
+      elem.classList.add('console__command-list-item')
+      console.log(elem)
 
       if (command.type === 'command') {
         elem.textContent = '$ ' + command.text;
       } else if(command.type === 'error'){
         elem.textContent = command.text;
-        elem.className = 'commandError';
+        elem.classList.add('console__command-list-item--error');
       } else if(command.type === 'response'){
         elem.textContent = command.text;
-        elem.className = 'commandResponse';
+        elem.classList.add('console__command-list-item--response');
       } else if(command.type === 'response-bold'){
         elem.textContent = command.text;
-        elem.className = 'commandResponseBold';
+        elem.classList.add('console__command-list-item--bold');
       } else if(command.type === 'warning'){
         elem.textContent = command.text;
-        elem.className = 'commandWarning';
+        elem.classList.add('console__command-list-item--warning');
       }
 
       this.prevElem.appendChild(elem);
