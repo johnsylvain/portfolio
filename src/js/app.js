@@ -3,9 +3,8 @@ import events from './utils/events';
 import { throttle } from './utils/helpers';
 
 import controller from './controller';
-import resumeContentView from './views/resumeContentView';
-import consoleView from './views/consoleView';
-import view from './views/mainView';
+import resumeContentView from './views/resumeContent';
+import consoleView from './views/console';
 
 const app = {
   pageWidth: window.innerWidth,

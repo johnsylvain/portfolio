@@ -36,8 +36,7 @@ let model = {
       "type 'help' to view other commands"
     ]
   },
-  data: {},
-  date: new Date().getFullYear()
+  data: {}
 };
 
 export default model;

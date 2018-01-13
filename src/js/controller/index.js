@@ -1,13 +1,12 @@
 import events from '../utils/events';
 import model from '../data';
 
-var controller = {
+const controller = {
   init(){
     model.currentOutput = model.defaultMessage;
 
     events.emit('resumeContentViewInit', null);
     events.emit('consoleViewInit', null);
-    events.emit('viewInit', null);
 
     this.loadResumeData()
       .then(res => {
@@ -21,7 +20,7 @@ var controller = {
   },
 
   fetchData(method, url) {
-    var xhr;
+    let xhr;
 
     if (window.XMLHttpRequest) { // Mozilla, Safari, ...
       xhr = new XMLHttpRequest();
@@ -69,10 +68,6 @@ var controller = {
           reject(err);
         });
     });
-  },
-
-  getDate() {
-    return model.date;
   },
 
   getResumeData() {
@@ -201,7 +196,7 @@ var controller = {
 
         model.previousCommands.push({
           text: window.location.host,
-          type: 'response-bold'
+          type: 'bold'
         })
       },
 
@@ -238,19 +233,17 @@ var controller = {
         model.previousCommands = [];
       },
 
-      help (){
-        var commands = model.commands;
+      help () {
+        const commands = model.commands;
         model.previousCommands.push(
-          { text: 'Available Commands:', type: 'response-bold'}
+          { text: 'Available Commands:', type: 'bold'}
         );
         commands.forEach(function(avalCommand, i) {
-          if (avalCommand.ignored !== true) {
-            var response = '';
-            if (avalCommand.params !== null) {
-              response = avalCommand.text + ' [' + avalCommand.params.toLocaleString() + ']';
-            } else {
-              response = avalCommand.text;
-            }
+          if (avalCommand.ignored !== true && avalCommand.text !== '') {
+            const response = (avalCommand.params !== null)
+              ? `- ${avalCommand.text} [${avalCommand.params.toLocaleString()}]`
+              : `- ${avalCommand.text}`
+
             model.previousCommands.push({
               text: response,
               type: 'response'
@@ -259,7 +252,7 @@ var controller = {
         })
       },
 
-      open (){
+      open () {
         const openResume = () => {
           self.updateOutput({resume: model.data})
             .then((res) => {
@@ -286,7 +279,7 @@ var controller = {
 
       show () {
         const showSection = (section) => () => {
-          var obj = {};
+          let obj = {};
           obj[section] = model.data[section];
           self.updateOutput(obj)
             .then(() => {
@@ -310,13 +303,12 @@ var controller = {
         }
       },
 
-      email (){
+      email () {
         let subject = '';
         for (let i = 1; i < comArgs.length; i++) {
           subject += (' ' + comArgs[i])
         };
-        var link = 'mailto:hi@johnsylvain.me?subject=' + subject;
-        window.open(link);
+        window.open('mailto:hi@johnsylvain.me?subject=' + subject);
       },
 
       social (){
@@ -398,7 +390,7 @@ var controller = {
     } else if(comArgs[0] === 'email'){
       commands[comArgs[0]]();
     } else if (comArgs.length > 1){
-      var subCommand = commands[comArgs[0]]();
+      const subCommand = commands[comArgs[0]]();
       if(subCommand[comArgs[1]]) {
         subCommand[comArgs[1]]()
       } else {

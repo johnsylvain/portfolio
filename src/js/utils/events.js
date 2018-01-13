@@ -1,4 +1,4 @@
-let events = {
+const events = {
   events: {},
 
   on(name, fn) {

@@ -1,11 +1,22 @@
-export function element(type, attrs, child) {
-  let e = document.createElement(type)
+export function h (nodeName, attributes, ...children) {
+  return { nodeName, attributes, children }
+}
 
-  for (let attr in attrs) 
-    e.setAttribute(attr === 'className' ? 'class' : attr, attrs[attr])
-
-  if (typeof child === 'string') e.textContent = child
-  else e.appendChild(child)
-
-  return e
+export function render (vnode) {
+  if (typeof vnode === 'string')
+    return document.createTextNode(vnode)
+    
+  let node = document.createElement(vnode.nodeName)
+  
+  for (let name in Object(vnode.attributes))
+    node.setAttribute(name === 'className' 
+        ? 'class' 
+        : name, 
+      vnode.attributes[name]
+    )
+    
+  for (let i = 0; i < vnode.children.length; i++)
+    node.appendChild(render(vnode.children[i]))
+    
+  return node
 }

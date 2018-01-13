@@ -1,5 +1,5 @@
 export function throttle(func, threshhold, scope) {
-  var wait = false
+  let wait = false
 
   return function() {
     if (!wait) {
