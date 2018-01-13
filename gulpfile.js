@@ -30,7 +30,7 @@ gulp.task('js', () => {
     })
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest('./dist/js/'));
 });
 
