@@ -151,12 +151,6 @@ var controller = {
     this.loadResumeData().then(function (res) {
       _data2.default.data = res;
       _data2.default.socialProfiles = Object.keys(_data2.default.data.contact.social);
-
-      var socialCommand = _data2.default.commands.filter(function (command) {
-        return command.text === 'social';
-      })[0];
-
-      socialCommand.params = _data2.default.socialProfiles;
     }).catch(function (err) {
       console.error(err);
     });
@@ -200,10 +194,10 @@ var controller = {
     });
   },
   loadResumeData: function loadResumeData() {
-    var _this2 = this;
+    var _this = this;
 
     return new Promise(function (resolve, reject) {
-      _this2.fetchData('GET', './data.json').then(function (res) {
+      _this.fetchData('GET', './data.json').then(function (res) {
         resolve(res.data.resumeData);
       }).catch(function (err) {
         reject(err);
@@ -264,6 +258,7 @@ var controller = {
 
     var flag = false;
     var args = command.split(' ');
+
     if (args[0] !== '') {
       _data2.default.previousCommands.push({
         text: command,
@@ -284,6 +279,7 @@ var controller = {
           type: 'command'
         });
       }
+
       _data2.default.enteredCommands.pointer = 0;
     }
 
@@ -306,7 +302,7 @@ var controller = {
     _events2.default.emit('consoleViewRender', null);
   },
   executeCommand: function executeCommand(command) {
-    var _this = this;
+    var self = this;
     var comArgs = command.split(' ');
 
     var commands = {
@@ -371,9 +367,8 @@ var controller = {
         });
       },
       open: function open() {
-
         var openResume = function openResume() {
-          _this.updateOutput({ resume: _data2.default.data }).then(function (res) {
+          self.updateOutput({ resume: _data2.default.data }).then(function (res) {
             // resumeContentView.render();
             _events2.default.emit('resumeContentViewRender', null);
           });
@@ -399,7 +394,7 @@ var controller = {
           return function () {
             var obj = {};
             obj[section] = _data2.default.data[section];
-            _this.updateOutput(obj).then(function () {
+            self.updateOutput(obj).then(function () {
               // resumeContentView.render();
               _events2.default.emit('resumeContentViewRender', null);
             });
@@ -429,7 +424,6 @@ var controller = {
         window.open(link);
       },
       social: function social() {
-
         var openLink = function openLink(site) {
           return function () {
             window.open(_data2.default.data.contact.social[site]);
@@ -489,85 +483,6 @@ var controller = {
             '-rf': rf
           };
         }
-      },
-      weather: function weather() {
-
-        if (comArgs.length !== 1) {
-          _data2.default.previousCommands.push({
-            text: 'error: \'weather\' does not take any parameters',
-            type: 'error'
-          });
-          return;
-        }
-
-        function getUserLocationPromise() {
-          return new Promise(function (resolve, reject) {
-
-            _this.fetchData('GET', 'http://ip-api.com/json').then(function (res) {
-              var crd = {
-                lat: res.data.lat,
-                lon: res.data.lon,
-                name: res.data.city,
-                country: res.data.countryCode
-              };
-              resolve(crd);
-            }).catch(function (err) {
-              reject(err);
-            });
-          });
-        }
-
-        function getUserWeatherPromise(lat, lon) {
-          return new Promise(function (resolve, reject) {
-            var key = '2f4d666f6f04dbad2164175736a5a2dc';
-            var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' + lat + '&lon=' + lon + '&APPID=' + key;
-
-            _this.fetchData('GET', url).then(function (res) {
-              resolve(res.data);
-            }).catch(function (err) {
-              reject(err);
-            });
-          });
-        }
-
-        var prompt = document.getElementById('command-prompt');
-        var input = document.getElementById('command-input');
-
-        _data2.default.previousCommands.push({ text: 'Getting IP Address...', type: 'response-bold' });
-        prompt.style.display = 'none';
-
-        getUserLocationPromise().then(function (crd) {
-
-          _data2.default.previousCommands.push({
-            text: 'Latitude: ' + crd.lat,
-            type: 'response'
-          }, {
-            text: 'Longitude: ' + crd.lon,
-            type: 'response'
-          });
-          // consoleView.render();
-          _events2.default.emit('consoleViewRender', null);
-
-          getUserWeatherPromise(crd.lat, crd.lon).then(function (res) {
-            _data2.default.previousCommands.push({ text: '------', type: 'response' }, { text: 'Getting weather data...', type: 'response-bold' }, { text: 'Weather for: ' + crd.name + ', ' + crd.country, type: 'response' }, { text: 'Temperature: ' + res.main.temp, type: 'response' }, { text: 'Conditions: ' + res.weather[0].description, type: 'response' });
-
-            prompt.style.display = 'block';
-            input.focus();
-
-            // consoleView.render();
-            _events2.default.emit('consoleViewRender', null);
-          }).catch(function (err) {
-            // console.error(err);
-          });
-        }).catch(function (err) {
-          console.log("Error: " + err);
-          _data2.default.previousCommands.push({ text: "Error: Could not retrieve IP", type: 'error' }, { text: "Try disabling your ad blocker", type: 'response' });
-          // consoleView.render();
-          _events2.default.emit('resumeContentViewRender', null);
-
-          prompt.style.display = 'block';
-          input.focus();
-        });
       }
     };
 
@@ -579,8 +494,6 @@ var controller = {
     if (comArgs.length === 1) {
       commands[comArgs[0]]();
     } else if (comArgs[0] === 'email') {
-      commands[comArgs[0]]();
-    } else if (comArgs[0] === 'weather') {
       commands[comArgs[0]]();
     } else if (comArgs.length > 1) {
       var subCommand = commands[comArgs[0]]();
@@ -598,9 +511,7 @@ var controller = {
     return _data2.default.previousCommands;
   },
   getFileName: function getFileName() {
-    var current = _data2.default.currentOutput;
-    var fileName = Object.keys(current)[0];
-    return fileName;
+    return Object.keys(_data2.default.currentOutput)[0];
   }
 };
 
@@ -625,7 +536,7 @@ var model = {
   },
   currentOutput: null,
   socialProfiles: [],
-  commands: [{ text: '', params: null }, { text: 'help', params: null }, { text: 'clear', params: null }, { text: 'pwd', params: null, ignored: true }, { text: 'ls', params: null, ignored: true }, { text: 'email', params: ['<subject>'] }, { text: 'open', params: ['resume', 'pdf'] }, { text: 'show', params: ['education', 'skills', 'xp', 'projects'] }, { text: 'social', params: ['github', 'linkedin'] }, { text: 'rm', params: ['-rf'], ignored: true }, { text: 'weather', params: null, ignored: true }],
+  commands: [{ text: '', params: null }, { text: 'help', params: null }, { text: 'clear', params: null }, { text: 'pwd', params: null, ignored: true }, { text: 'ls', params: null, ignored: true }, { text: 'email', params: ['<subject>'] }, { text: 'open', params: ['resume', 'pdf'] }, { text: 'show', params: ['education', 'skills', 'xp', 'projects'] }, { text: 'social', params: ['github', 'linkedin'] }, { text: 'rm', params: ['-rf'], ignored: true }],
   defaultMessage: {
     welcomeMessage: ["welcome to my interactive resume!", "to view my resume, type 'open resume' in the terminal to the left", "type 'help' to view other commands"]
   },

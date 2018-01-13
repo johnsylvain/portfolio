@@ -27,8 +27,7 @@ let model = {
     { text: 'open', params: ['resume', 'pdf'] },
     { text: 'show', params: ['education', 'skills', 'xp', 'projects'] },
     { text: 'social', params: ['github', 'linkedin'] },
-    { text: 'rm', params: ['-rf'], ignored: true },
-    { text: 'weather', params: null, ignored: true }
+    { text: 'rm', params: ['-rf'], ignored: true }
   ],
   defaultMessage: {
     welcomeMessage: [
