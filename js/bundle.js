@@ -661,26 +661,16 @@ Object.defineProperty(exports, "__esModule", {
 var events = {
   events: {},
 
-  on: function on(eventName, fn) {
-    this.events[eventName] = this.events[eventName] || [];
-    this.events[eventName].push(fn);
+  on: function on(name, fn) {
+    (this.events[name] || (this.events[name] = [])).push(fn);
   },
-  off: function off(eventName, fn) {
-    if (this.events[eventName]) {
-      for (var i = 0; i < this.events[eventName].length; i++) {
-        if (this.events[eventName][i] === fn) {
-          this.events[eventName].splice(i, 1);
-          break;
-        }
-      };
-    }
+  off: function off(name, fn) {
+    this.events[name].splice(this.events[name].indexOf(fn) >>> 0, 1);
   },
-  emit: function emit(eventName, data) {
-    if (this.events[eventName]) {
-      this.events[eventName].forEach(function (fn) {
-        fn(data);
-      });
-    }
+  emit: function emit(name, data, context) {
+    (this.events[name] || []).map(function (fn) {
+      fn.call(context, data);
+    });
   }
 };
 
