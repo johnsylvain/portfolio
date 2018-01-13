@@ -1,30 +1,17 @@
 let events = {
   events: {},
 
-  on(eventName, fn) {
-    this.events[eventName] = this.events[eventName] || [];
-    this.events[eventName].push(fn);
+  on(name, fn) {
+    (this.events[name] || (this.events[name] = [])).push(fn);
   },
 
-  off(eventName, fn) {
-    if (this.events[eventName]) {
-      for (var i = 0; i < this.events[eventName].length; i++) {
-        if (this.events[eventName][i] === fn) {
-          this.events[eventName].splice(i, 1);
-          break;
-        }
-      };
-    }
+  off(name, fn) {
+    this.events[name].splice(this.events[name].indexOf(fn) >>> 0, 1);
   },
 
-  emit(eventName, data) {
-    if (this.events[eventName]) {
-      this.events[eventName].forEach(function(fn) {
-        fn(data);
-      });
-    }
+  emit(name, data, context) {
+    (this.events[name] || []).map(fn => { fn.call(context, data) });
   }
-
 };
 
 export default events;
