@@ -19,15 +19,15 @@ const app = {
       {
         path: '/',
         controller: function() {
-          events.emit('switchModes', {flag: true});
+          events.emit('switchModes', { flag: true });
         }
       },
       {
         path: '/resume',
         controller: () => {
-          events.emit('switchModes', {flag: false});
+          events.emit('switchModes', { flag: false });
           if(window.innerWidth <= this.breakpoint) {
-            router.go({route: '#/'});
+            router.go({ route: '#/' });
           }
         }
       }
@@ -56,16 +56,13 @@ const app = {
   },
 
   handleKeypress (e) {
-    let availableKeys = controller.getKeyCommands();
-    let keyPress = availableKeys.filter(key => {
-      if(key.shortcut){
-        return key.code === e.which && e[key.shortcut];
-      } else if (!key.shourcut){
-        return key.code === e.which;
-      }
-    })[0]
+    const availableKeys = controller.getKeyCommands();
+    const keyPress = availableKeys.find(key => (key.shortcut)
+      ? key.code === e.which && e[key.shortcut]
+      : key.code === e.which
+    )
 
-    if(keyPress) { controller.executeKeypress(keyPress.action); }
+    if (keyPress) controller.executeKeypress(keyPress.action);
   },
 
   switchModes (flag) {
@@ -80,7 +77,7 @@ const app = {
       document.getElementById('toggle-interactive')
     ];
 
-    if (flag){
+    if (flag) {
       targets.forEach(t => {
         t.classList.remove('interactiveMode');
         t.classList.add('nonInteractiveMode');
@@ -103,7 +100,6 @@ const app = {
         t.classList.add('nonInteractiveMode');
       })
       btn.setAttribute('href', '#/resume');
-
     }
     this.interactiveMode = !this.interactiveMode;
   }

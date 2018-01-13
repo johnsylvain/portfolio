@@ -32,7 +32,7 @@ var consoleView = {
 
     this.promptElem.addEventListener('submit', e => {
       e.preventDefault();
-      let command = e.target.prompt.value;
+      const command = e.target.prompt.value;
       e.target.prompt.value = '';
       controller.enterCommand(command);
     })
@@ -52,9 +52,10 @@ var consoleView = {
     }
 
     commands.forEach((command, i) => {
-      const li = element('li', {
-        className: `console__command-list-item ${this.classMap[command.type]}`
-      }, (command.type === 'command') ? `$ ${command.text}` : command.text)
+      const li = element('li', 
+        {className: `console__command-list-item ${this.classMap[command.type]}`}, 
+        (command.type === 'command') ? `$ ${command.text}` : command.text
+      )
 
       this.listElem.appendChild(li);
     })
