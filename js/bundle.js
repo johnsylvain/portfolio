@@ -76,17 +76,11 @@ var app = {
   },
   handleKeypress: function handleKeypress(e) {
     var availableKeys = _controller2.default.getKeyCommands();
-    var keyPress = availableKeys.filter(function (key) {
-      if (key.shortcut) {
-        return key.code === e.which && e[key.shortcut];
-      } else if (!key.shourcut) {
-        return key.code === e.which;
-      }
-    })[0];
+    var keyPress = availableKeys.find(function (key) {
+      return key.shortcut ? key.code === e.which && e[key.shortcut] : key.code === e.which;
+    });
 
-    if (keyPress) {
-      _controller2.default.executeKeypress(keyPress.action);
-    }
+    if (keyPress) _controller2.default.executeKeypress(keyPress.action);
   },
   switchModes: function switchModes(flag) {
     var btn = document.getElementById('toggle-interactive');
@@ -785,9 +779,7 @@ var consoleView = {
     }
 
     commands.forEach(function (command, i) {
-      var li = (0, _dom.element)('li', {
-        className: 'console__command-list-item ' + _this2.classMap[command.type]
-      }, command.type === 'command' ? '$ ' + command.text : command.text);
+      var li = (0, _dom.element)('li', { className: 'console__command-list-item ' + _this2.classMap[command.type] }, command.type === 'command' ? '$ ' + command.text : command.text);
 
       _this2.listElem.appendChild(li);
     });
