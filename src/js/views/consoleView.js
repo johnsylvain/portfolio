@@ -1,5 +1,6 @@
 import controller from '../controller';
 import events from '../utils/events';
+import { element } from '../utils/dom';
 
 events.on('consoleViewInit', data => {
   consoleView.init();
@@ -9,12 +10,18 @@ events.on('consoleViewRender', data => {
   consoleView.render();
 });
 
-var consoleView = {
-  init(){
+var consoleView = { 
+  init () {
+    this.classMap = {
+      'command': '',
+      'error': 'console__command-list-item--error',
+      'response': 'console__command-list-item--response',
+      'response-bold': 'console__command-list-item--bold',
+      'warning': 'console__command-list-item--warning'
+    }
 
     this.promptElem = document.getElementById('command-prompt');
-    this.prevElem = document.getElementById('commands');
-    this.fileNameElem = document.getElementById('file-name');
+    this.listElem = document.getElementById('commands');
 
     this.consoleElem = document.getElementById('console-selector');
     this.commandInput = document.getElementById('command-input');
@@ -32,11 +39,9 @@ var consoleView = {
     this.render();
   },
 
-  render(){
-    this.prevElem.innerHTML = '';
+  render () {
+    this.listElem.innerHTML = '';
     let commands = controller.getPreviousCommands();
-
-    this.fileNameElem.textContent = controller.getFileName();
 
     this.consoleElem.scrollTop = this.consoleElem.scrollHeight;
 
@@ -47,28 +52,11 @@ var consoleView = {
     }
 
     commands.forEach((command, i) => {
-      let elem = document.createElement('li');
-      elem.classList.add('console__command-list-item')
-      console.log(elem)
+      const li = element('li', {
+        className: `console__command-list-item ${this.classMap[command.type]}`
+      }, (command.type === 'command') ? `$ ${command.text}` : command.text)
 
-      if (command.type === 'command') {
-        elem.textContent = '$ ' + command.text;
-      } else if(command.type === 'error'){
-        elem.textContent = command.text;
-        elem.classList.add('console__command-list-item--error');
-      } else if(command.type === 'response'){
-        elem.textContent = command.text;
-        elem.classList.add('console__command-list-item--response');
-      } else if(command.type === 'response-bold'){
-        elem.textContent = command.text;
-        elem.classList.add('console__command-list-item--bold');
-      } else if(command.type === 'warning'){
-        elem.textContent = command.text;
-        elem.classList.add('console__command-list-item--warning');
-      }
-
-      this.prevElem.appendChild(elem);
-
+      this.listElem.appendChild(li);
     })
 
 
