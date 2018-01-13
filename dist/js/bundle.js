@@ -9,9 +9,7 @@ var _events = require('./utils/events');
 
 var _events2 = _interopRequireDefault(_events);
 
-var _throttle = require('./utils/throttle');
-
-var _throttle2 = _interopRequireDefault(_throttle);
+var _helpers = require('./utils/helpers');
 
 var _controller = require('./controller');
 
@@ -66,7 +64,7 @@ var app = {
       });
     });
 
-    window.addEventListener('resize', (0, _throttle2.default)(function (event) {
+    window.addEventListener('resize', (0, _helpers.throttle)(function (event) {
       if (window.innerWidth <= _this.breakpoint) {
         router.go({ route: '#/' });
       }
@@ -78,22 +76,16 @@ var app = {
   },
   handleKeypress: function handleKeypress(e) {
     var availableKeys = _controller2.default.getKeyCommands();
-    var keyPress = availableKeys.filter(function (key) {
-      if (key.shortcut) {
-        return key.code === e.which && e[key.shortcut];
-      } else if (!key.shourcut) {
-        return key.code === e.which;
-      }
-    })[0];
+    var keyPress = availableKeys.find(function (key) {
+      return key.shortcut ? key.code === e.which && e[key.shortcut] : key.code === e.which;
+    });
 
-    if (keyPress) {
-      _controller2.default.executeKeypress(keyPress.action);
-    }
+    if (keyPress) _controller2.default.executeKeypress(keyPress.action);
   },
   switchModes: function switchModes(flag) {
     var btn = document.getElementById('toggle-interactive');
 
-    var targets = [document.getElementById('page-wrap'), document.getElementById('landing-wrapper'), document.getElementById('resume-wrapper'), document.getElementById('console-wrapper'), document.getElementById('container'), document.getElementById('toggle-interactive')];
+    var targets = [document.getElementById('page-wrap'), document.getElementById('landing-wrapper'), document.getElementById('resume-wrapper'), document.getElementById('console-selector'), document.getElementById('container'), document.getElementById('toggle-interactive')];
 
     if (flag) {
       targets.forEach(function (t) {
@@ -125,7 +117,7 @@ var app = {
 
 app.init();
 
-},{"./controller":2,"./utils/events":4,"./utils/router":6,"./utils/throttle":7,"./views/consoleView":8,"./views/mainView":9,"./views/resumeContentView":10}],2:[function(require,module,exports){
+},{"./controller":2,"./utils/events":5,"./utils/helpers":7,"./utils/router":8,"./views/consoleView":9,"./views/mainView":10,"./views/resumeContentView":11}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -153,12 +145,6 @@ var controller = {
     this.loadResumeData().then(function (res) {
       _data2.default.data = res;
       _data2.default.socialProfiles = Object.keys(_data2.default.data.contact.social);
-
-      var socialCommand = _data2.default.commands.filter(function (command) {
-        return command.text === 'social';
-      })[0];
-
-      socialCommand.params = _data2.default.socialProfiles;
     }).catch(function (err) {
       console.error(err);
     });
@@ -202,10 +188,10 @@ var controller = {
     });
   },
   loadResumeData: function loadResumeData() {
-    var _this2 = this;
+    var _this = this;
 
     return new Promise(function (resolve, reject) {
-      _this2.fetchData('GET', './data.json').then(function (res) {
+      _this.fetchData('GET', './data.json').then(function (res) {
         resolve(res.data.resumeData);
       }).catch(function (err) {
         reject(err);
@@ -266,6 +252,7 @@ var controller = {
 
     var flag = false;
     var args = command.split(' ');
+
     if (args[0] !== '') {
       _data2.default.previousCommands.push({
         text: command,
@@ -286,6 +273,7 @@ var controller = {
           type: 'command'
         });
       }
+
       _data2.default.enteredCommands.pointer = 0;
     }
 
@@ -308,7 +296,7 @@ var controller = {
     _events2.default.emit('consoleViewRender', null);
   },
   executeCommand: function executeCommand(command) {
-    var _this = this;
+    var self = this;
     var comArgs = command.split(' ');
 
     var commands = {
@@ -373,9 +361,8 @@ var controller = {
         });
       },
       open: function open() {
-
         var openResume = function openResume() {
-          _this.updateOutput({ resume: _data2.default.data }).then(function (res) {
+          self.updateOutput({ resume: _data2.default.data }).then(function (res) {
             // resumeContentView.render();
             _events2.default.emit('resumeContentViewRender', null);
           });
@@ -401,7 +388,7 @@ var controller = {
           return function () {
             var obj = {};
             obj[section] = _data2.default.data[section];
-            _this.updateOutput(obj).then(function () {
+            self.updateOutput(obj).then(function () {
               // resumeContentView.render();
               _events2.default.emit('resumeContentViewRender', null);
             });
@@ -431,7 +418,6 @@ var controller = {
         window.open(link);
       },
       social: function social() {
-
         var openLink = function openLink(site) {
           return function () {
             window.open(_data2.default.data.contact.social[site]);
@@ -491,85 +477,6 @@ var controller = {
             '-rf': rf
           };
         }
-      },
-      weather: function weather() {
-
-        if (comArgs.length !== 1) {
-          _data2.default.previousCommands.push({
-            text: 'error: \'weather\' does not take any parameters',
-            type: 'error'
-          });
-          return;
-        }
-
-        function getUserLocationPromise() {
-          return new Promise(function (resolve, reject) {
-
-            _this.fetchData('GET', 'http://ip-api.com/json').then(function (res) {
-              var crd = {
-                lat: res.data.lat,
-                lon: res.data.lon,
-                name: res.data.city,
-                country: res.data.countryCode
-              };
-              resolve(crd);
-            }).catch(function (err) {
-              reject(err);
-            });
-          });
-        }
-
-        function getUserWeatherPromise(lat, lon) {
-          return new Promise(function (resolve, reject) {
-            var key = '2f4d666f6f04dbad2164175736a5a2dc';
-            var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' + lat + '&lon=' + lon + '&APPID=' + key;
-
-            _this.fetchData('GET', url).then(function (res) {
-              resolve(res.data);
-            }).catch(function (err) {
-              reject(err);
-            });
-          });
-        }
-
-        var prompt = document.getElementById('command-prompt');
-        var input = document.getElementById('command-input');
-
-        _data2.default.previousCommands.push({ text: 'Getting IP Address...', type: 'response-bold' });
-        prompt.style.display = 'none';
-
-        getUserLocationPromise().then(function (crd) {
-
-          _data2.default.previousCommands.push({
-            text: 'Latitude: ' + crd.lat,
-            type: 'response'
-          }, {
-            text: 'Longitude: ' + crd.lon,
-            type: 'response'
-          });
-          // consoleView.render();
-          _events2.default.emit('consoleViewRender', null);
-
-          getUserWeatherPromise(crd.lat, crd.lon).then(function (res) {
-            _data2.default.previousCommands.push({ text: '------', type: 'response' }, { text: 'Getting weather data...', type: 'response-bold' }, { text: 'Weather for: ' + crd.name + ', ' + crd.country, type: 'response' }, { text: 'Temperature: ' + res.main.temp, type: 'response' }, { text: 'Conditions: ' + res.weather[0].description, type: 'response' });
-
-            prompt.style.display = 'block';
-            input.focus();
-
-            // consoleView.render();
-            _events2.default.emit('consoleViewRender', null);
-          }).catch(function (err) {
-            // console.error(err);
-          });
-        }).catch(function (err) {
-          console.log("Error: " + err);
-          _data2.default.previousCommands.push({ text: "Error: Could not retrieve IP", type: 'error' }, { text: "Try disabling your ad blocker", type: 'response' });
-          // consoleView.render();
-          _events2.default.emit('resumeContentViewRender', null);
-
-          prompt.style.display = 'block';
-          input.focus();
-        });
       }
     };
 
@@ -581,8 +488,6 @@ var controller = {
     if (comArgs.length === 1) {
       commands[comArgs[0]]();
     } else if (comArgs[0] === 'email') {
-      commands[comArgs[0]]();
-    } else if (comArgs[0] === 'weather') {
       commands[comArgs[0]]();
     } else if (comArgs.length > 1) {
       var subCommand = commands[comArgs[0]]();
@@ -600,15 +505,13 @@ var controller = {
     return _data2.default.previousCommands;
   },
   getFileName: function getFileName() {
-    var current = _data2.default.currentOutput;
-    var fileName = Object.keys(current)[0];
-    return fileName;
+    return Object.keys(_data2.default.currentOutput)[0];
   }
 };
 
 exports.default = controller;
 
-},{"../data":3,"../utils/events":4}],3:[function(require,module,exports){
+},{"../data":3,"../utils/events":5}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -627,7 +530,7 @@ var model = {
   },
   currentOutput: null,
   socialProfiles: [],
-  commands: [{ text: '', params: null }, { text: 'help', params: null }, { text: 'clear', params: null }, { text: 'pwd', params: null, ignored: true }, { text: 'ls', params: null, ignored: true }, { text: 'email', params: ['<subject>'] }, { text: 'open', params: ['resume', 'pdf'] }, { text: 'show', params: ['education', 'skills', 'xp', 'projects'] }, { text: 'social', params: ['github', 'linkedin'] }, { text: 'rm', params: ['-rf'], ignored: true }, { text: 'weather', params: null, ignored: true }],
+  commands: [{ text: '', params: null }, { text: 'help', params: null }, { text: 'clear', params: null }, { text: 'pwd', params: null, ignored: true }, { text: 'ls', params: null, ignored: true }, { text: 'email', params: ['<subject>'] }, { text: 'open', params: ['resume', 'pdf'] }, { text: 'show', params: ['education', 'skills', 'xp', 'projects'] }, { text: 'social', params: ['github', 'linkedin'] }, { text: 'rm', params: ['-rf'], ignored: true }],
   defaultMessage: {
     welcomeMessage: ["welcome to my interactive resume!", "to view my resume, type 'open resume' in the terminal to the left", "type 'help' to view other commands"]
   },
@@ -638,6 +541,23 @@ var model = {
 exports.default = model;
 
 },{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.element = element;
+function element(type, attrs, child) {
+  var e = document.createElement(type);
+
+  for (var attr in attrs) {
+    e.setAttribute(attr === 'className' ? 'class' : attr, attrs[attr]);
+  }if (typeof child === 'string') e.textContent = child;else e.appendChild(child);
+
+  return e;
+}
+
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -646,32 +566,22 @@ Object.defineProperty(exports, "__esModule", {
 var events = {
   events: {},
 
-  on: function on(eventName, fn) {
-    this.events[eventName] = this.events[eventName] || [];
-    this.events[eventName].push(fn);
+  on: function on(name, fn) {
+    (this.events[name] || (this.events[name] = [])).push(fn);
   },
-  off: function off(eventName, fn) {
-    if (this.events[eventName]) {
-      for (var i = 0; i < this.events[eventName].length; i++) {
-        if (this.events[eventName][i] === fn) {
-          this.events[eventName].splice(i, 1);
-          break;
-        }
-      };
-    }
+  off: function off(name, fn) {
+    this.events[name].splice(this.events[name].indexOf(fn) >>> 0, 1);
   },
-  emit: function emit(eventName, data) {
-    if (this.events[eventName]) {
-      this.events[eventName].forEach(function (fn) {
-        fn(data);
-      });
-    }
+  emit: function emit(name, data, context) {
+    (this.events[name] || []).map(function (fn) {
+      fn.call(context, data);
+    });
   }
 };
 
 exports.default = events;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -712,7 +622,40 @@ var filters = {
 
 exports.default = filters;
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.throttle = throttle;
+function throttle(func, threshhold, scope) {
+  var wait = false;
+
+  return function () {
+    if (!wait) {
+      func.apply(scope, arguments);
+      wait = true;
+      setTimeout(function () {
+        wait = false;
+      }, threshhold);
+    }
+  };
+}
+
+var compose = exports.compose = function compose() {
+  for (var _len = arguments.length, fns = Array(_len), _key = 0; _key < _len; _key++) {
+    fns[_key] = arguments[_key];
+  }
+
+  return function (initialValue) {
+    return fns.reduce(function (val, fn) {
+      return fn(val);
+    }, initialValue);
+  };
+};
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -764,29 +707,7 @@ var Router = function () {
 
 exports.default = Router;
 
-},{}],7:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-function throttle(func, threshhold, scope) {
-  var wait = false;
-
-  return function () {
-    if (!wait) {
-      func.apply(scope, arguments);
-      wait = true;
-      setTimeout(function () {
-        wait = false;
-      }, threshhold);
-    }
-  };
-};
-
-exports.default = throttle;
-
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -800,6 +721,8 @@ var _controller2 = _interopRequireDefault(_controller);
 var _events = require('../utils/events');
 
 var _events2 = _interopRequireDefault(_events);
+
+var _dom = require('../utils/dom');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -815,13 +738,19 @@ var consoleView = {
   init: function init() {
     var _this = this;
 
-    this.promptElem = document.getElementById('command-prompt');
-    this.prevElem = document.getElementById('commands');
-    this.fileNameElem = document.getElementById('file-name');
+    this.classMap = {
+      'command': '',
+      'error': 'console__command-list-item--error',
+      'response': 'console__command-list-item--response',
+      'response-bold': 'console__command-list-item--bold',
+      'warning': 'console__command-list-item--warning'
+    };
 
-    this.consoleElem = document.getElementById('console');
+    this.promptElem = document.getElementById('command-prompt');
+    this.listElem = document.getElementById('commands');
+
+    this.consoleElem = document.getElementById('console-selector');
     this.commandInput = document.getElementById('command-input');
-    // this.commandInput.focus();
 
     this.consoleElem.addEventListener('click', function () {
       _this.commandInput.focus();
@@ -838,10 +767,8 @@ var consoleView = {
   render: function render() {
     var _this2 = this;
 
-    this.prevElem.innerHTML = '';
+    this.listElem.innerHTML = '';
     var commands = _controller2.default.getPreviousCommands();
-
-    this.fileNameElem.textContent = _controller2.default.getFileName();
 
     this.consoleElem.scrollTop = this.consoleElem.scrollHeight;
 
@@ -852,32 +779,16 @@ var consoleView = {
     }
 
     commands.forEach(function (command, i) {
-      var elem = document.createElement('li');
+      var li = (0, _dom.element)('li', { className: 'console__command-list-item ' + _this2.classMap[command.type] }, command.type === 'command' ? '$ ' + command.text : command.text);
 
-      if (command.type === 'command') {
-        elem.textContent = '$ ' + command.text;
-      } else if (command.type === 'error') {
-        elem.textContent = command.text;
-        elem.className = 'commandError';
-      } else if (command.type === 'response') {
-        elem.textContent = command.text;
-        elem.className = 'commandResponse';
-      } else if (command.type === 'response-bold') {
-        elem.textContent = command.text;
-        elem.className = 'commandResponseBold';
-      } else if (command.type === 'warning') {
-        elem.textContent = command.text;
-        elem.className = 'commandWarning';
-      }
-
-      _this2.prevElem.appendChild(elem);
+      _this2.listElem.appendChild(li);
     });
   }
 };
 
 exports.default = consoleView;
 
-},{"../controller":2,"../utils/events":4}],9:[function(require,module,exports){
+},{"../controller":2,"../utils/dom":4,"../utils/events":5}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -907,7 +818,7 @@ var view = {
 
 exports.default = view;
 
-},{"../controller":2,"../utils/events":4}],10:[function(require,module,exports){
+},{"../controller":2,"../utils/events":5}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -926,6 +837,8 @@ var _filters = require('../utils/filters');
 
 var _filters2 = _interopRequireDefault(_filters);
 
+var _helpers = require('../utils/helpers');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _events2.default.on('resumeContentViewInit', function (data) {
@@ -938,16 +851,24 @@ _events2.default.on('resumeContentViewRender', function (data) {
 var resumeContentView = {
   init: function init() {
     this.resumeContainerElem = document.getElementById('resume-code');
+    this.fileNameElem = document.getElementById('file-name');
     this.render();
+  },
+  format: function format(data) {
+    return (0, _helpers.compose)(function (d) {
+      return JSON.stringify(d, null, '   ');
+    }, _filters2.default.textToJSON, _filters2.default.findUrls)(data);
   },
   render: function render() {
     var data = _controller2.default.getCurrentOutput();
-    var json = _filters2.default.textToJSON(JSON.stringify(data, null, '   '));
-    json = _filters2.default.findUrls(json);
+
+    var json = this.format(data);
+
     this.resumeContainerElem.innerHTML = json;
+    this.fileNameElem.textContent = _controller2.default.getFileName();
   }
 };
 
 exports.default = resumeContentView;
 
-},{"../controller":2,"../utils/events":4,"../utils/filters":5}]},{},[1]);
+},{"../controller":2,"../utils/events":5,"../utils/filters":6,"../utils/helpers":7}]},{},[1]);

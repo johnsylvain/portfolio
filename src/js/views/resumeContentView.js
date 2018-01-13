@@ -1,6 +1,7 @@
 import controller from '../controller';
 import events from '../utils/events';
 import filters from '../utils/filters';
+import { compose } from '../utils/helpers';
 
 
 events.on('resumeContentViewInit', data => {
@@ -11,16 +12,27 @@ events.on('resumeContentViewRender', data => {
 })
 
 var resumeContentView = {
-  init(){
+  init () {
     this.resumeContainerElem = document.getElementById('resume-code');
+    this.fileNameElem = document.getElementById('file-name');
     this.render();
   },
 
-  render(){
-    let data = controller.getCurrentOutput();
-    let json = filters.textToJSON(JSON.stringify(data,null,'   '));
-    json = filters.findUrls(json);
+  format (data) {
+    return compose(
+      (d) => JSON.stringify(d, null, '   '),
+      filters.textToJSON,
+      filters.findUrls
+    )(data)
+  },
+
+  render () {
+    const data = controller.getCurrentOutput();
+
+    const json = this.format(data)
+
     this.resumeContainerElem.innerHTML = json;
+    this.fileNameElem.textContent = controller.getFileName();
   }
 }
 

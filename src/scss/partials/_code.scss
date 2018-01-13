@@ -1,0 +1,29 @@
+pre {
+	white-space: pre-wrap;       /* Since CSS 2.1 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	line-height:150%;
+	font-family: $font-mono;
+	font-weight: 100;
+	font-size: 11pt;
+	margin: 0;
+	padding: 0;
+	color: #a0a0a0;
+
+	.string { color: $green; }
+	.number { color: darkorange; }
+	.boolean { color: #f1c40f; }
+	.null { color: magenta; }
+	.key { color: #b0b0b0; }
+	a {
+		color:$green;
+		text-decoration: none;
+		border-bottom: 2px solid rgba($green, 0.2);
+
+		&:hover {
+			border-bottom: 2px solid rgba($green, 0.8);
+		}
+	}
+}

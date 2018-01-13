@@ -9,20 +9,14 @@ var controller = {
     events.emit('consoleViewInit', null);
     events.emit('viewInit', null);
 
-    this.loadResumeData().then(res => {
-      model.data = res;
-      model.socialProfiles = Object.keys(model.data.contact.social)
-
-      var socialCommand = model.commands.filter(function(command) {
-        return command.text === 'social'
-      })[0];
-
-      socialCommand.params = model.socialProfiles
-
-    })
-    .catch(function(err) {
-      console.error(err);
-    })
+    this.loadResumeData()
+      .then(res => {
+        model.data = res;
+        model.socialProfiles = Object.keys(model.data.contact.social)
+      })
+      .catch((err) => {
+        console.error(err);
+      })
 
   },
 
@@ -68,12 +62,12 @@ var controller = {
   loadResumeData() {
     return new Promise((resolve, reject) => {
       this.fetchData('GET', './data.json')
-      .then(res => {
-        resolve(res.data.resumeData)
-      })
-      .catch(err => {
-        reject(err);
-      });
+        .then(res => {
+          resolve(res.data.resumeData)
+        })
+        .catch(err => {
+          reject(err);
+        });
     });
   },
 
@@ -143,7 +137,8 @@ var controller = {
     command = command.trim();
 
     let flag = false;
-    let args = command.split(' ');
+    const args = command.split(' ');
+
     if (args[0] !== '') {
       model.previousCommands.push({
         text: command,
@@ -165,14 +160,11 @@ var controller = {
           type: 'command'
         });
       }
+
       model.enteredCommands.pointer = 0;
-
-
     }
 
-    flag = model.commands.filter(o => {
-      return o.text === args[0]
-    })
+    flag = model.commands.filter(o => o.text === args[0])
 
     if (!flag.length) {
       model.previousCommands.push({
@@ -191,11 +183,11 @@ var controller = {
   },
 
   executeCommand(command) {
-    let _this = this;
-    let comArgs = command.split(' ');
+    const self = this
+    const comArgs = command.split(' ');
 
     let commands = {
-      pwd() {
+      pwd () {
         if(comArgs.length !== 1) {
           model.previousCommands.push({
             text: "'pwd' does not need any arguments",
@@ -212,7 +204,8 @@ var controller = {
           type: 'response-bold'
         })
       },
-      ls() {
+
+      ls () {
         if(comArgs.length !== 1) {
           model.previousCommands.push({
             text: "'ls' does not need any arguments",
@@ -232,7 +225,8 @@ var controller = {
         )
 
       },
-      clear(){
+
+      clear () {
         if (comArgs.length !== 1){
           model.previousCommands.push({
             text: "'clear' does not need any arguments",
@@ -243,7 +237,8 @@ var controller = {
 
         model.previousCommands = [];
       },
-      help(){
+
+      help (){
         var commands = model.commands;
         model.previousCommands.push(
           { text: 'Available Commands:', type: 'response-bold'}
@@ -263,17 +258,17 @@ var controller = {
           }
         })
       },
-      open(){
 
-        let openResume = () => {
-          _this.updateOutput({resume: model.data}).then(function(res){
-            // resumeContentView.render();
-            events.emit('resumeContentViewRender', null);
-
-          });
+      open (){
+        const openResume = () => {
+          self.updateOutput({resume: model.data})
+            .then((res) => {
+              // resumeContentView.render();
+              events.emit('resumeContentViewRender', null);
+            });
         };
 
-        let pdf = () => {
+        const pdf = () => {
           window.open("http://johnsylvain.me/resume.pdf");
         }
         if (comArgs.length === 1) {
@@ -288,17 +283,16 @@ var controller = {
           }
         }
       },
-      show(){
-        let showSection = (section) => {
-          return function() {
-            var obj = {};
-            obj[section] = model.data[section];
-            _this.updateOutput(obj).then(function() {
+
+      show () {
+        const showSection = (section) => () => {
+          var obj = {};
+          obj[section] = model.data[section];
+          self.updateOutput(obj)
+            .then(() => {
               // resumeContentView.render();
               events.emit('resumeContentViewRender', null);
-
             })
-          }
         }
 
         if (comArgs.length === 1) {
@@ -315,20 +309,19 @@ var controller = {
           }
         }
       },
-      email(){
+
+      email (){
         let subject = '';
-        for (var i = 1; i < comArgs.length; i++) {
+        for (let i = 1; i < comArgs.length; i++) {
           subject += (' ' + comArgs[i])
         };
         var link = 'mailto:hi@johnsylvain.me?subject=' + subject;
         window.open(link);
       },
-      social(){
 
-        let openLink = function(site){
-          return function(){
-            window.open(model.data.contact.social[site])
-          }
+      social (){
+        const openLink = (site) => () => {
+          window.open(model.data.contact.social[site])
         }
 
         if (comArgs.length === 1) {
@@ -343,9 +336,10 @@ var controller = {
           }
         }
       },
-      rm() {
-        let rf = () => {
-          var targets = [
+
+      rm () {
+        const rf = () => {
+          const targets = [
             document.getElementById('wrapper'),
             document.getElementsByClassName('trash'),
           ];
@@ -390,107 +384,6 @@ var controller = {
           }
 
         }
-      },
-
-      weather() {
-
-        if (comArgs.length !== 1) {
-          model.previousCommands.push({
-            text: 'error: \'weather\' does not take any parameters',
-            type: 'error'
-          })
-          return;
-        }
-
-        function getUserLocationPromise() {
-          return new Promise((resolve, reject) => {
-
-            _this.fetchData('GET', 'http://ip-api.com/json').then(res => {
-              var crd = {
-                lat: res.data.lat,
-                lon: res.data.lon,
-                name: res.data.city,
-                country: res.data.countryCode
-              }
-              resolve(crd);
-            })
-            .catch(err => {
-              reject(err);
-            })
-          })
-        }
-
-        function getUserWeatherPromise(lat, lon) {
-          return new Promise((resolve, reject) => {
-            var key = '2f4d666f6f04dbad2164175736a5a2dc';
-            var url = 'http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=' +
-            lat + '&lon=' + lon + '&APPID=' + key;
-
-            _this.fetchData('GET', url)
-            .then(function(res) {
-              resolve(res.data);
-            })
-            .catch(err => {
-              reject(err);
-            });
-          })
-        }
-
-        let prompt = document.getElementById('command-prompt');
-        let input = document.getElementById('command-input');
-
-        model.previousCommands.push(
-          { text: 'Getting IP Address...',	type: 'response-bold'}
-        )
-        prompt.style.display = 'none'
-
-        getUserLocationPromise().then(crd => {
-
-          model.previousCommands.push({
-            text: 'Latitude: ' + crd.lat,
-            type: 'response'
-          },{
-            text: 'Longitude: ' + crd.lon,
-            type: 'response'
-          });
-          // consoleView.render();
-          events.emit('consoleViewRender', null);
-
-
-          getUserWeatherPromise(crd.lat, crd.lon).then(res => {
-            model.previousCommands.push(
-              {text: '------', type: 'response'},
-              {text: 'Getting weather data...', type: 'response-bold'},
-              {text: 'Weather for: ' + crd.name + ', ' + crd.country, type: 'response'},
-              {text: 'Temperature: ' + res.main.temp, type: 'response'},
-              {text: 'Conditions: ' + res.weather[0].description, type: 'response'}
-            );
-
-            prompt.style.display = 'block';
-            input.focus();
-
-            // consoleView.render();
-            events.emit('consoleViewRender', null);
-
-          })
-          .catch(function(err) {
-            // console.error(err);
-          })
-        })
-        .catch(err => {
-          console.log("Error: " + err)
-          model.previousCommands.push(
-            { text: "Error: Could not retrieve IP", type: 'error'},
-            { text: "Try disabling your ad blocker", type: 'response'}
-          );
-          // consoleView.render();
-          events.emit('resumeContentViewRender', null);
-
-          prompt.style.display = 'block';
-          input.focus();
-        })
-
-
       }
     }
 
@@ -503,8 +396,6 @@ var controller = {
     if (comArgs.length === 1) {
       commands[comArgs[0]]();
     } else if(comArgs[0] === 'email'){
-      commands[comArgs[0]]();
-    } else if(comArgs[0] === 'weather'){
       commands[comArgs[0]]();
     } else if (comArgs.length > 1){
       var subCommand = commands[comArgs[0]]();
@@ -525,9 +416,7 @@ var controller = {
   },
 
   getFileName(){
-    let current = model.currentOutput;
-    let fileName = Object.keys(current)[0];
-    return fileName;
+    return Object.keys(model.currentOutput)[0];
   }
 
 }

@@ -1,38 +1,38 @@
 import Router from './utils/router';
 import events from './utils/events';
-import throttle from './utils/throttle';
+import { throttle } from './utils/helpers';
 
 import controller from './controller';
 import resumeContentView from './views/resumeContentView';
 import consoleView from './views/consoleView';
 import view from './views/mainView';
 
-var app = {
+const app = {
   pageWidth: window.innerWidth,
   breakpoint: 768,
   interactiveMode: false,
 
-  init() {
+  init () {
     controller.init();
 
-    let routes = [
+    const routes = [
       {
         path: '/',
         controller: function() {
-          events.emit('switchModes', {flag: true});
+          events.emit('switchModes', { flag: true });
         }
       },
       {
         path: '/resume',
         controller: () => {
-          events.emit('switchModes', {flag: false});
+          events.emit('switchModes', { flag: false });
           if(window.innerWidth <= this.breakpoint) {
-            router.go({route: '#/'});
+            router.go({ route: '#/' });
           }
         }
       }
     ]
-    let router = new Router(routes);
+    const router = new Router(routes);
 
     window.addEventListener('keyup', this.handleKeypress.bind(this));
 
@@ -54,32 +54,30 @@ var app = {
     })
 
   },
-  handleKeypress(e) {
-    let availableKeys = controller.getKeyCommands();
-    let keyPress = availableKeys.filter(key => {
-      if(key.shortcut){
-        return key.code === e.which && e[key.shortcut];
-      } else if (!key.shourcut){
-        return key.code === e.which;
-      }
-    })[0]
 
-    if(keyPress) { controller.executeKeypress(keyPress.action); }
+  handleKeypress (e) {
+    const availableKeys = controller.getKeyCommands();
+    const keyPress = availableKeys.find(key => (key.shortcut)
+      ? key.code === e.which && e[key.shortcut]
+      : key.code === e.which
+    )
+
+    if (keyPress) controller.executeKeypress(keyPress.action);
   },
 
-  switchModes(flag) {
+  switchModes (flag) {
     const btn = document.getElementById('toggle-interactive');
 
-    var targets = [
+    const targets = [
       document.getElementById('page-wrap'),
       document.getElementById('landing-wrapper'),
       document.getElementById('resume-wrapper'),
-      document.getElementById('console-wrapper'),
+      document.getElementById('console-selector'),
       document.getElementById('container'),
       document.getElementById('toggle-interactive')
     ];
 
-    if (flag){
+    if (flag) {
       targets.forEach(t => {
         t.classList.remove('interactiveMode');
         t.classList.add('nonInteractiveMode');
@@ -102,7 +100,6 @@ var app = {
         t.classList.add('nonInteractiveMode');
       })
       btn.setAttribute('href', '#/resume');
-
     }
     this.interactiveMode = !this.interactiveMode;
   }

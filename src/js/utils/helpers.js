@@ -1,4 +1,4 @@
-function throttle(func, threshhold, scope) {
+export function throttle(func, threshhold, scope) {
   var wait = false
 
   return function() {
@@ -11,6 +11,7 @@ function throttle(func, threshhold, scope) {
     }
   }
 
-};
+}
 
-export default throttle;
+export const compose = (...fns) => (initialValue) =>
+  fns.reduce((val, fn) => fn(val), initialValue)
