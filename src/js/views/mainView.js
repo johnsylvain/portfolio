@@ -6,10 +6,9 @@ events.on('viewInit', data => {
 })
 
 var view = {
-  init() {
+  init () {
     this.dateElem = document.getElementById('date');
     this.dateElem.innerHTML = controller.getDate();
-
   }
 }
 

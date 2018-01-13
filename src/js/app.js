@@ -1,18 +1,18 @@
 import Router from './utils/router';
 import events from './utils/events';
-import throttle from './utils/throttle';
+import { throttle } from './utils/helpers';
 
 import controller from './controller';
 import resumeContentView from './views/resumeContentView';
 import consoleView from './views/consoleView';
 import view from './views/mainView';
 
-var app = {
+const app = {
   pageWidth: window.innerWidth,
   breakpoint: 768,
   interactiveMode: false,
 
-  init() {
+  init () {
     controller.init();
 
     const routes = [
@@ -54,7 +54,8 @@ var app = {
     })
 
   },
-  handleKeypress(e) {
+
+  handleKeypress (e) {
     let availableKeys = controller.getKeyCommands();
     let keyPress = availableKeys.filter(key => {
       if(key.shortcut){
@@ -67,10 +68,10 @@ var app = {
     if(keyPress) { controller.executeKeypress(keyPress.action); }
   },
 
-  switchModes(flag) {
+  switchModes (flag) {
     const btn = document.getElementById('toggle-interactive');
 
-    var targets = [
+    const targets = [
       document.getElementById('page-wrap'),
       document.getElementById('landing-wrapper'),
       document.getElementById('resume-wrapper'),
