@@ -15,17 +15,13 @@ var _controller = require('./controller');
 
 var _controller2 = _interopRequireDefault(_controller);
 
-var _resumeContentView = require('./views/resumeContentView');
+var _resumeContent = require('./views/resumeContent');
 
-var _resumeContentView2 = _interopRequireDefault(_resumeContentView);
+var _resumeContent2 = _interopRequireDefault(_resumeContent);
 
-var _consoleView = require('./views/consoleView');
+var _console = require('./views/console');
 
-var _consoleView2 = _interopRequireDefault(_consoleView);
-
-var _mainView = require('./views/mainView');
-
-var _mainView2 = _interopRequireDefault(_mainView);
+var _console2 = _interopRequireDefault(_console);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -117,7 +113,7 @@ var app = {
 
 app.init();
 
-},{"./controller":2,"./utils/events":5,"./utils/helpers":7,"./utils/router":8,"./views/consoleView":9,"./views/mainView":10,"./views/resumeContentView":11}],2:[function(require,module,exports){
+},{"./controller":2,"./utils/events":5,"./utils/helpers":7,"./utils/router":8,"./views/console":9,"./views/resumeContent":10}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -140,7 +136,6 @@ var controller = {
 
     _events2.default.emit('resumeContentViewInit', null);
     _events2.default.emit('consoleViewInit', null);
-    _events2.default.emit('viewInit', null);
 
     this.loadResumeData().then(function (res) {
       _data2.default.data = res;
@@ -150,7 +145,7 @@ var controller = {
     });
   },
   fetchData: function fetchData(method, url) {
-    var xhr;
+    var xhr = void 0;
 
     if (window.XMLHttpRequest) {
       // Mozilla, Safari, ...
@@ -197,9 +192,6 @@ var controller = {
         reject(err);
       });
     });
-  },
-  getDate: function getDate() {
-    return _data2.default.date;
   },
   getResumeData: function getResumeData() {
     return _data2.default.data;
@@ -314,7 +306,7 @@ var controller = {
 
         _data2.default.previousCommands.push({
           text: window.location.host,
-          type: 'response-bold'
+          type: 'bold'
         });
       },
       ls: function ls() {
@@ -344,15 +336,11 @@ var controller = {
       },
       help: function help() {
         var commands = _data2.default.commands;
-        _data2.default.previousCommands.push({ text: 'Available Commands:', type: 'response-bold' });
+        _data2.default.previousCommands.push({ text: 'Available Commands:', type: 'bold' });
         commands.forEach(function (avalCommand, i) {
-          if (avalCommand.ignored !== true) {
-            var response = '';
-            if (avalCommand.params !== null) {
-              response = avalCommand.text + ' [' + avalCommand.params.toLocaleString() + ']';
-            } else {
-              response = avalCommand.text;
-            }
+          if (avalCommand.ignored !== true && avalCommand.text !== '') {
+            var response = avalCommand.params !== null ? '- ' + avalCommand.text + ' [' + avalCommand.params.toLocaleString() + ']' : '- ' + avalCommand.text;
+
             _data2.default.previousCommands.push({
               text: response,
               type: 'response'
@@ -414,8 +402,7 @@ var controller = {
         for (var i = 1; i < comArgs.length; i++) {
           subject += ' ' + comArgs[i];
         };
-        var link = 'mailto:hi@johnsylvain.me?subject=' + subject;
-        window.open(link);
+        window.open('mailto:hi@johnsylvain.me?subject=' + subject);
       },
       social: function social() {
         var openLink = function openLink(site) {
@@ -534,8 +521,7 @@ var model = {
   defaultMessage: {
     welcomeMessage: ["welcome to my interactive resume!", "to view my resume, type 'open resume' in the terminal to the left", "type 'help' to view other commands"]
   },
-  data: {},
-  date: new Date().getFullYear()
+  data: {}
 };
 
 exports.default = model;
@@ -546,15 +532,26 @@ exports.default = model;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.element = element;
-function element(type, attrs, child) {
-  var e = document.createElement(type);
+exports.h = h;
+exports.render = render;
+function h(nodeName, attributes) {
+  for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    children[_key - 2] = arguments[_key];
+  }
 
-  for (var attr in attrs) {
-    e.setAttribute(attr === 'className' ? 'class' : attr, attrs[attr]);
-  }if (typeof child === 'string') e.textContent = child;else e.appendChild(child);
+  return { nodeName: nodeName, attributes: attributes, children: children };
+}
 
-  return e;
+function render(vnode) {
+  if (typeof vnode === 'string') return document.createTextNode(vnode);
+
+  var node = document.createElement(vnode.nodeName);
+
+  for (var name in Object(vnode.attributes)) {
+    node.setAttribute(name === 'className' ? 'class' : name, vnode.attributes[name]);
+  }for (var i = 0; i < vnode.children.length; i++) {
+    node.appendChild(render(vnode.children[i]));
+  }return node;
 }
 
 },{}],5:[function(require,module,exports){
@@ -587,40 +584,39 @@ exports.default = events;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var filters = {
-  textToJSON: function textToJSON(json) {
-    if (typeof json != 'string') {
-      json = JSON.stringify(json, null, 2);
-    }
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-    var reg = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
-    return json.replace(reg, function (match) {
-      var cls = 'number';
-      if (/^"/.test(match)) {
-        if (/:$/.test(match)) {
-          cls = 'key';
-        } else {
-          cls = 'string';
-        }
-      } else if (/true|false/.test(match)) {
-        cls = 'boolean';
-      } else if (/null/.test(match)) {
-        cls = 'null';
-      }
-      return '<span class="' + cls + '">' + match + '</span>';
-    });
-  },
-  findUrls: function findUrls(text) {
-    var reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
-    return text.replace(reg, function (match) {
-      var url = match.replace('</span>', String.empty);
-      return '<a href="' + url + '" target="_blank">' + match + '</a>';
-    });
+exports.textToJSON = textToJSON;
+exports.findUrls = findUrls;
+function textToJSON(json) {
+  if (typeof json !== 'string') {
+    json = JSON.stringify(json, null, 2);
   }
-};
+  json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-exports.default = filters;
+  var reg = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
+  return json.replace(reg, function (match) {
+    var cls = 'number';
+    if (/^"/.test(match)) {
+      if (/:$/.test(match)) {
+        cls = 'key';
+      } else {
+        cls = 'string';
+      }
+    } else if (/true|false/.test(match)) {
+      cls = 'boolean';
+    } else if (/null/.test(match)) {
+      cls = 'null';
+    }
+    return '<span class="' + cls + '">' + match + '</span>';
+  });
+}
+
+function findUrls(text) {
+  var reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
+  return text.replace(reg, function (match) {
+    var url = match.replace('</span>', String.empty);
+    return '<a href="' + url + '" target="_blank">' + match + '</a>';
+  });
+}
 
 },{}],7:[function(require,module,exports){
 "use strict";
@@ -726,6 +722,8 @@ var _dom = require('../utils/dom');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 _events2.default.on('consoleViewInit', function (data) {
   consoleView.init();
 });
@@ -738,51 +736,40 @@ var consoleView = {
   init: function init() {
     var _this = this;
 
-    this.classMap = {
-      'command': '',
-      'error': 'console__command-list-item--error',
-      'response': 'console__command-list-item--response',
-      'response-bold': 'console__command-list-item--bold',
-      'warning': 'console__command-list-item--warning'
-    };
+    this.promptContainer = document.getElementById('command-prompt-container');
+    this.listItemsContainer = document.getElementById('commands');
+    this.consoleElement = document.getElementById('console-selector');
+    this.promptInputElement = document.getElementById('command-input');
 
-    this.promptElem = document.getElementById('command-prompt');
-    this.listElem = document.getElementById('commands');
-
-    this.consoleElem = document.getElementById('console-selector');
-    this.commandInput = document.getElementById('command-input');
-
-    this.consoleElem.addEventListener('click', function () {
-      _this.commandInput.focus();
+    this.consoleElement.addEventListener('click', function () {
+      _this.promptInputElement.focus();
     });
 
-    this.promptElem.addEventListener('submit', function (e) {
+    this.promptContainer.addEventListener('submit', function (e) {
       e.preventDefault();
-      var command = e.target.prompt.value;
+      _controller2.default.enterCommand(e.target.prompt.value);
       e.target.prompt.value = '';
-      _controller2.default.enterCommand(command);
     });
+
     this.render();
   },
   render: function render() {
-    var _this2 = this;
-
-    this.listElem.innerHTML = '';
+    this.listItemsContainer.innerHTML = '';
     var commands = _controller2.default.getPreviousCommands();
 
-    this.consoleElem.scrollTop = this.consoleElem.scrollHeight;
+    this.consoleElement.scrollTop = this.consoleElement.scrollHeight;
 
     if (_controller2.default.getEnteredCommands()) {
-      this.commandInput.value = _controller2.default.getEnteredCommands().text;
+      this.promptInputElement.value = _controller2.default.getEnteredCommands().text;
     } else {
-      this.commandInput.value = '';
+      this.promptInputElement.value = '';
     }
 
-    commands.forEach(function (command, i) {
-      var li = (0, _dom.element)('li', { className: 'console__command-list-item ' + _this2.classMap[command.type] }, command.type === 'command' ? '$ ' + command.text : command.text);
+    var vnodes = _dom.h.apply(undefined, ['ul', { className: 'console__command-list' }].concat(_toConsumableArray(commands.map(function (command) {
+      return (0, _dom.h)('li', { className: 'console__command-list-item console__command-list-item--' + command.type }, command.type === 'command' ? '$ ' + command.text : command.text);
+    }))));
 
-      _this2.listElem.appendChild(li);
-    });
+    this.listItemsContainer.appendChild((0, _dom.render)(vnodes));
   }
 };
 
@@ -803,41 +790,13 @@ var _events = require('../utils/events');
 
 var _events2 = _interopRequireDefault(_events);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_events2.default.on('viewInit', function (data) {
-  view.init();
-});
-
-var view = {
-  init: function init() {
-    this.dateElem = document.getElementById('date');
-    this.dateElem.innerHTML = _controller2.default.getDate();
-  }
-};
-
-exports.default = view;
-
-},{"../controller":2,"../utils/events":5}],11:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _controller = require('../controller');
-
-var _controller2 = _interopRequireDefault(_controller);
-
-var _events = require('../utils/events');
-
-var _events2 = _interopRequireDefault(_events);
-
 var _filters = require('../utils/filters');
 
-var _filters2 = _interopRequireDefault(_filters);
+var filters = _interopRequireWildcard(_filters);
 
 var _helpers = require('../utils/helpers');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -857,11 +816,10 @@ var resumeContentView = {
   format: function format(data) {
     return (0, _helpers.compose)(function (d) {
       return JSON.stringify(d, null, '   ');
-    }, _filters2.default.textToJSON, _filters2.default.findUrls)(data);
+    }, filters.textToJSON, filters.findUrls)(data);
   },
   render: function render() {
     var data = _controller2.default.getCurrentOutput();
-
     var json = this.format(data);
 
     this.resumeContainerElem.innerHTML = json;
