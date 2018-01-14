@@ -7,7 +7,7 @@
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./"
   },
-  "author": "",
+  "author": "John Sylvain <john.n.sylvain@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.24.1",
