@@ -54,6 +54,8 @@ const app = {
       this.switchModes(data.flag);
     })
 
+    document.querySelector('#date-selector').textContent = new Date().getFullYear().toString()
+
   },
 
   handleKeypress (e) {
