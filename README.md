@@ -15,4 +15,4 @@ yarn build
 
 ## Todo
 - [x] render interactive console from a virtual DOM
-- [ ] implement DOM diffing algorithm for more perfomant rendering
+- [x] implement DOM diffing algorithm for more perfomant rendering

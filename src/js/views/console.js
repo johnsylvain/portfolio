@@ -12,45 +12,52 @@ events.on('consoleViewRender', data => {
 
 const consoleView = { 
   init () {
-    this.promptContainer = document.getElementById('command-prompt-container');
-    this.listItemsContainer = document.getElementById('commands');
-    this.consoleElement = document.getElementById('console-selector');
-    this.promptInputElement = document.getElementById('command-input');
+    this.vdom = null
+    this.elements = {
+      promptContainer: document.getElementById('command-prompt-container'),
+      listItemsContainer: document.getElementById('commands'),
+      consoleContainer: document.getElementById('console-selector'),
+      promptInput: document.getElementById('command-input')
+    }
 
-    this.consoleElement.addEventListener('click', () => {
-      this.promptInputElement.focus();
+    this.bindEvents()
+    this.render()
+  },
+
+  bindEvents () {
+    this.elements.consoleContainer.addEventListener('click', () => {
+      this.elements.promptInput.focus();
     })
 
-    this.promptContainer.addEventListener('submit', e => {
+    this.elements.promptContainer.addEventListener('submit', e => {
       e.preventDefault();
       controller.enterCommand(e.target.prompt.value);
       e.target.prompt.value = '';
     })
-
-    this.render()
   },
 
   render () {
-    this.listItemsContainer.innerHTML = ''
     const commands = controller.getPreviousCommands()
 
-    this.consoleElement.scrollTop = this.consoleElement.scrollHeight
-
     if (controller.getEnteredCommands()) {
-      this.promptInputElement.value = controller.getEnteredCommands().text
+      this.elements.promptInput.value = controller.getEnteredCommands().text
     } else {
-      this.promptInputElement.value = ''
+      this.elements.promptInput.value = ''
     }
 
-    const vnodes = h('ul', { className: 'console__command-list' }, 
-      ...commands.map(command => 
-        h('li', { className: `console__command-list-item console__command-list-item--${command.type}` }, 
-          (command.type === 'command') ? `$ ${command.text}` : command.text
-        )
-      )
+    // Create virtual dom from jsx
+    const vnodes = (
+      <ul className="console__command-list">
+        {commands.map(command => 
+          <li className={`console__command-list-item console__command-list-item--${command.type}`}> 
+            {(command.type === 'command') ? `$ ${command.text}` : command.text}
+          </li>
+        )}
+      </ul>
     )
 
-    this.listItemsContainer.appendChild(render(vnodes))
+    // diff dom and render into container
+    this.vdom = render(this.elements.listItemsContainer, vnodes, this.vdom)
   }
 }
 
