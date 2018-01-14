@@ -6,6 +6,8 @@ import controller from './controller';
 import resumeContentView from './views/resumeContent';
 import consoleView from './views/console';
 
+import '../styles/style.scss';
+
 const app = {
   pageWidth: window.innerWidth,
   breakpoint: 768,
@@ -85,7 +87,7 @@ const app = {
       btn.setAttribute('href', '#/resume');
       return;
     }
-    
+
     if (!this.interactiveMode) {
       targets.forEach(t => {
         t.classList.add('interactiveMode');

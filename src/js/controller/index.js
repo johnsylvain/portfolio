@@ -1,6 +1,8 @@
 import events from '../utils/events';
 import model from '../data';
 
+import json from '../../data.json';
+
 const controller = {
   init(){
     model.currentOutput = model.defaultMessage;
@@ -8,66 +10,9 @@ const controller = {
     events.emit('resumeContentViewInit', null);
     events.emit('consoleViewInit', null);
 
-    this.loadResumeData()
-      .then(res => {
-        model.data = res;
-        model.socialProfiles = Object.keys(model.data.contact.social)
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+    model.data = json.resumeData;
+    model.socialProfiles = Object.keys(model.data.contact.social)
 
-  },
-
-  fetchData(method, url) {
-    let xhr;
-
-    if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-      xhr = new XMLHttpRequest();
-    } else if (window.ActiveXObject) { // IE
-      try {
-        xhr = new ActiveXObject('Msxml2.XMLHTTP');
-      }
-      catch (e) {
-        try {
-          xhr = new ActiveXObject('Microsoft.XMLHTTP');
-        }
-        catch (e) {}
-      }
-    }
-
-    return new Promise(function(resolve, reject) {
-
-      xhr.onload = function() {
-        if (this.readyState === 4 && this.status === 200) {
-          resolve({
-            data: JSON.parse(xhr.responseText),
-            status: this.status
-          });
-        } else {
-          reject(new Error('Could not retrieve data from: ' + url))
-        }
-      }
-
-      xhr.onerror = function(e) {
-        reject({ error: e })
-      };
-
-      xhr.open(method, url, true);
-      xhr.send();
-    });
-  },
-
-  loadResumeData() {
-    return new Promise((resolve, reject) => {
-      this.fetchData('GET', './data.json')
-        .then(res => {
-          resolve(res.data.resumeData)
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
   },
 
   getResumeData() {
