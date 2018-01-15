@@ -13,51 +13,59 @@ events.on('consoleViewRender', data => {
 const consoleView = { 
   init () {
     this.vdom = null
-    this.elements = {
-      promptContainer: document.getElementById('command-prompt-container'),
-      listItemsContainer: document.getElementById('commands'),
-      consoleContainer: document.getElementById('console-selector'),
-      promptInput: document.getElementById('command-input')
-    }
-
-    this.bindEvents()
     this.render()
+    this.bindEvents()
   },
-
+  
   bindEvents () {
-    this.elements.consoleContainer.addEventListener('click', () => {
-      this.elements.promptInput.focus();
-    })
-
-    this.elements.promptContainer.addEventListener('submit', e => {
-      e.preventDefault();
-      controller.enterCommand(e.target.prompt.value);
-      e.target.prompt.value = '';
+    const consoleContainer = document.getElementById('console-selector')
+ 
+    consoleContainer.addEventListener('click', (e) => {
+      document.getElementById('command-input').focus()
     })
   },
 
   render () {
-    const commands = controller.getPreviousCommands()
-
-    if (controller.getEnteredCommands()) {
-      this.elements.promptInput.value = controller.getEnteredCommands().text
-    } else {
-      this.elements.promptInput.value = ''
+    const handleSubmit = e => {
+      e.preventDefault();
+      controller.enterCommand(e.target.prompt.value);
+      e.target.prompt.value = '';
     }
 
     // Create virtual dom from jsx
     const vnodes = (
-      <ul className="console__command-list">
-        {commands.map(command => 
-          <li className={`console__command-list-item console__command-list-item--${command.type}`}> 
-            {(command.type === 'command') ? `$ ${command.text}` : command.text}
-          </li>
-        )}
-      </ul>
+      <div>
+        <ul className="console__command-list">
+          {controller.getPreviousCommands().map(command => 
+            <li key={command._id} className={`console__command-list-item console__command-list-item--${command.type}`}> 
+              {(command.type === 'command') ? `$ ${command.text}` : command.text}
+            </li>
+          )}
+        </ul>
+        <form onSubmit={handleSubmit}>
+          <span>$&nbsp;</span>
+          <input
+            type="text" 
+            name="prompt" 
+            id="command-input" 
+            className="console__prompt" 
+            autocomplete="off"
+            value={controller.getEnteredCommands().text}
+            forceUpdate={true}
+          />
+        </form>
+      </div>
     )
 
     // diff dom and render into container
-    this.vdom = render(this.elements.listItemsContainer, vnodes, this.vdom)
+    this.vdom = render(
+      document.getElementById('commands'), // container
+      vnodes, 
+      this.vdom
+    )
+    
+    // alway focus the input
+    document.getElementById('command-input').focus()
   }
 }
 

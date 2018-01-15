@@ -1,40 +1,42 @@
 import events from '../utils/events';
+import { uuid } from '../utils/helpers'
 import model from '../data';
 
-import json from '../../data.json';
+class Command {
+  constructor(text, type) {
+    this.text = text
+    this.type = type
+    this._id = uuid()
+  }
+}
 
 const controller = {
-  init(){
+  init () {
     model.currentOutput = model.defaultMessage;
 
     events.emit('resumeContentViewInit', null);
     events.emit('consoleViewInit', null);
 
-    model.data = json.resumeData;
     model.socialProfiles = Object.keys(model.data.contact.social)
-
   },
 
-  getResumeData() {
+  getResumeData () {
     return model.data;
   },
 
-  getDefaultData() {
+  getDefaultData () {
     return model.defaultMessage;
   },
 
-  getCurrentOutput() {
+  getCurrentOutput () {
     return model.currentOutput;
   },
 
-  updateOutput(newOutput) {
-    return new Promise((resolve, reject) => {
-      model.currentOutput = newOutput;
-      resolve();
-    })
+  updateOutput (newOutput) {
+    model.currentOutput = newOutput;
   },
 
-  executeKeypress(key) {
+  executeKeypress (key) {
     if (key === 'UP' || key === 'DOWN') {
       if(key === 'UP' &&
       model.enteredCommands.pointer < model.enteredCommands.data.length) {
@@ -53,52 +55,50 @@ const controller = {
       this.executeCommand('clear');
     }
 
-
     // consoleView.render();
     events.emit('consoleViewRender', null);
-
   },
 
-  getKeyCommands() {
+  getKeyCommands () {
     return model.keyCommands;
   },
 
-  getEnteredCommands() {
-    return model.enteredCommands.currentCommand;
+  getEnteredCommands () {
+    return model.enteredCommands.currentCommand
+      ? model.enteredCommands.currentCommand
+      : { text: '' }
   },
 
-  getCommand(text) {
-    return model.commands.filter(c => {
-      return c.text === text;
-    })
+  getCommand (text) {
+    return model.commands.filter(c => c.text === text)
   },
 
-  enterCommand(command) {
+  getPreviousCommands (){
+    return model.previousCommands;
+  },
+
+  getFileName (){
+    return Object.keys(model.currentOutput)[0];
+  },
+
+  enterCommand (command) {
     command = command.trim();
 
     let flag = false;
     const args = command.split(' ');
 
     if (args[0] !== '') {
-      model.previousCommands.push({
-        text: command,
-        type: 'command'
-      });
+      const newCommand = new Command(command, 'command')
 
-      let lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1];
+      model.previousCommands.push(newCommand);
+
+      const lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1];
       if (lastCommand) {
         if(command !== lastCommand.text){
-          model.enteredCommands.data.push({
-            text: command,
-            type: 'command'
-          });
+          model.enteredCommands.data.push(newCommand);
         }
-
       } else {
-        model.enteredCommands.data.push({
-          text: command,
-          type: 'command'
-        });
+        model.enteredCommands.data.push(newCommand);
       }
 
       model.enteredCommands.pointer = 0;
@@ -107,14 +107,10 @@ const controller = {
     flag = model.commands.filter(o => o.text === args[0])
 
     if (!flag.length) {
-      model.previousCommands.push({
-        text: 'command not found: ' + args[0],
-        type: 'error'
-      },
-      {
-        text: 'to view available commands type: help',
-        type: 'response'
-      });
+      model.previousCommands.push(
+        new Command('command not found: ' + args[0], 'error'),
+        new Command('to view available commands type: help', 'response')
+      );
     } else {
       this.executeCommand(command);
     }
@@ -122,56 +118,51 @@ const controller = {
     events.emit('consoleViewRender', null);
   },
 
-  executeCommand(command) {
+  executeCommand (command) {
     const self = this
     const comArgs = command.split(' ');
 
     let commands = {
       pwd () {
         if(comArgs.length !== 1) {
-          model.previousCommands.push({
-            text: "'pwd' does not need any arguments",
-            type: 'error'
-          });
+          model.previousCommands.push(
+            new Command("'pwd' does not need any arguments", 'error')
+          );
           // consoleView.render();
           events.emit('consoleViewRender', null);
-
-          return;
-        }
-
-        model.previousCommands.push({
-          text: window.location.host,
-          type: 'bold'
-        })
-      },
-
-      ls () {
-        if(comArgs.length !== 1) {
-          model.previousCommands.push({
-            text: "'ls' does not need any arguments",
-            type: 'error'
-          });
-          // consoleView.render();
-          events.emit('consoleViewRender', null);
-
 
           return;
         }
 
         model.previousCommands.push(
-          { text: "index.html", type: 'response' },
-          { text: "main.js", type: 'response' },
-          { text: "style.css", type: 'response' }
+          new Command(window.location.host, 'bold')
+        )
+      },
+
+      ls () {
+        if(comArgs.length !== 1) {
+          model.previousCommands.push(
+            new Command("'ls' does not need any arguments", 'error')
+          );
+          // consoleView.render();
+          events.emit('consoleViewRender', null);
+
+          return;
+        }
+
+        model.previousCommands.push(
+          new Command('index.html', 'response'),
+          new Command('app.js', 'response'),
+          new Command('style.css', 'response')
         )
 
       },
 
       clear () {
         if (comArgs.length !== 1){
-          model.previousCommands.push({
-            text: "'clear' does not need any arguments",
-            type: 'error'
-          });
+          model.previousCommands.push(
+            new Command("'clear' does not need any arguments", 'error')
+          );
           return;
         }
 
@@ -181,7 +172,7 @@ const controller = {
       help () {
         const commands = model.commands;
         model.previousCommands.push(
-          { text: 'Available Commands:', type: 'bold'}
+          new Command('Available Commands:', 'bold')
         );
         commands.forEach(function(avalCommand, i) {
           if (avalCommand.ignored !== true && avalCommand.text !== '') {
@@ -189,31 +180,26 @@ const controller = {
               ? `- ${avalCommand.text} [${avalCommand.params.toLocaleString()}]`
               : `- ${avalCommand.text}`
 
-            model.previousCommands.push({
-              text: response,
-              type: 'response'
-            });
+            model.previousCommands.push(
+              new Command(response, 'response')
+            );
           }
         })
       },
 
       open () {
         const openResume = () => {
-          self.updateOutput({resume: model.data})
-            .then((res) => {
-              // resumeContentView.render();
-              events.emit('resumeContentViewRender', null);
-            });
+          self.updateOutput({ resume: model.data })
+          events.emit('resumeContentViewRender', null);
         };
 
         const pdf = () => {
           window.open("http://johnsylvain.me/resume.pdf");
         }
         if (comArgs.length === 1) {
-          model.previousCommands.push({
-            text: "type 'open [" + controller.getCommand('open')[0].params + "]'",
-            type: 'warning'
-          })
+          model.previousCommands.push(
+            new Command("type 'open [" + controller.getCommand('open')[0].params + "]'", 'warning')
+          )
         } else {
           return {
             resume: openResume,
@@ -224,20 +210,16 @@ const controller = {
 
       show () {
         const showSection = (section) => () => {
-          let obj = {};
-          obj[section] = model.data[section];
-          self.updateOutput(obj)
-            .then(() => {
-              // resumeContentView.render();
-              events.emit('resumeContentViewRender', null);
-            })
+          self.updateOutput({
+            [section]: model.data[section]
+          })
+          events.emit('resumeContentViewRender', null);
         }
 
         if (comArgs.length === 1) {
-          model.previousCommands.push({
-            text: "type 'show [" + controller.getCommand('show')[0].params + "]'",
-            type: 'warning'
-          })
+          model.previousCommands.push(
+            new Command("type 'show [" + controller.getCommand('show')[0].params + "]'", 'warning')
+          )
         } else {
           return {
             education: showSection('education'),
@@ -262,10 +244,9 @@ const controller = {
         }
 
         if (comArgs.length === 1) {
-          model.previousCommands.push({
-            text: "type 'social [" + controller.getCommand('social')[0].params + "]'",
-            type: 'warning'
-          })
+          model.previousCommands.push(
+            new Command("type 'social [" + controller.getCommand('social')[0].params + "]'", 'warning')
+          )
         } else {
           return{
             github: openLink('github'),
@@ -311,10 +292,9 @@ const controller = {
         }
 
         if (comArgs.length === 1) {
-          model.previousCommands.push({
-            text: "error",
-            type: 'error'
-          });
+          model.previousCommands.push(
+            new Command('error', 'error')
+          );
         } else {
           return {
             '-rf': rf
@@ -329,7 +309,7 @@ const controller = {
     // consoleView.render();
     events.emit('resumeContentViewRender', null);
 
-
+    
     if (comArgs.length === 1) {
       commands[comArgs[0]]();
     } else if(comArgs[0] === 'email'){
@@ -339,23 +319,12 @@ const controller = {
       if(subCommand[comArgs[1]]) {
         subCommand[comArgs[1]]()
       } else {
-        model.previousCommands.push({
-          text: comArgs[1] + ' is not a proper parameter of \'' + comArgs[0] + '\'',
-          type: 'error'
-        })
+        model.previousCommands.push(
+          new Command(comArgs[1] + ' is not a proper parameter of \'' + comArgs[0] + '\'', 'error')
+        )
       }
     }
-
-  },
-
-  getPreviousCommands(){
-    return model.previousCommands;
-  },
-
-  getFileName(){
-    return Object.keys(model.currentOutput)[0];
   }
-
 }
 
 export default controller;

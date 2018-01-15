@@ -1,13 +1,16 @@
+import json from '../../data.json';
+
 let model = {
   keyCommands: [
     { code: 38, shortcut: null, action: 'UP' },
     { code: 40, shortcut: null, action: 'DOWN' },
-    { code: 75, shortcut: 'ctrlKey', action: 'CLEAR' }
+    // { code: 75, shortcut: 'ctrlKey', action: 'CLEAR' }
   ],
   previousCommands: [
     {
       text: 'type \'help\' to view commands',
-      type: 'response'
+      type: 'response',
+      _id: 1
     }
   ],
   enteredCommands: {
@@ -20,7 +23,7 @@ let model = {
   commands: [
     { text: '',	params: null },
     { text: 'help', params: null },
-    { text: 'clear', params: null },
+    // { text: 'clear', params: null },
     { text: 'pwd', params: null, ignored: true },
     { text: 'ls', params: null, ignored: true },
     { text: 'email', params: ['<subject>'] },
@@ -36,7 +39,7 @@ let model = {
       "type 'help' to view other commands"
     ]
   },
-  data: {}
+  data: json.resumeData
 };
 
 export default model;

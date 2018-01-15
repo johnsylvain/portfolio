@@ -37,16 +37,16 @@ const app = {
 
     window.addEventListener('keyup', this.handleKeypress.bind(this));
 
-    Array.from(document.getElementsByClassName('toggle-btn')).forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        router.go({route: e.target.href});
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', event => {
+        event.preventDefault();
+        router.go({ route: event.target.href });
       });
     });
 
     window.addEventListener('resize', throttle((event) => {
       if(window.innerWidth <= this.breakpoint) {
-        router.go({route: '#/'});
+        router.go({ route: '#/' });
       }
     }, 250, this));
 
@@ -55,7 +55,6 @@ const app = {
     })
 
     document.querySelector('#date-selector').textContent = new Date().getFullYear().toString()
-
   },
 
   handleKeypress (e) {

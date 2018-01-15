@@ -2,6 +2,7 @@ import controller from '../controller'
 import events from '../utils/events'
 import * as filters from '../utils/filters'
 import { compose } from '../utils/helpers'
+import { h, render } from '../utils/dom'
 
 events.on('resumeContentViewInit', data => {
   resumeContentView.init()
@@ -12,25 +13,39 @@ events.on('resumeContentViewRender', data => {
 
 const resumeContentView = {
   init () {
-    this.resumeContainerElem = document.getElementById('resume-code')
-    this.fileNameElem = document.getElementById('file-name')
+    this.vdom = null
     this.render()
-  },
-
-  format (data) {
-    return compose(
-      (d) => JSON.stringify(d, null, '   '),
-      filters.textToJSON,
-      filters.findUrls
-    )(data)
   },
 
   render () {
     const data = controller.getCurrentOutput()
-    const json = this.format(data)
+    const json = compose(
+      (d) => JSON.stringify(d, null, '   '),
+      filters.textToJSON,
+      filters.findUrls
+    )(data)
 
-    this.resumeContainerElem.innerHTML = json
-    this.fileNameElem.textContent = controller.getFileName()
+    const vnodes = (
+      <div>
+        <div class="menu-bar clearfix">
+          <div class="menu-bar__circle"></div>
+          <div class="menu-bar__circle"></div>
+          <div class="menu-bar__circle"></div>
+          <span class="menu-bar__title">
+            {controller.getFileName()}.json
+          </span>
+        </div>
+        <div id="resume-content">
+          <pre __html={json} forceUpdate={true}></pre>
+        </div>
+      </div>
+    )
+
+    this.vdom = render(
+      document.querySelector('#resume-wrapper'), 
+      vnodes, 
+      this.vdom
+    )
   }
 }
 
