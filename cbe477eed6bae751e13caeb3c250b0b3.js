@@ -181,7 +181,7 @@ var uuid = exports.uuid = function uuid() {
     return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
   });
 };
-},{}],27:[function(require,module,exports) {
+},{}],28:[function(require,module,exports) {
 module.exports = {
   "resumeData": {
     "name": "John Sylvain",
@@ -277,7 +277,7 @@ module.exports = {
   }
 }
 ;
-},{}],28:[function(require,module,exports) {
+},{}],27:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -314,7 +314,7 @@ var model = {
 };
 
 exports.default = model;
-},{"../../data.json":27}],25:[function(require,module,exports) {
+},{"../../data.json":28}],25:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -606,7 +606,7 @@ var controller = {
 };
 
 exports.default = controller;
-},{"../utils/events":12,"../utils/helpers":13,"../data":28}],31:[function(require,module,exports) {
+},{"../utils/events":12,"../utils/helpers":13,"../data":27}],24:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -645,7 +645,7 @@ function findUrls(text) {
     return '<a href="' + url + '" target="_blank">' + match + '</a>';
   });
 }
-},{}],32:[function(require,module,exports) {
+},{}],23:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -676,16 +676,9 @@ function createElement(vnode) {
   var node = document.createElement(vnode.nodeName);
 
   for (var name in vnode.attributes) {
-    if (isEventProp(name)) //  test if event
+    if (/^on/.test(name)) //  test if event
       node.addEventListener(name.slice(2).toLowerCase(), vnode.attributes[name]);else {
-      if (name === 'className') node.setAttribute('class', vnode.attributes[name]);else if (name === '__html') node.innerHTML = vnode.attributes[name];else if (typeof vnode.attributes[name] === 'boolean') {
-        if (vnode.attributes[node]) {
-          node.setAttribute(name, vnode.attributes[node]);
-          node[name] = true;
-        } else {
-          node[name] = false;
-        }
-      } else node.setAttribute(name, vnode.attributes[name]);
+      if (name === 'className') node.setAttribute('class', vnode.attributes[name]);else if (name === '__html') node.innerHTML = vnode.attributes[name];else node.setAttribute(name, vnode.attributes[name]);
     }
   }
 
@@ -694,24 +687,9 @@ function createElement(vnode) {
   }return node;
 }
 
-function setBooleanProp(target, name, value) {
-  console.log(name);
-  if (value) {
-    target.setAttribute(name, value);
-    target[name] = true;
-  } else {
-    target[name] = false;
-  }
-}
-
 function changed(node1, node2) {
   return (typeof node1 === "undefined" ? "undefined" : _typeof(node1)) !== (typeof node2 === "undefined" ? "undefined" : _typeof(node2)) || typeof node1 === 'string' && node1 !== node2 || node1.nodeName !== node2.nodeName || node1.attributes && node1.attributes.forceUpdate;
 }
-
-var isEventProp = function isEventProp(name) {
-  return (/^on/.test(name)
-  );
-};
 
 function render(parent, newNode, oldNode) {
   var index = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
@@ -729,7 +707,7 @@ function render(parent, newNode, oldNode) {
   // return new virtual dom
   return newNode;
 }
-},{}],29:[function(require,module,exports) {
+},{}],15:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -802,7 +780,7 @@ var resumeContentView = {
 };
 
 exports.default = resumeContentView;
-},{"../controller":25,"../utils/events":12,"../utils/filters":31,"../utils/helpers":13,"../utils/dom":32}],30:[function(require,module,exports) {
+},{"../controller":25,"../utils/events":12,"../utils/filters":24,"../utils/helpers":13,"../utils/dom":23}],14:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -894,7 +872,7 @@ var consoleView = {
 };
 
 exports.default = consoleView;
-},{"../controller":25,"../utils/events":12,"../utils/dom":32}],26:[function(require,module,exports) {
+},{"../controller":25,"../utils/events":12,"../utils/dom":23}],26:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -1080,7 +1058,7 @@ var app = {
 };
 
 app.init();
-},{"./utils/router":11,"./utils/events":12,"./utils/helpers":13,"./controller":25,"./views/resumeContent":29,"./views/console":30,"../styles/style.scss":10}],0:[function(require,module,exports) {
+},{"./utils/router":11,"./utils/events":12,"./utils/helpers":13,"./controller":25,"./views/resumeContent":15,"./views/console":14,"../styles/style.scss":10}],0:[function(require,module,exports) {
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
 function Module() {
@@ -1098,7 +1076,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://' + window.location.hostname + ':60033/');
+  var ws = new WebSocket('ws://' + window.location.hostname + ':61544/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 
