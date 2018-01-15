@@ -27,11 +27,11 @@ const resumeContentView = {
 
     const vnodes = (
       <div>
-        <div class="menu-bar clearfix">
-          <div class="menu-bar__circle"></div>
-          <div class="menu-bar__circle"></div>
-          <div class="menu-bar__circle"></div>
-          <span class="menu-bar__title">
+        <div className="menu-bar clearfix">
+          <div className="menu-bar__circle"></div>
+          <div className="menu-bar__circle"></div>
+          <div className="menu-bar__circle"></div>
+          <span className="menu-bar__title">
             {controller.getFileName()}.json
           </span>
         </div>
