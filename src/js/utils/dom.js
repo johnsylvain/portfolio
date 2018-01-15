@@ -13,7 +13,7 @@ function createElement (vnode) {
   let node = document.createElement(vnode.nodeName)
   
   for (let name in vnode.attributes) {
-    if (isEventProp(name)) //  test if event
+    if (/^on/.test(name)) //  test if event
       node.addEventListener(
         name.slice(2).toLowerCase(),
         vnode.attributes[name]
@@ -23,14 +23,6 @@ function createElement (vnode) {
         node.setAttribute('class', vnode.attributes[name])
       else if (name === '__html')
         node.innerHTML = vnode.attributes[name]
-      else if (typeof vnode.attributes[name] === 'boolean') {
-        if (vnode.attributes[node]) {
-          node.setAttribute(name, vnode.attributes[node])
-          node[name] = true
-        } else {
-          node[name] = false
-        }
-      }
       else
         node.setAttribute(name, vnode.attributes[name])
     }
@@ -42,24 +34,12 @@ function createElement (vnode) {
   return node
 }
 
-function setBooleanProp(target, name, value) {
-  console.log(name)
-  if (value) {
-    target.setAttribute(name, value);
-    target[name] = true;
-  } else {
-    target[name] = false;
-  }
-}
-
 function changed (node1, node2) {
   return typeof node1 !== typeof node2 ||
          typeof node1 === 'string' && node1 !== node2 ||
          node1.nodeName !== node2.nodeName ||
          node1.attributes && node1.attributes.forceUpdate
 }
-
-const isEventProp = name => /^on/.test(name)
 
 export function render (parent, newNode, oldNode, index = 0) {
   if (!oldNode) 
