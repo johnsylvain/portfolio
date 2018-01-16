@@ -1,22 +1,16 @@
 import events from '../utils/events';
-import { uuid } from '../utils/helpers'
 import model from '../data';
 
 class Command {
   constructor(text, type) {
     this.text = text
     this.type = type
-    this._id = uuid()
   }
 }
 
 const controller = {
   init () {
     model.currentOutput = model.defaultMessage;
-
-    events.emit('resumeContentViewInit', null);
-    events.emit('consoleViewInit', null);
-
     model.socialProfiles = Object.keys(model.data.contact.social)
   },
 

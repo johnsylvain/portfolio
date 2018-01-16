@@ -4,18 +4,18 @@ import * as filters from '../utils/filters'
 import { compose } from '../utils/helpers'
 import { h, render } from '../utils/dom'
 
-events.on('resumeContentViewInit', data => {
-  resumeContentView.init()
-})
-events.on('resumeContentViewRender', data => {
-  resumeContentView.render()
-})
-
-const resumeContentView = {
-  init () {
+export default class ResumeView {
+  constructor () {
     this.vdom = null
     this.render()
-  },
+    this.bindEvents()
+  }
+  
+  bindEvents () {
+    events.on('resumeContentViewRender', data => {
+      this.render()
+    })
+  }
 
   render () {
     const data = controller.getCurrentOutput()
@@ -48,5 +48,3 @@ const resumeContentView = {
     )
   }
 }
-
-export default resumeContentView

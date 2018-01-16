@@ -3,8 +3,8 @@ import events from './utils/events';
 import { throttle } from './utils/helpers';
 
 import controller from './controller';
-import resumeContentView from './views/resumeContent';
-import consoleView from './views/console';
+import ResumeView from './views/resume';
+import ConsoleView from './views/console';
 
 import '../styles/style.scss';
 
@@ -15,6 +15,8 @@ const app = {
 
   init () {
     controller.init();
+    new ResumeView();
+    new ConsoleView();
 
     const routes = [
       {
@@ -27,9 +29,8 @@ const app = {
         path: '/resume',
         controller: () => {
           events.emit('switchModes', { flag: false });
-          if(window.innerWidth <= this.breakpoint) {
+          if(window.innerWidth <= this.breakpoint)
             router.go({ route: '#/' });
-          }
         }
       }
     ]
@@ -45,7 +46,7 @@ const app = {
     });
 
     window.addEventListener('resize', throttle((event) => {
-      if(window.innerWidth <= this.breakpoint) {
+      if (window.innerWidth <= this.breakpoint) {
         router.go({ route: '#/' });
       }
     }, 250, this));

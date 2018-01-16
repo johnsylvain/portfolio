@@ -2,20 +2,12 @@ import controller from '../controller'
 import events from '../utils/events'
 import { h, render } from '../utils/dom'
 
-events.on('consoleViewInit', data => {
-  consoleView.init()
-})
-
-events.on('consoleViewRender', data => {
-  consoleView.render()
-})
-
-const consoleView = { 
-  init () {
+export default class ConsoleView { 
+  constructor () {
     this.vdom = null
     this.render()
     this.bindEvents()
-  },
+  }
   
   bindEvents () {
     const consoleContainer = document.getElementById('console-selector')
@@ -23,7 +15,11 @@ const consoleView = {
     consoleContainer.addEventListener('click', (e) => {
       document.getElementById('command-input').focus()
     })
-  },
+
+    events.on('consoleViewRender', data => {
+      this.render()
+    })
+  }
 
   render () {
     const handleSubmit = e => {
@@ -68,5 +64,3 @@ const consoleView = {
     document.getElementById('command-input').focus()
   }
 }
-
-export default consoleView
