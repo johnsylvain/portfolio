@@ -9,16 +9,17 @@ import ConsoleView from './views/console';
 import '../styles/style.scss';
 
 const app = {
-  pageWidth: window.innerWidth,
   breakpoint: 768,
   interactiveMode: false,
 
   init () {
-    controller.init();
-    new ResumeView();
-    new ConsoleView();
+    controller.init()
+    new ResumeView()
+    new ConsoleView()
 
-    const routes = [
+    this.bindEvents()
+
+    this.router = new Router([
       {
         path: '/',
         controller: function() {
@@ -30,32 +31,33 @@ const app = {
         controller: () => {
           events.emit('switchModes', { flag: false });
           if(window.innerWidth <= this.breakpoint)
-            router.go({ route: '#/' });
+            this.router.go({ route: '#/' });
         }
       }
-    ]
-    const router = new Router(routes);
+    ])
 
+    document.querySelector('#date-selector').textContent = new Date().getFullYear().toString()
+  },
+
+  bindEvents () {
     window.addEventListener('keyup', this.handleKeypress.bind(this));
 
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       btn.addEventListener('click', event => {
         event.preventDefault();
-        router.go({ route: event.target.href });
+        this.router.go({ route: event.target.href });
       });
     });
 
     window.addEventListener('resize', throttle((event) => {
       if (window.innerWidth <= this.breakpoint) {
-        router.go({ route: '#/' });
+        this.router.go({ route: '#/' });
       }
     }, 250, this));
 
     events.on('switchModes', data => {
       this.switchModes(data.flag);
     })
-
-    document.querySelector('#date-selector').textContent = new Date().getFullYear().toString()
   },
 
   handleKeypress (e) {
