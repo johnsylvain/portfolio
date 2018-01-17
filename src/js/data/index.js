@@ -1,4 +1,4 @@
-import json from '../../data.json';
+import json from './data.json';
 
 let model = {
   keyCommands: [
