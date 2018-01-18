@@ -40,8 +40,6 @@ const app = {
   },
 
   bindEvents () {
-    window.addEventListener('keyup', this.handleKeypress.bind(this));
-
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       btn.addEventListener('click', event => {
         event.preventDefault();
@@ -60,19 +58,8 @@ const app = {
     })
   },
 
-  handleKeypress (e) {
-    const availableKeys = controller.getKeyCommands();
-    const keyPress = availableKeys.find(key => (key.shortcut)
-      ? key.code === e.which && e[key.shortcut]
-      : key.code === e.which
-    )
-
-    if (keyPress) controller.executeKeypress(keyPress.action);
-  },
-
   switchModes (flag) {
     const btn = document.getElementById('toggle-interactive');
-
     const targets = [
       document.getElementById('page-wrap'),
       document.getElementById('landing-wrapper'),

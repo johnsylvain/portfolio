@@ -37,12 +37,12 @@ header {
     opacity: 0.8;
     margin-top: 10px;
     transition: transform 0.5s, background-image 0.5s, opacity 0.2s;
-    background-image: url('../img/code.svg');
+    background-image: url('../assets/code.svg');
     &.interactiveMode {
-      background-image: url('../img/close.svg');
+      background-image: url('../assets/close.svg');
     }
     &.nonInteractiveMode {
-      background-image: url('../img/code.svg');
+      background-image: url('../assets/code.svg');
     }
     &:hover {
       opacity: 0.9;

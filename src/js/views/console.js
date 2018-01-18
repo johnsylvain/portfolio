@@ -1,6 +1,7 @@
 import controller from '../controller'
 import events from '../utils/events'
 import { h, render } from '../utils/dom'
+import { defer } from '../utils/helpers'
 
 export default class ConsoleView { 
   constructor () {
@@ -19,6 +20,17 @@ export default class ConsoleView {
     events.on('consoleViewRender', data => {
       this.render()
     })
+
+    window.addEventListener('keyup', (e) => {
+      const availableKeys = controller.getKeyCommands();
+      const keyPress = availableKeys.find(key => (key.shortcut)
+        ? key.code === e.which && e[key.shortcut]
+        : key.code === e.which
+      )
+  
+      if (keyPress && document.activeElement.id === 'command-input') 
+        controller.executeKeypress(keyPress.action)
+    })
   }
 
   render () {
@@ -33,7 +45,7 @@ export default class ConsoleView {
       <div>
         <ul className="console__command-list">
           {controller.getPreviousCommands().map(command => 
-            <li key={command._id} className={`console__command-list-item console__command-list-item--${command.type}`}> 
+            <li className={`console__command-list-item console__command-list-item--${command.type}`}> 
               {(command.type === 'command') ? `$ ${command.text}` : command.text}
             </li>
           )}
@@ -52,7 +64,7 @@ export default class ConsoleView {
         </form>
       </div>
     )
-
+    
     // diff dom and render into container
     this.vdom = render(
       document.getElementById('commands'), // container
