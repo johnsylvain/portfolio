@@ -1,7 +1,6 @@
 import controller from '../controller'
 import events from '../utils/events'
 import { h, render } from '../utils/dom'
-import { defer } from '../utils/helpers'
 
 export default class ConsoleView { 
   constructor () {
@@ -40,7 +39,6 @@ export default class ConsoleView {
       e.target.prompt.value = '';
     }
 
-    // Create virtual dom from jsx
     const vnodes = (
       <div>
         <ul className="console__command-list">
