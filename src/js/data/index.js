@@ -1,4 +1,4 @@
-import json from './data.json';
+import json from './data.json'
 
 let model = {
   keyCommands: [
@@ -9,8 +9,7 @@ let model = {
   previousCommands: [
     {
       text: 'type \'help\' to view commands',
-      type: 'response',
-      _id: 1
+      type: 'response'
     }
   ],
   enteredCommands: {
@@ -19,7 +18,6 @@ let model = {
     pointer: 0,
   },
   currentOutput: null,
-  socialProfiles: [],
   commands: [
     { text: '',	params: null },
     { text: 'help', params: null },
@@ -40,6 +38,6 @@ let model = {
     ]
   },
   data: json.resumeData
-};
+}
 
-export default model;
+export default model

@@ -3,29 +3,29 @@ class Router {
     this.routes = {}
 
     routes.forEach(route => {
-      this.addRoute(route.path, route.controller);
+      this.addRoute(route.path, route.controller)
     })
 
-    window.addEventListener('hashchange', this.go.bind(this));
-    window.addEventListener('load', this.go.bind(this));
+    window.addEventListener('hashchange', this.go.bind(this))
+    window.addEventListener('load', this.go.bind(this))
   }
 
   go(path) {
     if (path.route) history.replaceState(undefined, undefined, path.route)
 
-    const url = location.hash.slice(1) || '/';
-    const route = this.routes[url];
+    const url = location.hash.slice(1) || '/'
+    const route = this.routes[url]
 
-    if (route && route.controller) route.controller();
+    if (route && route.controller) route.controller()
     else {
-      this.routes['/'].controller();
-      history.replaceState(undefined, undefined, '#/');
+      this.routes['/'].controller()
+      history.replaceState(undefined, undefined, '#/')
     }
   }
 
   addRoute(path, controller) {
-    this.routes[path] = { controller };
+    this.routes[path] = { controller }
   }
 }
 
-export default Router;
+export default Router

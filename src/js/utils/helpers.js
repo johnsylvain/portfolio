@@ -3,11 +3,11 @@ export function throttle(func, threshhold, scope) {
 
   return function() {
     if (!wait) {
-      func.apply(scope, arguments);
-      wait = true;
+      func.apply(scope, arguments)
+      wait = true
       setTimeout(function() {
         wait = false
-      }, threshhold);
+      }, threshhold)
     }
   }
 }

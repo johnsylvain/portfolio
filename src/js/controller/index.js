@@ -1,40 +1,39 @@
-import events from '../utils/events';
-import model from '../data';
+import events from '../utils/events'
+import model from '../data'
 
 const controller = {
   init () {
-    model.currentOutput = model.defaultMessage;
-    model.socialProfiles = Object.keys(model.data.contact.social)
+    model.currentOutput = model.defaultMessage
   },
 
   getCurrentOutput () {
-    return model.currentOutput;
+    return model.currentOutput
   },
 
   updateOutput (newOutput) {
-    model.currentOutput = newOutput;
+    model.currentOutput = newOutput
   },
 
   executeKeypress (key) {
     if (key === 'UP' || key === 'DOWN') {
       if (key === 'UP' && model.enteredCommands.pointer < model.enteredCommands.data.length)
-        model.enteredCommands.pointer += 1;
+        model.enteredCommands.pointer += 1
 
       if (key === 'DOWN' && model.enteredCommands.pointer > 0)
-        model.enteredCommands.pointer -= 1;
+        model.enteredCommands.pointer -= 1
 
-      const pos = model.enteredCommands.data.length - model.enteredCommands.pointer;
-      model.enteredCommands.currentCommand = model.enteredCommands.data[pos];
+      const pos = model.enteredCommands.data.length - model.enteredCommands.pointer
+      model.enteredCommands.currentCommand = model.enteredCommands.data[pos]
     }
 
     if (key === 'CLEAR')
-      this.executeCommand('clear');
+      this.executeCommand('clear')
 
     events.emit('consoleViewRender')
   },
 
   getKeyCommands () {
-    return model.keyCommands;
+    return model.keyCommands
   },
 
   getEnteredCommands () {
@@ -48,11 +47,11 @@ const controller = {
   },
 
   getPreviousCommands (){
-    return model.previousCommands;
+    return model.previousCommands
   },
 
   getFileName (){
-    return Object.keys(model.currentOutput)[0];
+    return Object.keys(model.currentOutput)[0]
   },
 
   enterCommand (command) {
@@ -91,7 +90,7 @@ const controller = {
 
   executeCommand (command) {
     const self = this
-    const comArgs = command.split(' ');
+    const comArgs = command.split(' ')
 
     const checkArguments = (expected, name) => {
       if (comArgs.length !== expected) {
@@ -134,7 +133,7 @@ const controller = {
           'clear'
         )
 
-        model.previousCommands = [];
+        model.previousCommands = []
       },
 
       help () {
@@ -143,10 +142,10 @@ const controller = {
           'help'
         )
 
-        const commands = model.commands;
+        const commands = model.commands
         model.previousCommands.push(
           { text: 'Available Commands:', type: 'bold' }
-        );
+        )
         commands.forEach((avalCommand, i) => {
           if (avalCommand.ignored !== true && avalCommand.text !== '') {
             const response = (avalCommand.params !== null)
@@ -155,7 +154,7 @@ const controller = {
 
             model.previousCommands.push(
               { text: response, type: 'response' }
-            );
+            )
           }
         })
       },
@@ -166,7 +165,7 @@ const controller = {
         }
 
         const pdf = () => {
-          window.open("http://johnsylvain.me/resume.pdf");
+          window.open("http://johnsylvain.me/resume.pdf")
         }
         if (comArgs.length === 1) {
           model.previousCommands.push(
@@ -202,14 +201,14 @@ const controller = {
       },
 
       email () {
-        let subject = '';
+        let subject = ''
         for (let i = 1; i < comArgs.length; i++) {
           subject += (' ' + comArgs[i])
-        };
-        window.open('mailto:hi@johnsylvain.me?subject=' + subject);
+        }
+        window.open('mailto:hi@johnsylvain.me?subject=' + subject)
       },
 
-      social (){
+      social () {
         const openLink = (site) => () => {
           window.open(model.data.contact.social[site])
         }
@@ -229,41 +228,35 @@ const controller = {
       rm () {
         const rf = () => {
           const targets = [
-            document.getElementById('wrapper'),
-            document.getElementsByClassName('trash'),
-          ];
+            document.querySelector('#wrapper'),
+            document.querySelectorAll('.trash'),
+          ]
 
-          document.getElementById('command-input').disabled = true;
-          targets.forEach(function(el, i) {
-            if(Array.from(el)[0]){
-              Array.from(el).forEach(function(e) {
-                e.classList.add('crash');
-              })
+          document.querySelector('#command-input').disabled = true
+          targets.forEach((el) => {
+            if (Array.from(el)[0]) {
+              el.forEach(e => { e.classList.add('crash') })
             } else {
-              el.classList.add('crash');
+              el.classList.add('crash')
             }
           })
-          window.setTimeout(function(){
-            document.getElementById('command-input').disabled = false;
-
-            targets.forEach(function(el, i) {
-              if(Array.from(el)[0]){
-                Array.from(el).forEach(function(e) {
-                  e.classList.remove('crash');
-                })
+          window.setTimeout(() => {
+            document.querySelector('#command-input').disabled = false
+            targets.forEach((el) => {              
+              if (Array.from(el)[0]) {
+                el.forEach(e => { e.classList.remove('crash') })
               } else {
-                el.classList.remove('crash');
+                el.classList.remove('crash')
               }
             })
-
-            document.getElementById('command-input').focus();
+            document.querySelector('#command-input').focus()
           }, 4000)
         }
 
         if (comArgs.length === 1) {
           model.previousCommands.push(
             { text: 'error', type: 'error' }
-          );
+          )
         } else {
           return {
             '-rf': rf
@@ -272,15 +265,17 @@ const controller = {
       }
     }
 
-    model.enteredCommands.pointer = 0;
-    model.enteredCommands.currentCommand = '';
-    
-    if (comArgs.length === 1) {
-      commands[comArgs[0]]();
-    } else if(comArgs[0] === 'email'){
-      commands[comArgs[0]]();
+    model.enteredCommands.pointer = 0
+    model.enteredCommands.currentCommand = ''
+
+    if (comArgs[0] === '') {
+      model.previousCommands.push(
+        { text: '', type: 'command' }
+      )
+    } else if (comArgs.length === 1 || comArgs[0] === 'email') {
+      commands[comArgs[0]]()
     } else if (comArgs.length > 1){
-      const subCommand = commands[comArgs[0]]();
+      const subCommand = commands[comArgs[0]]()
       if(subCommand[comArgs[1]]) {
         subCommand[comArgs[1]]()
       } else {
@@ -290,8 +285,8 @@ const controller = {
       }
     }
 
-    events.emit('resumeContentViewRender');
+    events.emit('resumeContentViewRender')
   }
 }
 
-export default controller;
+export default controller
