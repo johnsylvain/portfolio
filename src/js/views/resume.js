@@ -2,7 +2,7 @@ import controller from '../controller'
 import events from '../utils/events'
 import * as filters from '../utils/filters'
 import { compose } from '../utils/helpers'
-import { h, render } from '../utils/dom'
+import { h, render } from '../utils/vdom'
 
 export default class ResumeView {
   constructor () {
@@ -36,15 +36,16 @@ export default class ResumeView {
           </span>
         </div>
         <div id="resume-content">
-          <pre __html={json} forceUpdate={true}></pre>
+          <pre __html={json}></pre>
         </div>
       </div>
     )
 
-    this.vdom = render(
+    render(
       document.querySelector('#resume-wrapper'), 
       vnodes, 
       this.vdom
     )
+    this.vdom = vnodes
   }
 }

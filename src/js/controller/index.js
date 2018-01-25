@@ -46,8 +46,8 @@ const controller = {
     return model.commands.find(c => c.text === text)
   },
 
-  getPreviousCommands (){
-    return model.previousCommands
+  getCommandList (){
+    return model.commandList
   },
 
   getFileName (){
@@ -63,7 +63,7 @@ const controller = {
     if (args[0] !== '') {
       const newCommand = { text: command, type: 'command' }
 
-      model.previousCommands.push(newCommand)
+      model.commandList.push(newCommand)
 
       const lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1]
       if (lastCommand) {
@@ -78,7 +78,7 @@ const controller = {
     flag = model.commands.find(o => o.text === args[0])
 
     if (!flag)
-      model.previousCommands.push(
+      model.commandList.push(
         { text: 'command not found: ' + args[0], type: 'error' },
         { text: 'to view available commands type: help', type: 'response' }
       )
@@ -94,7 +94,7 @@ const controller = {
 
     const checkArguments = (expected, name) => {
       if (comArgs.length !== expected) {
-        model.previousCommands.push(
+        model.commandList.push(
           { text: `'${name}' does not need any arguments`, type: 'error' }
         )
         return
@@ -108,7 +108,7 @@ const controller = {
           'pwd'
         )
 
-        model.previousCommands.push(
+        model.commandList.push(
           { text: window.location.host, type: 'bold' }
         )
       },
@@ -119,7 +119,7 @@ const controller = {
           'ls'
         )
 
-        model.previousCommands.push(
+        model.commandList.push(
           { text: 'index.html', type: 'response' },
           { text: 'app.js', type: 'response' },
           { text: 'style.css', type: 'response' }
@@ -133,7 +133,7 @@ const controller = {
           'clear'
         )
 
-        model.previousCommands = []
+        model.commandList = []
       },
 
       help () {
@@ -143,7 +143,7 @@ const controller = {
         )
 
         const commands = model.commands
-        model.previousCommands.push(
+        model.commandList.push(
           { text: 'Available Commands:', type: 'bold' }
         )
         commands.forEach((avalCommand, i) => {
@@ -152,7 +152,7 @@ const controller = {
               ? `- ${avalCommand.text} [${avalCommand.params.toLocaleString()}]`
               : `- ${avalCommand.text}`
 
-            model.previousCommands.push(
+            model.commandList.push(
               { text: response, type: 'response' }
             )
           }
@@ -168,7 +168,7 @@ const controller = {
           window.open("http://johnsylvain.me/resume.pdf")
         }
         if (comArgs.length === 1) {
-          model.previousCommands.push(
+          model.commandList.push(
             { text: `type 'open [${controller.getCommand('open').params}]'`, type: 'warning' }
           )
         } else {
@@ -187,7 +187,7 @@ const controller = {
         }
 
         if (comArgs.length === 1) {
-          model.previousCommands.push(
+          model.commandList.push(
             { text: `type 'show [${controller.getCommand('show').params}]'`, type: 'warning' }
           )
         } else {
@@ -214,7 +214,7 @@ const controller = {
         }
 
         if (comArgs.length === 1) {
-          model.previousCommands.push(
+          model.commandList.push(
             { text: `type 'social [${controller.getCommand('social').params}]'`, type: 'warning' }
           )
         } else {
@@ -254,7 +254,7 @@ const controller = {
         }
 
         if (comArgs.length === 1) {
-          model.previousCommands.push(
+          model.commandList.push(
             { text: 'error', type: 'error' }
           )
         } else {
@@ -269,7 +269,7 @@ const controller = {
     model.enteredCommands.currentCommand = ''
 
     if (comArgs[0] === '') {
-      model.previousCommands.push(
+      model.commandList.push(
         { text: '', type: 'command' }
       )
     } else if (comArgs.length === 1 || comArgs[0] === 'email') {
@@ -279,13 +279,16 @@ const controller = {
       if(subCommand[comArgs[1]]) {
         subCommand[comArgs[1]]()
       } else {
-        model.previousCommands.push(
+        model.commandList.push(
           { text: comArgs[1] + ' is not a proper parameter of \'' + comArgs[0] + '\'', type: 'error' }
         )
       }
     }
 
+    console.log(model.commandList)
+
     events.emit('resumeContentViewRender')
+    events.emit('consoleViewRender')
   }
 }
 

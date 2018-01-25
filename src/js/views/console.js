@@ -1,6 +1,6 @@
 import controller from '../controller'
 import events from '../utils/events'
-import { h, render } from '../utils/dom'
+import { h, render } from '../utils/vdom'
 
 export default class ConsoleView { 
   constructor () {
@@ -34,15 +34,17 @@ export default class ConsoleView {
 
   render () {
     const handleSubmit = e => {
-      e.preventDefault();
-      controller.enterCommand(e.target.prompt.value);
-      e.target.prompt.value = '';
+      e.preventDefault()
+      controller.enterCommand(e.target.prompt.value)
+      e.target.prompt.value = ''
     }
+
+    const commandList = controller.getCommandList()
 
     const vnodes = (
       <div>
-        <ul className="console__command-list">
-          {controller.getPreviousCommands().map(command => 
+        <ul className="console__command-list" forceUpdate={commandList.length === 0}>
+          {commandList.map(command => 
             <li className={`console__command-list-item console__command-list-item--${command.type}`}> 
               {(command.type === 'command') ? `$ ${command.text}` : command.text}
             </li>
@@ -64,13 +66,14 @@ export default class ConsoleView {
     )
     
     // diff dom and render into container
-    this.vdom = render(
-      document.getElementById('commands'), // container
+    render(
+      document.querySelector('#commands'), // container
       vnodes, 
       this.vdom
     )
+    this.vdom = vnodes
     
     // alway focus the input
-    document.getElementById('command-input').focus()
+    document.querySelector('#command-input').focus()
   }
 }

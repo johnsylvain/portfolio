@@ -4,9 +4,9 @@ let model = {
   keyCommands: [
     { code: 38, shortcut: null, action: 'UP' },
     { code: 40, shortcut: null, action: 'DOWN' },
-    // { code: 75, shortcut: 'ctrlKey', action: 'CLEAR' }
+    { code: 75, shortcut: 'ctrlKey', action: 'CLEAR' }
   ],
-  previousCommands: [
+  commandList: [
     {
       text: 'type \'help\' to view commands',
       type: 'response'
@@ -21,7 +21,7 @@ let model = {
   commands: [
     { text: '',	params: null },
     { text: 'help', params: null },
-    // { text: 'clear', params: null },
+    { text: 'clear', params: null },
     { text: 'pwd', params: null, ignored: true },
     { text: 'ls', params: null, ignored: true },
     { text: 'email', params: ['<subject>'] },

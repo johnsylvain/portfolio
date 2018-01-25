@@ -1,4 +1,4 @@
-import Router from './utils/router'
+import Router from './utils/router.js'
 import events from './utils/events'
 import { throttle } from './utils/helpers'
 
