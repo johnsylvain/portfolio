@@ -20,12 +20,12 @@ export default class ResumeView {
   render () {
     const data = controller.getCurrentOutput()
     const json = compose(
-      (d) => JSON.stringify(d, null, '   '),
+      (d) => JSON.stringify(d, null, '  '),
       filters.textToJSON,
       filters.findUrls
     )(data)
 
-    const vnodes = (
+    const Resume = () =>
       <div>
         <div className="menu-bar clearfix">
           <div className="menu-bar__circle"></div>
@@ -36,16 +36,13 @@ export default class ResumeView {
           </span>
         </div>
         <div id="resume-content">
-          <pre __html={json}></pre>
+          <pre dangerouslySetInnerHTML={{ __html: json }}></pre>
         </div>
       </div>
-    )
 
     render(
-      document.querySelector('#resume-wrapper'), 
-      vnodes, 
-      this.vdom
+      <Resume />, 
+      document.querySelector('#resume-selector')
     )
-    this.vdom = vnodes
   }
 }

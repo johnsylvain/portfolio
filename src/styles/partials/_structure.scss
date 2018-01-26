@@ -1,15 +1,12 @@
 html, body{
 	font-family: $font-mono;
-	// background-color: #7f7f7f;
 	background: linear-gradient(270deg, #d78eff, #8ec7ff, #a74dff);
 	background-size: 300% 300%;
-	// color: #2c2c2c;
 	color:#555;
 }
 
-*{font-smoothing:antialiased;}
+*{ font-smoothing: antialiased; }
 #wrapper {
-	// background-color: #555;
 	background-color: #fff;
 
 	&.crash{
@@ -35,15 +32,18 @@ html, body{
 	min-height: 100vh;
 	flex-direction: column;
 }
+
 #content {
 	position: relative;
 }
+
 #page-wrap{
-	// padding-left: 33%;
-	transition: padding-left 0.5s ease;
+	transition: padding-left 0.4s ease;
+
 	&.interactiveMode {
 		padding-left: 27%;
 	}
+
 	&.nonInteractiveMode{
 		padding-left: 0%;
 	}

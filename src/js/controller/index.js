@@ -284,9 +284,6 @@ const controller = {
         )
       }
     }
-
-    console.log(model.commandList)
-
     events.emit('resumeContentViewRender')
     events.emit('consoleViewRender')
   }

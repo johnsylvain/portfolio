@@ -36,7 +36,7 @@ header {
     height: 60px;
     opacity: 0.8;
     margin-top: 10px;
-    transition: transform 0.5s, background-image 0.5s, opacity 0.2s;
+    transition: transform 0.4s, background-image 0.4s, opacity 0.2s;
     background-image: url('../assets/code.svg');
     &.interactiveMode {
       background-image: url('../assets/close.svg');
@@ -82,7 +82,7 @@ footer {
   font-size: 14pt;
   line-height: 140%;
   margin-top: 30px;
-  transition: visbility 0s, opacity 0.5s;
+  transition: visbility 0s, opacity 0.4s;
   z-index: 3000;
   .section {
     margin-bottom: 50px;
@@ -178,7 +178,7 @@ footer {
   }
 }
 
-#resume-wrapper {
+#resume-selector {
   font-family: $font-mono;
   position: absolute;
   border-radius: 4px;
@@ -190,7 +190,7 @@ footer {
   opacity: 0;
   z-index: 0;
   line-height: 100%;
-  transition: visibility 0s, opacity 0.5s;
+  transition: visibility 0s, opacity 0.4s;
   height: 0;
   overflow: hidden;
   &.interactiveMode {
@@ -222,10 +222,10 @@ footer {
   width: 27%;
   max-width: 450px;
   opacity: 0;
-  transform: translateX(-200px);
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform: translateX(-27%);
+  transition: transform 0.4s ease, opacity 0.4s ease;
   &.interactiveMode {
-    transform: translateX(0px);
+    transform: translateX(0);
     opacity: 1;
   }
   &.nonInteractiveMode {

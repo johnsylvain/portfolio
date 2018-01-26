@@ -7,9 +7,13 @@ export function h (nodeName, attributes, ...children) {
     : { nodeName, attributes, children }
 }
 
-export function render (parent, newNode, oldNode) {
-  const patches = diff(newNode, oldNode)
-  patch(parent, patches)
+export function render (vnodes, parent) {
+  const el = createElement(vnodes)
+
+  while (parent.firstChild)
+    parent.removeChild(parent.firstChild)
+
+  parent.appendChild(el)
 }
 
 function createElement (vnode) {
@@ -28,137 +32,23 @@ function createElement (vnode) {
   return node
 }
 
-function setAttribute (node, name, value) {
-  if (name === 'className')
-    node.setAttribute('class', value)
-  else if (name === '__html')
-    node.innerHTML = value
-  else
-    node.setAttribute(name, value)
-}
-
-function removeAttribute (node, name, value) {
-  if (name === 'className')
-    node.remove('class')
-  else if (name === '__html')
-    node.innerHTML = ''
-  else
-    node.removeAttribute(name)
-}
-
 function setAttributes (node, attributes) {
   for (let name in attributes) {
-    if (/^on/.test(name))
-      setEventListener(node, name, attributes[name])
-    else 
-      setAttribute(node, name, attributes[name])
-  }
-}
-
-function setEventListener (node, name, value) {
-  node.addEventListener(
-    name.slice(2).toLowerCase(), value
-  )
-}
-
-function diffChildren (newNode, oldNode) {
-  const patches = []
-  const patchesLength = Math.max(
-    newNode.children.length,
-    oldNode.children.length
-  )
-  for (let i = 0; i < patchesLength; i++) {
-    patches[i] = diff(
-      newNode.children[i],
-      oldNode.children[i]
-    )
-  }
-  return patches
-}
-
-function diffAttributes (newNode, oldNode) {
-  const patches = []
-
-  const attributes = Object.assign({}, newNode.attributes, oldNode.attributes)
-  Object.keys(attributes).forEach(name => {
-    const newVal = newNode.attributes[name]
-    const oldVal = oldNode.attributes[name]
-
-    if (!newVal)
-      patches.push({ type: 'REMOVE_ATTRIBUTE', name, value: oldVal })
-
-    else if (!oldVal || oldVal !== newVal)
-      patches.push({ type: 'SET_ATTRIBUTE', name, value: newVal })
-
-  })
-
-  return patches
-}
-
-function diff (newNode, oldNode) {
-  if (!oldNode)
-    return { type: 'CREATE', newNode }
-  
-  if (!newNode)
-    return { type: 'REMOVE' }
-
-  if (changed(newNode, oldNode))
-    return { type: 'REPLACE', newNode }
-
-  if (newNode.nodeName)
-    return { 
-      type: 'UPDATE',
-      children: diffChildren(newNode, oldNode),
-      attributes: diffAttributes(newNode, oldNode)
-    }
-}
-
-function patchAttributes (parent, patches) {
-  for (let i = 0; i < patches.length; i ++) {
-    const attribute = patches[i]
-    const { type, name, value } = attribute
-
-    if (type === 'SET_ATTRIBUTE')
-      setAttribute(parent, name, value)
-
-    else if (type === 'REMOVE_ATTRIBUTE')
-      removeAttribute(parent, name, value)
-  }
-}
-
-function patch (parent, patches, index = 0) {
-  if (!patches) return
-
-  const el = parent.childNodes[index]
-
-  switch(patches.type) {
-    case 'CREATE': {
-      const { newNode } = patches
-      const newElement = createElement(newNode)
-      return parent.appendChild(newElement)
-    }
-    case 'REMOVE':
-      return parent.removeChild(el)
-    case 'REPLACE': {
-      const { newNode } = patches
-      const newElement = createElement(newNode)
-      return parent.replaceChild(newElement, el)
-    }
-    case 'UPDATE': {
-      const { children, attributes } = patches
-
-      patchAttributes(el, attributes)
-
-      for (let i = 0; i < children.length; i++) {
-        patch(el, children[i], i)
+    if (/^on/.test(name)) {
+      node.addEventListener(
+        name.slice(2).toLowerCase(), attributes[name]
+      )
+    } else {
+      switch (name) {
+        case 'className':
+          node.setAttribute('class', attributes[name])
+          break
+        case 'dangerouslySetInnerHTML':
+          node.innerHTML = attributes[name].__html
+          break
+        default:
+          node.setAttribute(name, attributes[name])
       }
     }
   }
-}
-
-function changed (node1, node2) {
-  return typeof node1 !== typeof node2 ||
-         typeof node1 === 'string' && node1 !== node2 ||
-         node1.nodeName !== node2.nodeName ||
-         node1.attributes && node1.attributes.forceUpdate
 }

@@ -41,9 +41,9 @@ export default class ConsoleView {
 
     const commandList = controller.getCommandList()
 
-    const vnodes = (
-      <div>
-        <ul className="console__command-list" forceUpdate={commandList.length === 0}>
+    const Console = () =>
+      <div className="console" id="commands">
+        <ul className="console__command-list">
           {commandList.map(command => 
             <li className={`console__command-list-item console__command-list-item--${command.type}`}> 
               {(command.type === 'command') ? `$ ${command.text}` : command.text}
@@ -59,19 +59,14 @@ export default class ConsoleView {
             className="console__prompt" 
             autocomplete="off"
             value={controller.getEnteredCommands().text}
-            forceUpdate={true}
           />
         </form>
       </div>
-    )
     
-    // diff dom and render into container
     render(
-      document.querySelector('#commands'), // container
-      vnodes, 
-      this.vdom
+      <Console />,
+      document.querySelector('#console-selector')
     )
-    this.vdom = vnodes
     
     // alway focus the input
     document.querySelector('#command-input').focus()
