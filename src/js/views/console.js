@@ -4,7 +4,6 @@ import { h, render } from '../utils/vdom'
 
 export default class ConsoleView { 
   constructor () {
-    this.vdom = null
     this.render()
     this.bindEvents()
   }

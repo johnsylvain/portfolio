@@ -6,7 +6,6 @@ import { h, render } from '../utils/vdom'
 
 export default class ResumeView {
   constructor () {
-    this.vdom = null
     this.render()
     this.bindEvents()
   }

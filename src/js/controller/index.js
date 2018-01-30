@@ -17,10 +17,10 @@ const controller = {
   executeKeypress (key) {
     if (key === 'UP' || key === 'DOWN') {
       if (key === 'UP' && model.enteredCommands.pointer < model.enteredCommands.data.length)
-        model.enteredCommands.pointer += 1
+        model.enteredCommands.pointer++
 
       if (key === 'DOWN' && model.enteredCommands.pointer > 0)
-        model.enteredCommands.pointer -= 1
+        model.enteredCommands.pointer--
 
       const pos = model.enteredCommands.data.length - model.enteredCommands.pointer
       model.enteredCommands.currentCommand = model.enteredCommands.data[pos]
@@ -46,46 +46,39 @@ const controller = {
     return model.commands.find(c => c.text === text)
   },
 
-  getCommandList (){
+  getCommandList () {
     return model.commandList
   },
 
-  getFileName (){
+  getFileName () {
     return Object.keys(model.currentOutput)[0]
   },
 
   enterCommand (command) {
     command = command.trim()
 
-    let flag = false
     const args = command.split(' ')
+    const newCommand = { text: command, type: 'command' }
+    const lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1]
+    const flag = model.commands.find(o => o.text === args[0])
 
-    if (args[0] !== '') {
-      const newCommand = { text: command, type: 'command' }
+    model.commandList.push(newCommand)
 
-      model.commandList.push(newCommand)
+    if (args[0] !== '' && (!lastCommand || command !== lastCommand.text))
+      model.enteredCommands.data.push(newCommand)
 
-      const lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1]
-      if (lastCommand) {
-        if (command !== lastCommand.text)
-          model.enteredCommands.data.push(newCommand)
-      } else
-        model.enteredCommands.data.push(newCommand)
+    model.enteredCommands.pointer = 0
 
-      model.enteredCommands.pointer = 0
-    }
-
-    flag = model.commands.find(o => o.text === args[0])
-
-    if (!flag)
+    if (!flag) {
       model.commandList.push(
         { text: 'command not found: ' + args[0], type: 'error' },
         { text: 'to view available commands type: help', type: 'response' }
       )
-    else
+      events.emit('consoleViewRender')
+    }
+    else {
       this.executeCommand(command)
-
-    events.emit('consoleViewRender')
+    }
   },
 
   executeCommand (command) {
@@ -93,7 +86,7 @@ const controller = {
     const comArgs = command.split(' ')
 
     const checkArguments = (expected, name) => {
-      if (comArgs.length !== expected) {
+      if (comArgs.length - 1 !== expected) {
         model.commandList.push(
           { text: `'${name}' does not need any arguments`, type: 'error' }
         )
@@ -104,8 +97,7 @@ const controller = {
     const commands = {
       pwd () {
         checkArguments(
-          controller.getCommand('pwd').params || 1, 
-          'pwd'
+          controller.getCommand('pwd').params || 0, 'pwd'
         )
 
         model.commandList.push(
@@ -115,8 +107,7 @@ const controller = {
 
       ls () {
         checkArguments(
-          controller.getCommand('ls').params || 1, 
-          'ls'
+          controller.getCommand('ls').params || 0, 'ls'
         )
 
         model.commandList.push(
@@ -129,8 +120,7 @@ const controller = {
 
       clear () {
         checkArguments(
-          controller.getCommand('clear').params || 1, 
-          'clear'
+          controller.getCommand('clear').params || 0, 'clear'
         )
 
         model.commandList = []
@@ -138,8 +128,7 @@ const controller = {
 
       help () {
         checkArguments(
-          controller.getCommand('help').params || 1, 
-          'help'
+          controller.getCommand('help').params || 0, 'help'
         )
 
         const commands = model.commands
@@ -201,11 +190,11 @@ const controller = {
       },
 
       email () {
-        let subject = ''
-        for (let i = 1; i < comArgs.length; i++) {
-          subject += (' ' + comArgs[i])
-        }
-        window.open('mailto:hi@johnsylvain.me?subject=' + subject)
+        const subject = comArgs
+          .slice(1)
+          .reduce((s, w) => `${s} ${w}`)
+
+        window.open(`mailto:hi@johnsylvain.me?subject=${subject}`)
       },
 
       social () {
@@ -255,7 +244,7 @@ const controller = {
 
         if (comArgs.length === 1) {
           model.commandList.push(
-            { text: 'error', type: 'error' }
+            { text: `please specify a path`, type: 'warning' }
           )
         } else {
           return {
@@ -268,11 +257,7 @@ const controller = {
     model.enteredCommands.pointer = 0
     model.enteredCommands.currentCommand = ''
 
-    if (comArgs[0] === '') {
-      model.commandList.push(
-        { text: '', type: 'command' }
-      )
-    } else if (comArgs.length === 1 || comArgs[0] === 'email') {
+    if (comArgs[0] !== '' && comArgs.length === 1 || comArgs[0] === 'email') {
       commands[comArgs[0]]()
     } else if (comArgs.length > 1){
       const subCommand = commands[comArgs[0]]()
