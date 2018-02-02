@@ -11,113 +11,99 @@
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Ubuntu+Mono:400,700" rel="stylesheet">
 </head>
 <body>
-  <div id="page">
+  <div id="wrapper">
+    <div id="console-selector"></div> <!-- JavaScript Selector -->
+    
+    <div id="page-wrap">
+      <div class="container" id="container-selector">
+        <div class="content" id="content">
+          <header>
+            <div>
+              <h1>John Sylvain</h1>
+              <p>Software Engineer</p>
+            </div>
+            <div>
+              <!-- JavaScript Selector -->
+              <a href="#/resume" id="toggle-interactive" class="toggle-btn"></a>
+            </div>
+          </header>
+          <section id="landing-wrapper">
+            
+            <div class="section about">
+              <h2>About</h2>
+              <p>I am a Software Engineer at <a href="https://rocketmiles.com">Rocketmiles</a> and a recent graduate of Purdue University. In the past, I have worked for <a href="http://usaa.com" target="_blank">USAA</a> and <a href="http://blastradius.com" target="_blank">Blast Radius</a>. I design and develop web applications that are simple and fun to use.</p>
+              <p class="mobile-hide">If you would like to learn more about me and my experience, feel free to check out my <a href="#/resume" class="toggle-btn">interactive resume</a>, or download <a href="https://johnsylvain.me/resume.pdf" target="_blank">a PDF</a>.</p>
+              <p class="mobile-show">If you would like to learn more about me and my experience, feel free to check out my  <a href="https://johnsylvain.me/resume.pdf" target="_blank">resume</a>.</p>
+            </div>
 
-    <div id="wrapper">
-      <div id="console-selector" class="nonInteractiveMode"></div> <!-- JavaScript Selector -->
-      
-      <div id="page-wrap">
-        <div class="container" id="container">
-          <div class="content" id="content">
-            <header>
-              <div class="grid">
-                <div class="col-3-4">
-                  <h1>John Sylvain</h1>
-                  <p>Software Engineer</p>
-                </div>
-                <div class="col-1-4">
-                  <!-- JavaScript Selector -->
-                  <a href="#/resume" id="toggle-interactive" class="toggle-btn"></a>
-                </div>
-              </div>
-            </header>
-            <div id="landing-wrapper">
-              <div class="section about">
-                <h2>About</h2>
-                <p>I am a Software Engineer at <a href="https://rocketmiles.com">Rocketmiles</a> and a recent graduate of Purdue University. In the past, I have worked for <a href="http://usaa.com" target="_blank">USAA</a> and <a href="http://blastradius.com" target="_blank">Blast Radius</a>. I design and develop web applications that are simple and fun to use.</p>
-                <p class="mobile-hide">If you would like to learn more about me and my experience, feel free to check out my <a href="#/resume" class="toggle-btn">interactive resume</a>, or download <a href="https://johnsylvain.me/resume.pdf" target="_blank">a PDF</a>.</p>
-                <p class="mobile-show">If you would like to learn more about me and my experience, feel free to check out my  <a href="https://johnsylvain.me/resume.pdf" target="_blank">resume</a>.</p>
-              </div>
-              <div class="section">
-                <h2>Projects</h2>
-                <div id="projects">
-                  <div class="grid">
-                    <div class="col-1-2">
-                      <div class="project">
-                        <img src="./assets/mortyv2.svg" alt="" class="project__image"/>
-                        <div class="project__caption">
-                          <h3 class="project__title">PlaceMorty</h3>
-                          <p class="project__description">PlaceMorty provides quick access to placeholder images via AWS S3 storage, Redis caching, and an admin dashboard for curation.</p>
-                          <a href="https://placemorty.us" target="_blank" class="project__link">Demo</a>
-                          <a href="http://github.com/johnsylvain/placemorty/" target="_blank" class="project__link">GitHub</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-1-2">
-                      <div class="project">
-                        <img src="./assets/pagine.svg" alt="" class="project__image"/>
-                        <div class="project__caption">
-                          <h3 class="project__title">Pagine</h3>
-                          <p class="project__description">Pagine is a system that makes it easy to generate websites directly in the browser with no need for compiling.</p>
-                          <a href="https://johnsylvain.github.io/pagine" class="mobile-hide-link project__link" target="_blank">Website</a>
-                          <a href="http://github.com/johnsylvain/pagine/" target="_blank" class="project__link">GitHub</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-1-2">
-                      <div class="project">
-                        <img src="./assets/st-extensionv2.svg" alt="" class="project__image"/>
-                        <div class="project__caption">
-                          <h3 class="project__title">Shower Thoughts Newtab</h3>
-                          <p class="project__description">This Chrome Extension creates a fun newtab page, leveraging Chrome storage for caching reddit data and storing user options.</p>
-                          <a href="https://chrome.google.com/webstore/detail/reddit-rshowerthoughts-ne/pcmdclajhocfphjlgbhniglijghlmlfg?hl=en-US&gl=US" target="_blank" class="project__link">Download</a>
-                          <a href="http://github.com/johnsylvain/reddit-showerthoughts-newtab/" target="_blank" class="project__link">GitHub</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-1-2">
-                      <div class="project">
-                        <img src="./assets/jslinkv3.svg" alt="" class="project__image"/>
-                        <div class="project__caption">
-                          <h3 class="project__title">Personal URL Shortener</h3>
-                          <p class="project__description">This MERN webapp generates unique links for frequented websites, complete with an admin dashboard and JWT authentication.</p>
-                          <a href="http://github.com/johnsylvain/url-shortener-node/" target="_blank" class="project__link">GitHub</a>
-                        </div>
-                      </div>
-                    </div>
+            <div class="section">
+              <h2>Projects</h2>
+              <div class="projects">
+
+                <div class="project">
+                  <img src="./assets/mortyv2.svg" alt="" class="project__image"/>
+                  <div class="project__caption">
+                    <h3 class="project__title">PlaceMorty</h3>
+                    <p class="project__description">PlaceMorty provides quick access to placeholder images via AWS S3 storage, Redis caching, and an admin dashboard for curation.</p>
+                    <a href="https://placemorty.us" target="_blank" class="project__link">Demo</a>
+                    <a href="http://github.com/johnsylvain/placemorty/" target="_blank" class="project__link">GitHub</a>
                   </div>
                 </div>
+
+                <div class="project">
+                  <img src="./assets/pagine.svg" alt="" class="project__image"/>
+                  <div class="project__caption">
+                    <h3 class="project__title">Pagine</h3>
+                    <p class="project__description">Pagine is a system that makes it easy to generate websites directly in the browser with no need for compiling.</p>
+                    <a href="https://johnsylvain.github.io/pagine" class="mobile-hide-link project__link" target="_blank">Website</a>
+                    <a href="http://github.com/johnsylvain/pagine/" target="_blank" class="project__link">GitHub</a>
+                  </div>
+                </div>
+
+                <div class="project">
+                  <img src="./assets/st-extensionv2.svg" alt="" class="project__image"/>
+                  <div class="project__caption">
+                    <h3 class="project__title">Shower Thoughts Newtab</h3>
+                    <p class="project__description">This Chrome Extension creates a fun newtab page, leveraging Chrome storage for caching reddit data and storing user options.</p>
+                    <a href="https://chrome.google.com/webstore/detail/reddit-rshowerthoughts-ne/pcmdclajhocfphjlgbhniglijghlmlfg?hl=en-US&gl=US" target="_blank" class="project__link">Download</a>
+                    <a href="http://github.com/johnsylvain/reddit-showerthoughts-newtab/" target="_blank" class="project__link">GitHub</a>
+                  </div>
+                </div>
+
+                <div class="project">
+                  <img src="./assets/jslinkv3.svg" alt="" class="project__image"/>
+                  <div class="project__caption">
+                    <h3 class="project__title">Personal URL Shortener</h3>
+                    <p class="project__description">This MERN webapp generates unique links for frequented websites, complete with an admin dashboard and JWT authentication.</p>
+                    <a href="http://github.com/johnsylvain/url-shortener-node/" target="_blank" class="project__link">GitHub</a>
+                  </div>
+                </div>
+
               </div>
             </div>
-            <div id="resume-selector"></div> <!-- JavaScript Selector -->
-          </div>
-          <footer>
-            <div class="grid">
-              <div class="col-1-2">
-                <p>
-                  &#0169; John Sylvain <span id="date-selector"></span> <!-- JavaScript Selector -->
-                </p>
-              </div>
-              <div class="col-1-2 align-right">
-                <p>
-                  <a href="http://github.com/johnsylvain" target="_blank">GitHub</a>
-                  <a href="http://linkedin.com/in/johnsylvain" target="_blank">LinkedIn</a>
-                  <a href="mailto:hi@johnsylvain.me" target="_blank">Email</a>
-                </p>
-              </div>
-            </div>
-          </footer>
+          </section>
+          <div id="resume-selector"></div> <!-- JavaScript Selector -->
         </div>
+        <footer class="footer">
+          <div>
+            &#0169; John Sylvain <span id="date-selector"></span> <!-- JavaScript Selector -->
+          </div>
+          <div class="footer__links">
+            <a href="http://github.com/johnsylvain" target="_blank">GitHub</a>
+            <a href="http://linkedin.com/in/johnsylvain" target="_blank">LinkedIn</a>
+            <a href="mailto:hi@johnsylvain.me" target="_blank">Email</a>
+          </div>
+        </footer>
       </div>
     </div>
+  </div>
 
-    <!-- Shh... Easter Egg -->
-    <div class="trash">
-      <img src="assets/trash.png" alt="">
-    </div>
-    <div class="trash" id="trash-front">
-      <img src="assets/trash-front.png" alt="">
-    </div>
+  <!-- Shh... Easter Egg -->
+  <div class="trash">
+    <img src="assets/trash.png" alt="">
+  </div>
+  <div class="trash" id="trash-front">
+    <img src="assets/trash-front.png" alt="">
   </div>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

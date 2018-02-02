@@ -65,14 +65,13 @@ const app = {
       document.getElementById('landing-wrapper'),
       document.getElementById('resume-selector'),
       document.getElementById('console-selector'),
-      document.getElementById('container'),
+      document.getElementById('container-selector'),
       document.getElementById('toggle-interactive')
     ]
 
     if (flag) {
       targets.forEach(t => {
-        t.classList.remove('interactiveMode')
-        t.classList.add('nonInteractiveMode')
+        t.classList.remove('interactive-mode')
       })
       this.interactiveMode = false
       btn.setAttribute('href', '#/resume')
@@ -81,14 +80,12 @@ const app = {
 
     if (!this.interactiveMode) {
       targets.forEach(t => {
-        t.classList.add('interactiveMode')
-        t.classList.remove('nonInteractiveMode')
+        t.classList.add('interactive-mode')
       })
       btn.setAttribute('href', '#/')
     } else {
       targets.forEach(t => {
-        t.classList.remove('interactiveMode')
-        t.classList.add('nonInteractiveMode')
+        t.classList.remove('interactive-mode')
       })
       btn.setAttribute('href', '#/resume')
     }

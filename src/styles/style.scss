@@ -2,6 +2,7 @@
 $font-mono: 'Ubuntu Mono', monospace;
 $font-sans-serif: 'Karla', "Helvetica Neue", Helvetica, sans-serif;
 $green: #3cb66f;
+$blue: #3498db;
 
 @import 'partials/animations';
 @import 'partials/reset';
@@ -12,6 +13,9 @@ header {
   padding: 40px 0;
   font-family: $font-sans-serif;
   color: #555;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: center;
 
   h1 {
     font-size: 3rem;
@@ -35,15 +39,13 @@ header {
     width: 60px;
     height: 60px;
     opacity: 0.8;
-    margin-top: 10px;
     transition: transform 0.4s, background-image 0.4s, opacity 0.2s;
     background-image: url('../assets/code.svg');
-    &.interactiveMode {
+
+    &.interactive-mode {
       background-image: url('../assets/close.svg');
     }
-    &.nonInteractiveMode {
-      background-image: url('../assets/code.svg');
-    }
+
     &:hover {
       opacity: 0.9;
     }
@@ -52,26 +54,27 @@ header {
 
 footer {
   padding: 40px 0;
-  font-size: 1rem;
-  color: #555;
   font-family: $font-sans-serif;
-  p {
-    margin-bottom: 10px;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  
+  .footer__links {
+    text-align: right;
   }
+
   a {
     text-decoration: none;
     color: $green;
     padding-bottom: 2px;
     border-bottom: 2px solid rgba($green, 0.3);
-    margin: 12px;
+    
+    &:not(:first-child) {
+      margin-left: 10px;
+    }
+
     &:hover {
-      border-bottom: 2px solid rgba($green, 0.8);
-    }
-    &:last-of-type {
-      margin: 0;
-    }
-    &:first-of-type {
-      margin: 0;
+      border-color: rgba($green, 0.8);
     }
   }
 }
@@ -91,7 +94,7 @@ footer {
         margin-bottom: 20px;
       }
       a {
-        color: #3498db;
+        color: $blue;
         text-decoration: none;
       }
       a:hover {
@@ -99,21 +102,17 @@ footer {
       }
     }
   }
-  #projects {
-    margin-top: 10px;
-    .placeholder {
-      width: auto;
-      text-align: center;
-      background-color: #efefef;
-      color: #555;
-      padding: 20px 15px;
-      font-size: 12pt;
-      border-radius: 2px;
-      margin-top: 20px;
-      opacity: 0.5;
-    }
+
+  .projects {
+    visibility: visible;
+    opacity: 1;
+    z-index: 1000;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 10px;
+
     .project {
-      margin-top: 10px;
       position: static;
       width: 100%;
       border-radius: 3px;
@@ -150,7 +149,7 @@ footer {
           margin-right: 3px;
           
           &:hover {
-            background-color: #3498db;
+            background-color: $blue;
             color: white;
           }
         }
@@ -163,18 +162,12 @@ footer {
     font-weight: bolder;
     margin-bottom: 10px;
   }
-  &.interactiveMode {
+  &.interactive-mode {
     visibility: hidden;
     opacity: 0;
     z-index: 0;
     height: 0;
     overflow: hidden;
-  }
-  &.nonInteractiveMode {
-    visibility: visible;
-    opacity: 1;
-    z-index: 1000;
-    height: auto;
   }
 }
 
@@ -193,21 +186,17 @@ footer {
   transition: visibility 0s, opacity 0.4s;
   height: 0;
   overflow: hidden;
-  &.interactiveMode {
+  visibility: hidden;
+  margin: 0;
+
+  &.interactive-mode {
     visibility: visible;
     opacity: 1;
     height: auto;
     z-index: 1000;
     margin-bottom: 50px;
   }
-  &.nonInteractiveMode {
-    opacity: 0;
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-    z-index: 0;
-    margin: 0;
-  }
+
   #resume-content {
     padding: 20px;
     #resume-code {
@@ -222,15 +211,12 @@ footer {
   width: 27%;
   max-width: 450px;
   opacity: 0;
-  transform: translateX(-27%);
+  transform: translateX(-200px);
   transition: transform 0.4s ease, opacity 0.4s ease;
-  &.interactiveMode {
+
+  &.interactive-mode {
     transform: translateX(0);
     opacity: 1;
-  }
-  &.nonInteractiveMode {
-    transform: translateX(-200px);
-    opacity: 0;
   }
 }
 
@@ -352,28 +338,17 @@ a.mobile-hide-link {
 }
 
 @media (max-width: 768px) {
-  #page-wrap {
-    padding-left: 0;
-  }
   #toggle-interactive {
     display: none;
   }
+
   #landing-wrapper {
     h2 {
       font-size: 20pt;
     }
   }
-  [class*='col-'] {
-    width: 100%;
-    padding-left: 0;
-    padding: 0;
-    .grid &:last-of-type {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
+
   header {
-    text-align: center;
     h1 {
       font-size: 2.5rem;
     }
@@ -381,12 +356,11 @@ a.mobile-hide-link {
       font-size: 10pt;
     }
   }
-  footer {
-    text-align: center;
-    .align-right {
-      text-align: center;
-    }
+
+  footer .footer__links {
+    text-align: left;
   }
+
   #placeholder {
     display: none;
   }
