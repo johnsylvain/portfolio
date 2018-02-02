@@ -26,7 +26,7 @@ export default class ResumeView {
 
     const Resume = () =>
       <div>
-        <div className="menu-bar clearfix">
+        <div className="menu-bar">
           <div className="menu-bar__circle"></div>
           <div className="menu-bar__circle"></div>
           <div className="menu-bar__circle"></div>
