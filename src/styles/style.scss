@@ -1,35 +1,37 @@
 // Variables
 $font-mono: 'Ubuntu Mono', monospace;
-$font-sans-serif: 'Karla', "Helvetica Neue", Helvetica, sans-serif;
+$font-sans-serif: 'Karla', 'Helvetica Neue', Helvetica, sans-serif;
+$font-bold: 700;
 $green: #3cb66f;
 $blue: #3498db;
+$medium-gray: #555;
 
 @import 'partials/animations';
 @import 'partials/reset';
 @import 'partials/structure';
 @import 'partials/code';
+@import 'partials/footer';
+@import 'partials/projects';
 
 header {
-  padding: 40px 0;
+  padding: 50px 0;
   font-family: $font-sans-serif;
-  color: #555;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  color: $medium-gray;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
 
   h1 {
     font-size: 3rem;
-    font-weight: 400;
-    letter-spacing: 2px;
     margin-bottom: 10px;
-    font-weight: bold;
+    font-weight: $font-bold;
     padding-right: 0.3em;
   }
 
   p {
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 5px;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: lighten(#555, 10);
   }
 
   #toggle-interactive {
@@ -52,116 +54,39 @@ header {
   }
 }
 
-footer {
-  padding: 40px 0;
+section {
   font-family: $font-sans-serif;
-  display: grid;
-  grid-gap: 15px;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  
-  .footer__links {
-    text-align: right;
-  }
-
-  a {
-    text-decoration: none;
-    color: $green;
-    padding-bottom: 2px;
-    border-bottom: 2px solid rgba($green, 0.3);
-    
-    &:not(:first-child) {
-      margin-left: 10px;
-    }
-
-    &:hover {
-      border-color: rgba($green, 0.8);
-    }
-  }
-}
-
-#landing-wrapper {
-  font-family: $font-sans-serif;
-  color: #555;
+  color: $medium-gray;
   font-size: 14pt;
   line-height: 140%;
-  margin-top: 30px;
-  transition: visbility 0s, opacity 0.4s;
+  transition:  opacity 0.4s;
   z-index: 3000;
+
   .section {
     margin-bottom: 50px;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
     &.about {
       p {
-        margin-bottom: 20px;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
       }
+
       a {
         color: $blue;
         text-decoration: none;
       }
+
       a:hover {
         text-decoration: underline;
       }
     }
   }
 
-  .projects {
-    visibility: visible;
-    opacity: 1;
-    z-index: 1000;
-    height: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    grid-gap: 10px;
-
-    .project {
-      position: static;
-      width: 100%;
-      border-radius: 3px;
-      background-color: #efefef;
-
-      .project__image {
-        width: 100%;
-        height: auto;
-        border-radius: 2px 2px 0 0;
-      }
-
-      .project__caption {
-        padding: 10px 15px 13px;
-        font-size: 11pt;
-
-        .project__title {
-          font-size: 14pt;
-          font-weight: bold;
-          margin-bottom: 0.2em;
-        }
-
-        .project__description {
-          line-height: 140%;
-          color: lighten(#555, 5%);
-          margin-bottom: 0.8em;
-        }
-
-        .project__link {
-          color: #555;
-          text-decoration: none;
-          background-color: #dedede;
-          padding: 4px 10px;
-          border-radius: 50px;
-          margin-right: 3px;
-          
-          &:hover {
-            background-color: $blue;
-            color: white;
-          }
-        }
-      }
-    }
-  }
-
-  h2 {
-    font-size: 24pt;
-    font-weight: bolder;
-    margin-bottom: 10px;
-  }
   &.interactive-mode {
     visibility: hidden;
     opacity: 0;
@@ -175,11 +100,10 @@ footer {
   font-family: $font-mono;
   position: absolute;
   border-radius: 4px;
-  background-color: #555;
+  background-color: $medium-gray;
   box-shadow: 0 8px 40px rgba(131, 131, 131, 0.1);
   color: #95a5a6;
   position: relative;
-  top: 0;
   opacity: 0;
   z-index: 0;
   line-height: 100%;
@@ -187,7 +111,6 @@ footer {
   height: 0;
   overflow: hidden;
   visibility: hidden;
-  margin: 0;
 
   &.interactive-mode {
     visibility: visible;
@@ -225,6 +148,7 @@ footer {
   padding: 5px;
   border-radius: 3px 3px 0 0;
   text-align: center;
+
   .menu-bar__circle {
     width: 11px;
     height: 11px;
@@ -233,15 +157,19 @@ footer {
     margin: 3px;
     margin-top: 4px;
     &:nth-child(1) {
+
       background-color: #e74c3c;
     }
+
     &:nth-child(2) {
       background-color: #f1c40f;
     }
+
     &:nth-child(3) {
       background-color: #2ecc71;
     }
   }
+
   .menu-bar__title {
     font-size: 0.8rem;
     color: #5a6a6b;
@@ -256,34 +184,41 @@ footer {
   padding: 10px;
   height: 100vh;
   overflow-y: scroll;
-  color: #555;
+  color: $medium-gray;
   font-size: 11pt;
+
   .console__command-list {
     list-style: none;
     margin: 0;
     padding: 0;
+
     .console__command-list-item {
       padding: inherit;
       line-height: 110%;
+
       &.console__command-list-item--error {
         margin-left: 2ch;
         color: #e74c3c;
       }
+
       &.console__command-list-item--response {
         color: #8f8f8f;
         margin-left: 2ch;
       }
+
       &.console__command-list-item--bold {
         color: #6f6f6f;
         margin-left: 2ch;
-        font-weight: bold;
+        font-weight: $font-bold;
       }
+
       &.console__command-list-item--warning {
         color: #e67e22;
         margin-left: 2ch;
       }
     }
   }
+
   .console__prompt {
     background-color: transparent;
     font-family: $font-mono;
@@ -292,7 +227,7 @@ footer {
     font-size: 11pt;
     margin: 0;
     padding: 0;
-    color: #555;
+    color: $medium-gray;
     width: 90%;
     line-height: 110%;
   }
@@ -318,6 +253,8 @@ a.mobile-hide-link {
   width: 50vw;
   height: 50vw;
   transform-origin: center;
+  visibility: hidden;
+
   img {
     position: absolute;
     top: 0;
@@ -325,15 +262,14 @@ a.mobile-hide-link {
     width: 50vw;
     height: auto;
   }
+
   &.crash {
     animation: trash-can 4s;
-    &#trash-front {
-      // position: absolute;
+    visibility: visible;
+
+    &.trash__front {
       z-index: 9000;
     }
-  }
-  &#trash-front {
-    z-index: -10;
   }
 }
 
@@ -351,9 +287,6 @@ a.mobile-hide-link {
   header {
     h1 {
       font-size: 2.5rem;
-    }
-    p {
-      font-size: 10pt;
     }
   }
 

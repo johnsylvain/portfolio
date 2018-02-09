@@ -1,0 +1,52 @@
+.projects {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1000;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 10px;
+
+  .project {
+    border-radius: 3px;
+    background-color: #efefef;
+
+    .project__image {
+      width: 100%;
+      height: auto;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .project__caption {
+      padding: 10px 15px 13px;
+      font-size: 11pt;
+
+      .project__title {
+        font-size: 14pt;
+        font-weight: 700;
+        margin-bottom: 0.2em;
+        color: lighten($medium-gray, 5%);
+      }
+
+      .project__description {
+        line-height: 140%;
+        color: lighten($medium-gray, 5%);
+        margin-bottom: 0.8em;
+      }
+
+      .project__link {
+        color: $medium-gray;
+        text-decoration: none;
+        background-color: #dedede;
+        padding: 4px 10px;
+        border-radius: 50px;
+        margin-right: 3px;
+
+        &:hover {
+          background-color: $blue;
+          color: white;
+        }
+      }
+    }
+  }
+}
