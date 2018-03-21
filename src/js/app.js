@@ -3,8 +3,8 @@ import events from './utils/events'
 import { throttle } from './utils/helpers'
 
 import controller from './controller'
-import ResumeView from './views/resume'
-import ConsoleView from './views/console'
+import resumeView from './views/resume'
+import consoleView from './views/console'
 
 import '../styles/style.scss'
 
@@ -14,11 +14,10 @@ const app = {
 
   init () {
     controller.init()
-    new ResumeView()
-    new ConsoleView()
+    resumeView.init()
+    consoleView.init()
 
     this.bindEvents()
-
     this.router = new Router([
       {
         path: '/',

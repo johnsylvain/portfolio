@@ -4,17 +4,17 @@ import * as filters from '../utils/filters'
 import { compose } from '../utils/helpers'
 import { h, render } from '../utils/vdom'
 
-export default class ResumeView {
-  constructor () {
-    this.render()
+export default {
+  init () {
     this.bindEvents()
-  }
-  
+    this.render()
+  },
+
   bindEvents () {
     events.on('resumeContentViewRender', data => {
       this.render()
     })
-  }
+  },
 
   render () {
     const data = controller.getCurrentOutput()

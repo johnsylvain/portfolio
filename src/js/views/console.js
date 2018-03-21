@@ -2,12 +2,12 @@ import controller from '../controller'
 import events from '../utils/events'
 import { h, render } from '../utils/vdom'
 
-export default class ConsoleView { 
-  constructor () {
-    this.render()
+export default {
+  init () {
     this.bindEvents()
-  }
-  
+    this.render()
+  },
+
   bindEvents () {
     const consoleContainer = document.getElementById('console-selector')
  
@@ -29,7 +29,7 @@ export default class ConsoleView {
       if (keyPress && document.activeElement.id === 'command-input') 
         controller.executeKeypress(keyPress.action)
     })
-  }
+  },
 
   render () {
     const handleSubmit = e => {

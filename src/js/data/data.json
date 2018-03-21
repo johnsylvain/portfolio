@@ -78,7 +78,7 @@
     ],
     "skills": {
       "languages": [
-        "JavaScript (ES Next)", "HTML/CSS", "PHP", "C", "C#"
+        "JavaScript (ES 2018)", "HTML", "CSS (Sass, Less)", "C"
       ],
       "frameworks-and-libraries": [
         "React", "Redux", "Express", "Angular", "Node"
