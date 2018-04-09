@@ -1,4 +1,4 @@
-export function throttle(func, threshhold, scope) {
+export function throttle (func, threshhold, scope) {
   let wait = false
 
   return function() {

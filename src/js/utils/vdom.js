@@ -36,7 +36,7 @@ function createElement (vnode) {
       .map(createElement)
       .forEach(node.appendChild.bind(node))
   }
-  
+
   return node
 }
 

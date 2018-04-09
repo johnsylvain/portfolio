@@ -1,6 +1,6 @@
 import json from './data.json'
 
-let model = {
+export default {
   keyCommands: [
     { code: 38, shortcut: null, action: 'UP' },
     { code: 40, shortcut: null, action: 'DOWN' },
@@ -17,7 +17,13 @@ let model = {
     currentCommand: '',
     pointer: 0,
   },
-  currentOutput: null,
+  currentOutput: {
+    welcomeMessage: [
+      "welcome to my interactive resume!",
+      "to view my resume, type 'open resume' in the terminal to the left",
+      "type 'help' to view other commands"
+    ]
+  },
   commands: [
     { text: '',	params: null },
     { text: 'help', params: null },
@@ -30,14 +36,5 @@ let model = {
     { text: 'social', params: ['github', 'linkedin'] },
     { text: 'rm', params: ['-rf'], ignored: true }
   ],
-  defaultMessage: {
-    welcomeMessage: [
-      "welcome to my interactive resume!",
-      "to view my resume, type 'open resume' in the terminal to the left",
-      "type 'help' to view other commands"
-    ]
-  },
   data: json.resumeData
 }
-
-export default model

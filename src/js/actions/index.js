@@ -1,14 +1,15 @@
 import events from '../utils/events'
 import model from '../data'
 
-const controller = {
-  init () {
-    model.currentOutput = model.defaultMessage
-  },
-
-  getCurrentOutput () {
-    return model.currentOutput
-  },
+const actions = {
+  getCurrentOutput: () => model.currentOutput,
+  getKeyCommands: () => model.keyCommands,
+  getCommand: (text) => model.commands.find(c => c.text === text),
+  getCommandList: () => model.commandList,
+  getFileName: () => Object.keys(model.currentOutput)[0],
+  getEnteredCommands: () => model.enteredCommands.currentCommand
+      ? model.enteredCommands.currentCommand
+      : { text: '' },
 
   updateOutput (newOutput) {
     model.currentOutput = newOutput
@@ -30,28 +31,6 @@ const controller = {
       this.executeCommand('clear')
 
     events.emit('consoleViewRender')
-  },
-
-  getKeyCommands () {
-    return model.keyCommands
-  },
-
-  getEnteredCommands () {
-    return model.enteredCommands.currentCommand
-      ? model.enteredCommands.currentCommand
-      : { text: '' }
-  },
-
-  getCommand (text) {
-    return model.commands.find(c => c.text === text)
-  },
-
-  getCommandList () {
-    return model.commandList
-  },
-
-  getFileName () {
-    return Object.keys(model.currentOutput)[0]
   },
 
   enterCommand (command) {
@@ -97,7 +76,7 @@ const controller = {
     const commands = {
       pwd () {
         checkArguments(
-          controller.getCommand('pwd').params || 0, 'pwd'
+          actions.getCommand('pwd').params || 0, 'pwd'
         )
 
         model.commandList.push(
@@ -107,7 +86,7 @@ const controller = {
 
       ls () {
         checkArguments(
-          controller.getCommand('ls').params || 0, 'ls'
+          actions.getCommand('ls').params || 0, 'ls'
         )
 
         model.commandList.push(
@@ -120,7 +99,7 @@ const controller = {
 
       clear () {
         checkArguments(
-          controller.getCommand('clear').params || 0, 'clear'
+          actions.getCommand('clear').params || 0, 'clear'
         )
 
         model.commandList = []
@@ -128,7 +107,7 @@ const controller = {
 
       help () {
         checkArguments(
-          controller.getCommand('help').params || 0, 'help'
+          actions.getCommand('help').params || 0, 'help'
         )
 
         const commands = model.commands
@@ -158,7 +137,7 @@ const controller = {
         }
         if (comArgs.length === 1) {
           model.commandList.push(
-            { text: `type 'open [${controller.getCommand('open').params}]'`, type: 'warning' }
+            { text: `type 'open [${actions.getCommand('open').params}]'`, type: 'warning' }
           )
         } else {
           return {
@@ -177,7 +156,7 @@ const controller = {
 
         if (comArgs.length === 1) {
           model.commandList.push(
-            { text: `type 'show [${controller.getCommand('show').params}]'`, type: 'warning' }
+            { text: `type 'show [${actions.getCommand('show').params}]'`, type: 'warning' }
           )
         } else {
           return {
@@ -204,7 +183,7 @@ const controller = {
 
         if (comArgs.length === 1) {
           model.commandList.push(
-            { text: `type 'social [${controller.getCommand('social').params}]'`, type: 'warning' }
+            { text: `type 'social [${actions.getCommand('social').params}]'`, type: 'warning' }
           )
         } else {
           return{
@@ -231,7 +210,7 @@ const controller = {
           })
           window.setTimeout(() => {
             document.querySelector('#command-input').disabled = false
-            targets.forEach((el) => {              
+            targets.forEach((el) => {
               if (Array.from(el)[0]) {
                 el.forEach(e => { e.classList.remove('crash') })
               } else {
@@ -274,4 +253,4 @@ const controller = {
   }
 }
 
-export default controller
+export default actions

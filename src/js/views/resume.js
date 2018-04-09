@@ -1,37 +1,22 @@
-import controller from '../controller'
+import actions from '../actions'
 import events from '../utils/events'
 import * as filters from '../utils/filters'
 import { compose } from '../utils/helpers'
-import { h, render } from '../utils/vdom'
+import { h } from '../utils/vdom'
 
 export default {
-  init () {
-    this.bindEvents()
-    this.render()
-  },
-
-  bindEvents () {
-    events.on('resumeContentViewRender', data => {
-      this.render()
-    })
-  },
-
   render () {
-    const data = controller.getCurrentOutput()
+    const data = actions.getCurrentOutput()
     const json = compose(
       (d) => JSON.stringify(d, null, '  '),
       filters.textToJSON,
       filters.findUrls
     )(data)
 
-    const Resume = () =>
+    return (
       <div>
         <pre dangerouslySetInnerHTML={{ __html: json }}></pre>
       </div>
-
-    render(
-      <Resume />, 
-      document.querySelector('#resume-selector')
     )
   }
 }
