@@ -26,17 +26,7 @@ export default {
 
     const Resume = () =>
       <div>
-        <div className="menu-bar">
-          <div className="menu-bar__circle"></div>
-          <div className="menu-bar__circle"></div>
-          <div className="menu-bar__circle"></div>
-          <span className="menu-bar__title">
-            {controller.getFileName()}.json
-          </span>
-        </div>
-        <div id="resume-content">
-          <pre dangerouslySetInnerHTML={{ __html: json }}></pre>
-        </div>
+        <pre dangerouslySetInnerHTML={{ __html: json }}></pre>
       </div>
 
     render(

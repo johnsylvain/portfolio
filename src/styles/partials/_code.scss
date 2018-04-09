@@ -4,19 +4,19 @@ pre {
 	white-space: -pre-wrap;      /* Opera 4-6 */
 	white-space: -o-pre-wrap;    /* Opera 7 */
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
-	line-height:150%;
+	line-height: 150%;
 	font-family: $font-mono;
-	font-weight: 100;
-	font-size: 11pt;
+	font-size: 0.8rem;
 	margin: 0;
 	padding: 0;
-	color: #a0a0a0;
+	color: #d3d3d3;
 
 	.string { color: $green; }
 	.number { color: darkorange; }
 	.boolean { color: #f1c40f; }
 	.null { color: magenta; }
-	.key { color: #b0b0b0; }
+	.key { color: #999; }
+
 	a {
 		color:$green;
 		text-decoration: none;

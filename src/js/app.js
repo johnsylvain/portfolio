@@ -17,35 +17,52 @@ const app = {
     resumeView.init()
     consoleView.init()
 
+    document.querySelectorAll('.item').forEach((item, i) => {
+      setTimeout(() => {
+        item.classList.add('fade-up')
+      }, i * 80)
+
+      item.addEventListener('animationend', () => {
+        item.style.opacity = 1
+        item.classList.remove('fade-up')
+      })
+    })
+
     this.bindEvents()
     this.router = new Router([
       {
         path: '/',
         controller: function() {
           events.emit('switchModes', { flag: true })
+          setActiveNavButton('/')
         }
       },
       {
         path: '/resume',
         controller: () => {
           events.emit('switchModes', { flag: false })
-          if(window.innerWidth <= this.breakpoint)
+          setActiveNavButton('/resume')
+          if (window.innerWidth <= this.breakpoint)
             this.router.go({ route: '#/' })
         }
       }
     ])
 
+    function setActiveNavButton (path) {
+      const children = Array.from(document.querySelector('.nav').children)
+      
+      children
+        .forEach(a => a.classList.remove('active'))
+
+      children
+        .find(a => a.getAttribute('href') === `#${path}`)
+        .classList.add('active')
+    }
+
     document.querySelector('#date-selector').textContent = new Date().getFullYear().toString()
   },
 
   bindEvents () {
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', event => {
-        event.preventDefault()
-        this.router.go({ route: event.target.href })
-      })
-    })
-
     window.addEventListener('resize', throttle((event) => {
       if (window.innerWidth <= this.breakpoint) {
         this.router.go({ route: '#/' })
@@ -58,14 +75,11 @@ const app = {
   },
 
   switchModes (flag) {
-    const btn = document.getElementById('toggle-interactive')
     const targets = [
-      document.getElementById('page-wrap'),
-      document.getElementById('landing-wrapper'),
+      document.querySelector('.wrap'),
       document.getElementById('resume-selector'),
       document.getElementById('console-selector'),
-      document.getElementById('container-selector'),
-      document.getElementById('toggle-interactive')
+      // document.getElementById('container-selector'),
     ]
 
     if (flag) {
@@ -73,7 +87,6 @@ const app = {
         t.classList.remove('interactive-mode')
       })
       this.interactiveMode = false
-      btn.setAttribute('href', '#/resume')
       return
     }
 
@@ -81,12 +94,10 @@ const app = {
       targets.forEach(t => {
         t.classList.add('interactive-mode')
       })
-      btn.setAttribute('href', '#/')
     } else {
       targets.forEach(t => {
         t.classList.remove('interactive-mode')
       })
-      btn.setAttribute('href', '#/resume')
     }
     this.interactiveMode = !this.interactiveMode
   }

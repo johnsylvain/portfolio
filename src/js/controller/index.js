@@ -217,7 +217,7 @@ const controller = {
       rm () {
         const rf = () => {
           const targets = [
-            document.querySelector('#wrapper'),
+            document.querySelector('.wrap'),
             document.querySelectorAll('.trash'),
           ]
 

@@ -8,11 +8,97 @@
   <meta name="keywords" content="John Sylvain, web development,html,css,javascript,web design,purdue,angular,nodejs,react,redux,fullstack,front end">
   <meta name="author" content="John Sylvain">
   <link rel="icon" href="assets/favicon.png" />
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700|Karla:400,500,700" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700|Karla:400,500,700" rel="stylesheet"> -->
 </head>
 <body>
-  <div id="wrapper">
-    <div id="console-selector"></div> <!-- JavaScript Selector -->
+  <div class="wrap">
+    <div id="console-selector"></div>
+    <div class="grid">
+      <div class="item span-row">
+        <header>
+          <div>
+            <h1>John Sylvain</h1>
+            <p>Software Engineer</p>
+          </div>
+          <nav class="nav">
+            <a href="#/" class="active">Porfolio</a>
+            <a href="#/resume">Resume</a>
+          </nav>
+        </header>
+      </div>
+
+      <div class="item span-row show-interactive">
+        <div id="resume-selector"></div>
+      </div>
+
+
+      <div class="item span-row hide-interactive">
+        <div class="about">
+          <h3>Hello! 👋</h3>
+          <p>I'm John, a passionate software engineer focused on creating performant JavaScript web applications and developer tools. Currently, I develop impactful UIs for large scale consumer web products at <a href="https://rocketmiles.com" target="_blank">Rocketmiles</a>.</p>
+          <p class="mobile-hide">If you would like to learn more about me and my experience, feel free to check out my <a href="#/resume" class="toggle-btn">interactive resume</a>.</p>
+        </div>
+      </div>
+
+      <div class="item no-pad hide-interactive">
+        <div class="project">
+          <div class="project__body">
+            <h3 class="project__title">PlaceMorty</h3>
+            <p class="project__description">PlaceMorty provides quick access to placeholder images via AWS S3 storage, Redis caching, and an admin dashboard for curation.</p>
+          </div>
+          <div class="project__links">
+            <a href="https://placemorty.us" target="_blank">Demo</a>
+            <a href="http://github.com/johnsylvain/placemorty/" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item no-pad hide-interactive">
+        <div class="project">
+          <div class="project__body">
+            <h3 class="project__title">Pagine</h3>
+            <p class="project__description">Pagine is a system that makes it easy to generate websites directly in the browser with no need for compiling.</p>
+          </div>
+          <div class="project__links">
+            <a href="https://johnsylvain.github.io/pagine" class="mobile-hide-link" target="_blank">Website</a>
+            <a href="http://github.com/johnsylvain/pagine/" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item no-pad hide-interactive">
+        <div class="project">
+          <div class="project__body">
+            <h3 class="project__title">Shower Thoughts Newtab</h3>
+            <p class="project__description">This Chrome Extension creates a fun newtab page, leveraging Chrome storage for caching reddit data and storing user options.</p>
+          </div>
+          <div class="project__links">
+            <a href="https://chrome.google.com/webstore/detail/reddit-rshowerthoughts-ne/pcmdclajhocfphjlgbhniglijghlmlfg?hl=en-US&gl=US" target="_blank">Download</a>
+            <a href="http://github.com/johnsylvain/reddit-showerthoughts-newtab/" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item no-pad hide-interactive">
+        <div class="project">
+          <div class="project__body">
+            <h3 class="project__title">Personal URL Shortener</h3>
+            <p class="project__description">This MERN webapp generates unique links for frequented websites, complete with an admin dashboard and JWT authentication.</p>
+          </div>
+          <div class="project__links">
+            <a href="http://github.com/johnsylvain/url-shortener-node/" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      &copy; John Sylvain <span id="date-selector"></span>
+    </footer>
+  </div>
+
+  <!-- <div id="wrapper">
+    <div id="console-selector"></div> JavaScript Selector
 
     <div id="page-wrap">
       <div class="container" id="container-selector">
@@ -22,7 +108,7 @@
               <h1>John Sylvain</h1>
               <p>Software Engineer</p>
             </div>
-            <!-- JavaScript Selector -->
+            JavaScript Selector
             <a href="#/resume" id="toggle-interactive" class="toggle-btn"></a>
           </header>
           <section id="landing-wrapper">
@@ -74,23 +160,23 @@
                   </div>
                 </div>
 
-                <!-- <div class="project">
+                <div class="project">
                   <img src="./assets/streamit.svg" alt="" class="project__image"/>
                   <div class="project__caption">
                     <h3 class="project__title">Streamit</h3>
                     <p class="project__description">Streamit is a PWA </p>
                     <a href="http://github.com/johnsylvain/url-shortener-node/" target="_blank" class="project__link">GitHub</a>
                   </div>
-                </div> -->
+                </div>
 
               </div>
             </div>
           </section>
-          <div id="resume-selector"></div> <!-- JavaScript Selector -->
+          <div id="resume-selector"></div> JavaScript Selector
         </div>
         <footer class="footer">
           <div>
-            &#0169; John Sylvain <span id="date-selector"></span> <!-- JavaScript Selector -->
+            &#0169; John Sylvain <span id="date-selector"></span> JavaScript Selector
           </div>
           <div class="footer__links">
             <a href="http://github.com/johnsylvain" target="_blank">GitHub</a>
@@ -100,7 +186,7 @@
         </footer>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Shh... Easter Egg -->
   <div class="trash">
