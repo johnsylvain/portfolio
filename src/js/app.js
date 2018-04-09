@@ -58,17 +58,6 @@ const app = {
   },
 
   bindEvents () {
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', event => {
-        event.preventDefault()
-        this.router.go({ route: event.target.href })
-      })
-    })
-
-    document.getElementById('console-selector').addEventListener('click', (e) => {
-      document.getElementById('command-input').focus()
-    })
-
     window.addEventListener('resize', throttle((event) => {
       if (window.innerWidth <= this.breakpoint) {
         this.router.go({ route: '#/' })
@@ -99,20 +88,19 @@ const app = {
       document.querySelector('#command-input').focus()
     })
 
-    events.on('resumeContentViewRender',
+    events.on('resumeContentViewRender', () => {
       render(
         resumeView.render(),
         document.querySelector('#resume-selector')
       )
-    )
+    })
   },
 
   switchModes (flag) {
     const targets = [
       document.querySelector('.wrap'),
-      document.getElementById('resume-selector'),
-      document.getElementById('console-selector'),
-      // document.getElementById('container-selector'),
+      document.querySelector('#resume-selector'),
+      document.querySelector('#console-selector'),
     ]
 
     if (flag) {

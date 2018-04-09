@@ -1,6 +1,6 @@
 import actions from '../actions'
 import events from '../utils/events'
-import { h, render } from '../utils/vdom'
+import { h } from '../utils/vdom'
 
 export default {
   render () {
