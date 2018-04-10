@@ -6,9 +6,12 @@ class Router {
     window.addEventListener('load', this.go.bind(this))
   }
 
-  go (path) {
-    if (path.route)
-      history.replaceState(undefined, undefined, path.route)
+  go (event) {
+    const path = typeof event === 'string'
+      ? event : null
+  
+    if (path)
+      history.replaceState(undefined, undefined, path)
 
     const url = location.hash.slice(1) || '/'
 

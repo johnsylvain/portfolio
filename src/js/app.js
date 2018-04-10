@@ -22,7 +22,7 @@ const app = {
     document.querySelectorAll('.item').forEach((item, i) => {
       setTimeout(() => {
         item.classList.add('fade-up')
-      }, i * 80)
+      }, i * 70)
 
       item.addEventListener('animationend', () => {
         item.style.opacity = 1
@@ -39,7 +39,7 @@ const app = {
         events.emit('switchModes', { flag: false })
         setActiveNavButton('/resume')
         if(window.innerWidth <= this.breakpoint)
-          this.router.go({ route: '#/' })
+          this.router.go('#/')
       }
     })
 
@@ -60,7 +60,7 @@ const app = {
   bindEvents () {
     window.addEventListener('resize', throttle((event) => {
       if (window.innerWidth <= this.breakpoint) {
-        this.router.go({ route: '#/' })
+        this.router.go('#/')
       }
     }, 250, this))
 
@@ -73,6 +73,10 @@ const app = {
 
       if (keyPress && document.activeElement.id === 'command-input')
         actions.executeKeypress(keyPress.action)
+    })
+
+    document.querySelector('#console-selector').addEventListener('click', e => {
+      document.querySelector('#command-input').focus()
     })
 
     events.on('switchModes', data => {

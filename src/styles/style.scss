@@ -1,14 +1,14 @@
 // Variables
-$font-mono: 'Ubuntu Mono', monospace;
+$font-mono: 'IBM Plex Mono', monospace;
 $font-sans-serif: 'Karla', 'Helvetica Neue', Helvetica, sans-serif;
 $font-bold: 700;
 $green: #3cb66f;
 $blue: #3498db;
 $medium-gray: #555;
-
 $bg-gray: #E9EBF1;
 $light-gray: #9f9f9f;
 $default-text: #484868;
+$royal-blue: #5985F7;
 $font-stack: -apple-system,
   BlinkMacSystemFont,
   "Segoe UI",
@@ -22,10 +22,7 @@ $font-stack: -apple-system,
 
 @import 'partials/animations';
 @import 'partials/reset';
-// @import 'partials/structure';
 @import 'partials/code';
-// @import 'partials/footer';
-// @import 'partials/projects';
 
 body {
   background: $bg-gray;
@@ -33,15 +30,17 @@ body {
   font-family: $font-stack;
 }
 
+.container {
+  max-width: 730px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
   grid-gap: 15px;
-  grid-auto-rows: minmax(70px, auto);
-  grid-auto-flow: row;
   padding: 2rem 1rem;
-  max-width: 710px;
-  margin: 0 auto;
 
   .item {
     padding: 1.3rem;
@@ -60,6 +59,11 @@ body {
     grid-column-start: 1; 
     grid-column-end: -1; 
   }
+
+  .span-2 {
+    grid-column: span 2;
+  }
+
 }
 
 .wrap {
@@ -112,7 +116,6 @@ header {
     font-weight: normal;
     font-size: 1.5rem;
     margin-bottom: 5px;
-    letter-spacing: 0.5px;
   }
 
   p {
@@ -129,7 +132,7 @@ header {
       color: $light-gray;
       
       &.active {
-        background: #5985F7;
+        background: $royal-blue;
         color: white;
       }
   
@@ -143,7 +146,6 @@ header {
 footer {
   font-size: 0.8rem;
   padding: 1rem;
-  text-align: center;
   color: rgba($default-text, 0.4);
 }
 
@@ -151,14 +153,6 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  img {
-    border-radius: 3px 3px 0 0;
-  }
-
-  .project__body {
-    padding: 1rem;
-  }
 
   .project__title {
     font-weight: 500;
@@ -168,26 +162,25 @@ footer {
 
   .project__description {
     line-height: 1.3;
+    margin-bottom: 10px;
   }
 
   .project__links {
     display: flex;
-    justify-content: space-around;
-    border-top: 1px solid $bg-gray;
-    margin: 0 1rem;
-    padding: 0.2rem 0;
-
+    
     a {
-      color: $medium-gray;
-      text-decoration: none;
+      padding: 6px 13px;
+      color: $default-text;
+      background: $bg-gray;
+      border-radius: 50px;
+      margin-right: 5px;
       display: block;
-      width: 100%;
-      text-align: center;
-      padding: 0.8rem;
-      border-radius: 3px;
+      font-size: 0.8rem;
+      text-decoration: none;
 
       &:hover {
-        background: transparentize($bg-gray, 0.7);
+        background: $royal-blue;
+        color: white;
       }
     }
   }
@@ -202,136 +195,17 @@ footer {
   }
 
   p:not(:last-child) {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
 }
 
+.link {
+  color: inherit;
+  text-decoration: none;
+  color: $royal-blue;
 
-
-.fade-up {
-  animation: fade-up 800ms forwards;
-}
-
-@keyframes fade-up {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  50% {
-    opacity: 1;
-    transform: translateY(-5px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-}
-
-
-
-
-
-
-
-
-// header {
-//   padding: 50px 0;
-//   font-family: $font-sans-serif;
-//   color: $medium-gray;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-
-//   h1 {
-//     font-size: 3rem;
-//     margin-bottom: 10px;
-//     font-weight: $font-bold;
-//     padding-right: 0.3em;
-//   }
-
-//   p {
-//     font-weight: 500;
-//     font-size: 1.3rem;
-//     color: lighten(#555, 10);
-//   }
-
-//   #toggle-interactive {
-//     float: right;
-//     border-radius: 50%;
-//     cursor: pointer;
-//     width: 60px;
-//     height: 60px;
-//     opacity: 0.8;
-//     transition: transform 0.4s, background-image 0.4s, opacity 0.2s;
-//     background-image: url('../assets/code.svg');
-
-//     &.interactive-mode {
-//       background-image: url('../assets/close.svg');
-//     }
-
-//     &:hover {
-//       opacity: 0.9;
-//     }
-//   }
-// }
-
-// section {
-//   font-family: $font-sans-serif;
-//   color: $medium-gray;
-//   font-size: 14pt;
-//   line-height: 140%;
-//   transition:  opacity 0.4s;
-//   z-index: 3000;
-
-//   .section {
-//     margin-bottom: 50px;
-
-//     h2 {
-//       font-size: 2rem;
-//       margin-bottom: 1rem;
-//     }
-
-//     &.about {
-//       p {
-//         margin-bottom: 1rem;
-//         font-size: 1.2rem;
-//       }
-
-//       a {
-//         color: $blue;
-//         text-decoration: none;
-//       }
-
-//       a:hover {
-//         text-decoration: underline;
-//       }
-//     }
-//   }
-
-//   &.interactive-mode {
-//     visibility: hidden;
-//     opacity: 0;
-//     z-index: 0;
-//     height: 0;
-//     overflow: hidden;
-//   }
-// }
-
-#resume-selector {
-  font-family: $font-mono;
-  font-size: 0.8rem;
-  opacity: 0;
-  z-index: 0;
-  line-height: 100%;
-  transition: visibility 0s, opacity 0.4s;
-  height: 0;
-
-  &.interactive-mode {
-    opacity: 1;
-    height: auto;
-    z-index: 1000;
+  &:hover {
+    text-decoration: underline;
   }
 }
 
@@ -358,7 +232,7 @@ footer {
   height: 100vh;
   overflow-y: scroll;
   color: white;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 
   .console__command-list {
     list-style: none;
@@ -367,7 +241,8 @@ footer {
 
     .console__command-list-item {
       padding: inherit;
-      line-height: 110%;
+      margin: 4px 0;
+      line-height: 100%;
 
       &.console__command-list-item--error {
         margin-left: 2ch;
@@ -397,21 +272,13 @@ footer {
     font-family: $font-mono;
     outline: none;
     border: none;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     margin: 0;
     padding: 0;
     color: white;
     width: 90%;
-    line-height: 110%;
+    line-height: 100%;
   }
-}
-
-.mobile-hide {
-  display: block;
-}
-
-a.mobile-hide-link {
-  visibility: visible;
 }
 
 .trash {
@@ -442,38 +309,8 @@ a.mobile-hide-link {
   }
 }
 
-// @media (max-width: 768px) {
-//   #toggle-interactive {
-//     display: none;
-//   }
-
-//   #landing-wrapper {
-//     h2 {
-//       font-size: 20pt;
-//     }
-//   }
-
-//   header {
-//     h1 {
-//       font-size: 2.5rem;
-//     }
-//   }
-
-//   footer .footer__links {
-//     text-align: left;
-//   }
-
-//   #placeholder {
-//     display: none;
-//   }
-//   .trash {
-//     display: none;
-//   }
-//   .mobile-hide {
-//     display: none;
-//   }
-//   a.mobile-hide-link {
-//     visibility: collapse;
-//     display: none;
-//   }
-// }
+@media (max-width: 768px) {
+  .mobile-hide {
+    display: none;
+  }
+}

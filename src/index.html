@@ -8,19 +8,19 @@
   <meta name="keywords" content="John Sylvain, web development,html,css,javascript,web design,purdue,angular,nodejs,react,redux,fullstack,front end">
   <meta name="author" content="John Sylvain">
   <link rel="icon" href="assets/favicon.png" />
-  <!-- <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700|Karla:400,500,700" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400" rel="stylesheet" />
 </head>
 <body>
   <div class="wrap">
     <div id="console-selector"></div>
-    <div class="grid">
+    <div class="grid container">
       <div class="item span-row">
         <header>
           <div>
             <h1>John Sylvain</h1>
             <p>Software Engineer</p>
           </div>
-          <nav class="nav">
+          <nav class="nav mobile-hide">
             <a href="#/" class="active">Porfolio</a>
             <a href="#/resume">Resume</a>
           </nav>
@@ -35,17 +35,27 @@
       <div class="item span-row hide-interactive">
         <div class="about">
           <h3>Hello! 👋</h3>
-          <p>I'm John, a passionate software engineer focused on creating performant JavaScript web applications and developer tools. Currently, I develop impactful UIs for large scale consumer web products at <a href="https://rocketmiles.com" target="_blank">Rocketmiles</a>.</p>
-          <p class="mobile-hide">If you would like to learn more about me and my experience, feel free to check out my <a href="#/resume" class="toggle-btn">interactive resume</a>.</p>
+          <p>
+            I'm John, a passionate software engineer focused on creating performant JavaScript
+            web applications and developer tools.
+          </p>
+          <p>
+            Currently, I work at 
+            <a href="https://rocketmiles.com" class="link" target="_blank">Rocketmiles</a>.
+          </p>
         </div>
       </div>
 
-      <div class="item no-pad hide-interactive">
+      <!-- <div class="item hide-interactive">
+        <h3>Connect</h3>
+        <p><a href="https://github.com/johnsylvain" target="_blank">github / johnsylvain</a></p>
+        <p><a href="https://linkedin.com/in/johnsylvain" target="_blank">linkedin / johnsylvain</a></p>
+      </div> -->
+
+      <div class="item hide-interactive">
         <div class="project">
-          <div class="project__body">
-            <h3 class="project__title">PlaceMorty</h3>
-            <p class="project__description">PlaceMorty provides quick access to placeholder images via AWS S3 storage, Redis caching, and an admin dashboard for curation.</p>
-          </div>
+          <h3 class="project__title">PlaceMorty</h3>
+          <p class="project__description">PlaceMorty provides quick access to placeholder images via AWS S3 storage, Redis caching, and an admin dashboard for curation.</p>
           <div class="project__links">
             <a href="https://placemorty.us" target="_blank">Demo</a>
             <a href="http://github.com/johnsylvain/placemorty/" target="_blank">GitHub</a>
@@ -53,12 +63,10 @@
         </div>
       </div>
 
-      <div class="item no-pad hide-interactive">
+      <div class="item hide-interactive">
         <div class="project">
-          <div class="project__body">
-            <h3 class="project__title">Pagine</h3>
-            <p class="project__description">Pagine is a system that makes it easy to generate websites directly in the browser with no need for compiling.</p>
-          </div>
+          <h3 class="project__title">Pagine 📄</h3>
+          <p class="project__description">Pagine is a system that makes it easy to generate websites directly in the browser with no need for compiling.</p>
           <div class="project__links">
             <a href="https://johnsylvain.github.io/pagine" class="mobile-hide-link" target="_blank">Website</a>
             <a href="http://github.com/johnsylvain/pagine/" target="_blank">GitHub</a>
@@ -66,12 +74,10 @@
         </div>
       </div>
 
-      <div class="item no-pad hide-interactive">
+      <div class="item hide-interactive">
         <div class="project">
-          <div class="project__body">
-            <h3 class="project__title">Shower Thoughts Newtab</h3>
-            <p class="project__description">This Chrome Extension creates a fun newtab page, leveraging Chrome storage for caching reddit data and storing user options.</p>
-          </div>
+          <h3 class="project__title">Shower Thoughts Newtab 💡</h3>
+          <p class="project__description">This Chrome Extension creates a fun newtab page, leveraging Chrome storage for caching reddit data and storing user options.</p>
           <div class="project__links">
             <a href="https://chrome.google.com/webstore/detail/reddit-rshowerthoughts-ne/pcmdclajhocfphjlgbhniglijghlmlfg?hl=en-US&gl=US" target="_blank">Download</a>
             <a href="http://github.com/johnsylvain/reddit-showerthoughts-newtab/" target="_blank">GitHub</a>
@@ -79,12 +85,10 @@
         </div>
       </div>
 
-      <div class="item no-pad hide-interactive">
+      <div class="item hide-interactive">
         <div class="project">
-          <div class="project__body">
-            <h3 class="project__title">Personal URL Shortener</h3>
-            <p class="project__description">This MERN webapp generates unique links for frequented websites, complete with an admin dashboard and JWT authentication.</p>
-          </div>
+          <h3 class="project__title">Personal URL Shortener 🔗</h3>
+          <p class="project__description">This MERN webapp generates unique links for frequented websites, complete with an admin dashboard and JWT authentication.</p>
           <div class="project__links">
             <a href="http://github.com/johnsylvain/url-shortener-node/" target="_blank">GitHub</a>
           </div>
@@ -93,7 +97,9 @@
     </div>
 
     <footer>
-      &copy; John Sylvain <span id="date-selector"></span>
+      <div class="container">
+        &copy; John Sylvain <span id="date-selector"></span>
+      </div>
     </footer>
   </div>
 
