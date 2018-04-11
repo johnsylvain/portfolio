@@ -25,7 +25,7 @@ $font-stack: -apple-system,
 @import 'partials/code';
 
 body {
-  background: $bg-gray;
+  background: darken($bg-gray, 10%);
   color: $default-text;
   font-family: $font-stack;
 }
@@ -71,12 +71,13 @@ body {
 }
 
 .wrap {
-  transition: margin 0.4s ease;
+  transition: padding 0.4s ease;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   min-height: 100vh;
   position: relative;
+  background: $bg-gray;
 
   & > div {
     width: 100%;
@@ -91,7 +92,7 @@ body {
   }
 
   &.interactive-mode {
-    margin-left: 27%;
+    padding-left: 27%;
 
     .hide-interactive {
       display: none;
@@ -157,6 +158,22 @@ footer {
 
   .copyright {
     flex-grow: 1;
+  }
+
+  a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: $light-gray;
+    opacity: 0.8;
+
+    &:not(:first-child) {
+      margin-left: 7px;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
