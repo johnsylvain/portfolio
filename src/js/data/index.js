@@ -18,8 +18,7 @@ export default {
     pointer: 0,
   },
   currentOutput: {
-    welcomeMessage: [
-      "welcome to my interactive resume!",
+    instructions: [
       "to view my resume, type 'open resume' in the terminal to the left",
       "type 'help' to view other commands"
     ]
