@@ -1,7 +1,5 @@
 import actions from '../actions'
-import events from '../utils/events'
-import * as filters from '../utils/filters'
-import { compose } from '../utils/helpers'
+import { compose, textToJSON, findUrls } from '../utils/helpers'
 import { h } from '../utils/vdom'
 
 export default {
@@ -9,8 +7,8 @@ export default {
     const data = actions.getCurrentOutput()
     const json = compose(
       (d) => JSON.stringify(d, null, '  '),
-      filters.textToJSON,
-      filters.findUrls
+      textToJSON,
+      findUrls
     )(data)
 
     return (

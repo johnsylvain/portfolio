@@ -1,4 +1,4 @@
-const events = {
+export default {
   events: {},
 
   on (name, fn) {
@@ -9,5 +9,3 @@ const events = {
     (this.events[name] || []).map(fn => { fn.call(context, data) })
   }
 }
-
-export default events

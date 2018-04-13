@@ -31,7 +31,7 @@ const app = {
     })
 
     this.router = new Router({
-      '/': function () {
+      '/': () => {
         events.emit('switchModes', { flag: true })
         setActiveNavButton('/')
       },
@@ -100,31 +100,20 @@ const app = {
     })
   },
 
-  switchModes (flag) {
+  switchModes (forceHome) {
     const targets = [
       document.querySelector('.wrap'),
       document.querySelector('#resume-selector'),
       document.querySelector('#console-selector'),
     ]
 
-    if (flag) {
-      targets.forEach(t => {
-        t.classList.remove('interactive-mode')
-      })
+    if (forceHome) {
+      targets.forEach(t => t.classList.remove('interactive-mode'))
       this.interactiveMode = false
-      return
-    }
-
-    if (!this.interactiveMode) {
-      targets.forEach(t => {
-        t.classList.add('interactive-mode')
-      })
     } else {
-      targets.forEach(t => {
-        t.classList.remove('interactive-mode')
-      })
+      targets.forEach(t => t.classList.toggle('interactive-mode'))
+      this.interactiveMode = !this.interactiveMode
     }
-    this.interactiveMode = !this.interactiveMode
   }
 }
 

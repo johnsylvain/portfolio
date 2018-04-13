@@ -1,16 +1,14 @@
 import actions from '../actions'
-import events from '../utils/events'
 import { h } from '../utils/vdom'
 
 export default {
   render () {
+    const commandList = actions.getCommandList()
     const handleSubmit = e => {
       e.preventDefault()
       actions.enterCommand(e.target.prompt.value)
       e.target.prompt.value = ''
     }
-
-    const commandList = actions.getCommandList()
 
     return (
       <div className="console" id="commands">
