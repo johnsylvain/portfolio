@@ -11,19 +11,19 @@ pre {
 	padding: 0;
 	color: #d3d3d3;
 
-	.string { color: $green; }
+	.string { color: #3cb66f; }
 	.number { color: darkorange; }
 	.boolean { color: #f1c40f; }
 	.null { color: magenta; }
 	.key { color: #999; }
 
 	a {
-		color:$green;
+		color: #3cb66f;
 		text-decoration: none;
-		border-bottom: 2px solid rgba($green, 0.2);
+		border-bottom: 2px solid rgba(#3cb66f, 0.2);
 
 		&:hover {
-			border-bottom: 2px solid rgba($green, 0.8);
+			border-bottom: 2px solid rgba(#3cb66f, 0.8);
 		}
 	}
 }

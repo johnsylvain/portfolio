@@ -1,15 +1,6 @@
-// Variables
-$font-mono: 'IBM Plex Mono', monospace;
-$font-sans-serif: 'Karla', 'Helvetica Neue', Helvetica, sans-serif;
-$font-bold: 700;
-$green: #3cb66f;
-$blue: #3498db;
-$medium-gray: #555;
-$bg-gray: #E9EBF1;
-$light-gray: #9f9f9f;
-$default-text: #484868;
-$royal-blue: #5985F7;
-$font-stack: -apple-system,
+$font-bold: 500;
+$font-mono: 'Source Code Pro', monospace;
+$font-sans-serif: -apple-system,
   BlinkMacSystemFont,
   "Segoe UI",
   Roboto,
@@ -20,6 +11,12 @@ $font-stack: -apple-system,
   "Segoe UI Emoji",
   "Segoe UI Symbol";
 
+$blue: #3498db;
+$bg-gray: #E9EBF1;
+$gray: #9f9f9f;
+$default-text: #484868;
+$royal-blue: #5985F7;
+
 @import 'partials/animations';
 @import 'partials/reset';
 @import 'partials/code';
@@ -27,7 +24,7 @@ $font-stack: -apple-system,
 body {
   background: darken($bg-gray, 10%);
   color: $default-text;
-  font-family: $font-stack;
+  font-family: $font-sans-serif;
 }
 
 .container {
@@ -124,32 +121,14 @@ header {
   }
 
   p {
-    color: $light-gray;
-  }
-}
-
-.round-link {
-  border-radius: 50px;
-  padding: 6px 16px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-decoration: none;
-  color: $light-gray;
-  
-  &.active {
-    background: $royal-blue;
-    color: white;
-  }
-
-  &:not(.active):hover {
-    background: $bg-gray;
+    color: $gray;
   }
 }
 
 footer {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   padding: 1rem 0 2rem;
-  color: $light-gray;
+  color: $gray;
 
   & > div {
     display: flex;
@@ -161,10 +140,9 @@ footer {
   }
 
   a {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: $font-bold;
     text-decoration: none;
-    color: $light-gray;
+    color: $gray;
     opacity: 0.8;
 
     &:not(:first-child) {
@@ -193,26 +171,31 @@ footer {
     margin-bottom: 0.8rem;
   }
 
-  .project-list {
+  .project {
     margin-top: 1rem;
 
     li {
-      margin-bottom: 10px;
-      transition: 0.1s ease;
+      margin: 0px -10px;
+      
+      a {
+        padding: 5px 10px;
+        display: block;
+        border-radius: 2px;
 
-      &:hover {
-        transform: translateX(5px);
+        &:hover {
+          background: transparentize($bg-gray, 0.6);
+        }
       }
     }
 
-    .project-list__title {
-      font-weight: 500;
+    .project__title {
+      font-weight: $font-bold;
       display: block;
       line-height: 130%;
     }
 
-    .project-list__subtitle {
-      color: $light-gray;
+    .project__subtitle {
+      color: $gray;
     }
 
     a {
@@ -228,7 +211,7 @@ footer {
   border-radius: 50px;
   padding: 0.3rem 0.7rem;
   color: white;
-  font-weight: 500;
+  font-weight: $font-bold;
   margin-right: 8px;
 }
 
@@ -239,6 +222,24 @@ footer {
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+.round-link {
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: 0.9rem;
+  font-weight: $font-bold;
+  text-decoration: none;
+  color: $gray;
+  
+  &.active {
+    background: $royal-blue;
+    color: white;
+  }
+
+  &:not(.active):hover {
+    background: $bg-gray;
   }
 }
 
@@ -274,28 +275,27 @@ footer {
 
     .console__command-list-item {
       padding: inherit;
-      margin: 4px 0;
-      line-height: 100%;
+      line-height: 130%;
+
+      &:not(.console__command-list-item--command) {
+        margin-left: 2ch;
+      }
 
       &.console__command-list-item--error {
-        margin-left: 2ch;
         color: #e74c3c;
       }
 
       &.console__command-list-item--response {
-        color: #8f8f8f;
-        margin-left: 2ch;
+        color: lighten(#303E4E, 35%);
       }
 
       &.console__command-list-item--bold {
-        color: #6f6f6f;
-        margin-left: 2ch;
         font-weight: $font-bold;
+        color: lighten(#303E4E, 45%);
       }
 
       &.console__command-list-item--warning {
         color: #e67e22;
-        margin-left: 2ch;
       }
     }
   }

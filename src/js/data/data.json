@@ -19,18 +19,22 @@
     },
     "experience": [
       {
-        "company": "Rocketmiles",
+        "company": "Rocket Travel, Inc.",
         "position": "Software Engineer",
-        "date": "October 2017 - present"
+        "date": "October 2017 - present",
+        "description": [
+          "Developed impactful UIs for multiple large-scale consumer web products",
+          "Created A/B tested interfaces, increasing conversions upwards of 10%",
+          "Refactored multiple front-end codebases to follow industry-wide standards"
+        ]
       },
       {
         "company": "USAA",
         "position": "Software Development Intern",
         "date": "Summer 2016",
         "description": [
-          "Worked on a small, agile team primarily focused on enterprise applications.",
-          "Developed an AngularJS application to manage business rules.",
-          "Analyzed data and created visualizations for the Enterprise Systems Division."
+          "Worked on an agile team primarily focused on enterprise applications",
+          "Developed a Restful application to manage business rules"
         ]
       },
       {
@@ -38,7 +42,7 @@
         "position": "Web Development Intern",
         "date": "Summer 2015",
         "description": [
-          "Developed websites and dynamic emails for a number of blue chip clients.",
+          "Developed websites and dynamic emails for a number of blue chip clients",
           "Aided in the relaunch of the global Blast Radius website"
         ]
       }
