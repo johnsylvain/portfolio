@@ -21,6 +21,8 @@ const app = {
     events.emit('console.render')
     events.emit('resume.render')
 
+    document.querySelector('.date').textContent = new Date().getFullYear().toString()
+
     document.querySelectorAll('.item').forEach((item, i) => {
       setTimeout(() => {
         item.classList.add('fade-up')
