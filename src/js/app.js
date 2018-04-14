@@ -12,12 +12,14 @@ import '../styles/style.scss'
 const app = {
   breakpoint: 768,
   interactiveMode: false,
+  router: undefined,
 
   init () {
     this.bindEvents()
+    this.bindRoutes()
 
-    events.emit('consoleViewRender')
-    events.emit('resumeContentViewRender')
+    events.emit('console.render')
+    events.emit('resume.render')
 
     document.querySelectorAll('.item').forEach((item, i) => {
       setTimeout(() => {
@@ -29,17 +31,20 @@ const app = {
         item.classList.remove('fade-up')
       })
     })
+  },
 
+  bindRoutes () {
     this.router = new Router({
       '/': () => {
-        events.emit('switchModes', { flag: true })
-        setActiveNavButton('/')
+        this.switchModes({ interactive: true })
+        setActiveNavButton('#/')
       },
       '/resume': () => {
-        events.emit('switchModes', { flag: false })
-        setActiveNavButton('/resume')
-        if(window.innerWidth <= this.breakpoint)
+        this.switchModes({ interactive: false })
+        setActiveNavButton('#/resume')
+        if (window.innerWidth <= this.breakpoint) {
           this.router.go('#/')
+        }
       }
     })
 
@@ -50,14 +55,14 @@ const app = {
         .forEach(a => a.classList.remove('active'))
 
       children
-        .find(a => a.getAttribute('href') === `#${path}`)
+        .find(a => a.getAttribute('href') === path)
         .classList.add('active')
     }
-
-    document.querySelector('#date-selector').textContent = new Date().getFullYear().toString()
   },
 
   bindEvents () {
+    const $console = document.querySelector('.console')
+
     window.addEventListener('resize', throttle((event) => {
       if (window.innerWidth <= this.breakpoint) {
         this.router.go('#/')
@@ -79,20 +84,15 @@ const app = {
       document.querySelector('#command-input').focus()
     })
 
-    events.on('switchModes', data => {
-      this.switchModes(data.flag)
-    })
-
-    events.on('consoleViewRender', () => {
+    events.on('console.render', () => {
       render(
         consoleView.render(),
         document.querySelector('#console-selector')
       )
-
       document.querySelector('#command-input').focus()
     })
 
-    events.on('resumeContentViewRender', () => {
+    events.on('resume.render', () => {
       render(
         resumeView.render(),
         document.querySelector('#resume-selector')
@@ -100,14 +100,14 @@ const app = {
     })
   },
 
-  switchModes (forceHome) {
+  switchModes ({ interactive }) {
     const targets = [
       document.querySelector('.wrap'),
       document.querySelector('#resume-selector'),
       document.querySelector('#console-selector'),
     ]
 
-    if (forceHome) {
+    if (interactive) {
       targets.forEach(t => t.classList.remove('interactive-mode'))
       this.interactiveMode = false
     } else {

@@ -1,36 +1,43 @@
 import events from '../utils/events'
-import model from '../data'
+import state from '../state'
 
 const actions = {
-  getCurrentOutput: () => model.currentOutput,
-  getKeyCommands: () => model.keyCommands,
-  getCommand: (text) => model.commands.find(c => c.text === text),
-  getCommandList: () => model.commandList,
-  getFileName: () => Object.keys(model.currentOutput)[0],
-  getEnteredCommands: () => model.enteredCommands.currentCommand
-      ? model.enteredCommands.currentCommand
+  getCurrentOutput: () => state.currentOutput,
+  getKeyCommands: () => state.keyCommands,
+  getCommand: (text) => state.commands.find(c => c.text === text),
+  getCommandList: () => state.commandList,
+  getEnteredCommands: () => state.enteredCommands.currentCommand
+      ? state.enteredCommands.currentCommand
       : { text: '' },
 
   updateOutput (newOutput) {
-    model.currentOutput = newOutput
+    state.currentOutput = newOutput
   },
 
   executeKeypress (key) {
-    if (key === 'UP' || key === 'DOWN') {
-      if (key === 'UP' && model.enteredCommands.pointer < model.enteredCommands.data.length)
-        model.enteredCommands.pointer++
+    switch (key) {
+      case 'UP': {
+        if (state.enteredCommands.pointer < state.enteredCommands.data.length)
+          state.enteredCommands.pointer++
 
-      if (key === 'DOWN' && model.enteredCommands.pointer > 0)
-        model.enteredCommands.pointer--
+        const pos = state.enteredCommands.data.length - state.enteredCommands.pointer
+        state.enteredCommands.currentCommand = state.enteredCommands.data[pos]
+        break
+      }
+      case 'DOWN': {
+        if (state.enteredCommands.pointer > 0)
+          state.enteredCommands.pointer--
 
-      const pos = model.enteredCommands.data.length - model.enteredCommands.pointer
-      model.enteredCommands.currentCommand = model.enteredCommands.data[pos]
+        const pos = state.enteredCommands.data.length - state.enteredCommands.pointer
+        state.enteredCommands.currentCommand = state.enteredCommands.data[pos]
+        break
+      }
+      case 'CLEAR':
+        this.executeCommand('clear')
+        break
     }
 
-    if (key === 'CLEAR')
-      this.executeCommand('clear')
-
-    events.emit('consoleViewRender')
+    events.emit('console.render')
   },
 
   enterCommand (command) {
@@ -38,22 +45,22 @@ const actions = {
 
     const args = command.split(' ')
     const newCommand = { text: command, type: 'command' }
-    const lastCommand = model.enteredCommands.data[model.enteredCommands.data.length - 1]
-    const flag = model.commands.find(o => o.text === args[0])
+    const lastCommand = state.enteredCommands.data[state.enteredCommands.data.length - 1]
+    const flag = state.commands.find(o => o.text === args[0])
 
-    model.commandList.push(newCommand)
+    state.commandList.push(newCommand)
 
     if (args[0] !== '' && (!lastCommand || command !== lastCommand.text))
-      model.enteredCommands.data.push(newCommand)
+      state.enteredCommands.data.push(newCommand)
 
-    model.enteredCommands.pointer = 0
+    state.enteredCommands.pointer = 0
 
     if (!flag) {
-      model.commandList.push(
+      state.commandList.push(
         { text: 'command not found: ' + args[0], type: 'error' },
         { text: 'to view available commands type: help', type: 'response' }
       )
-      events.emit('consoleViewRender')
+      events.emit('console.render')
     }
     else {
       this.executeCommand(command)
@@ -62,34 +69,36 @@ const actions = {
 
   executeCommand (command) {
     const self = this
-    const comArgs = command.split(' ')
+    command = command.split(' ')
 
-    const checkArguments = (expected, name) => {
-      if (comArgs.length - 1 !== expected) {
-        model.commandList.push(
-          { text: `'${name}' does not need any arguments`, type: 'error' }
-        )
+    const verifyArguments = (expected, name) => {
+      if (command.length - 1 !== expected) {
+        state.commandList.push({
+          text: `'${name}' does not need any arguments`,
+          type: 'error'
+        })
         return
       }
     }
 
     const commands = {
       pwd () {
-        checkArguments(
+        verifyArguments(
           actions.getCommand('pwd').params || 0, 'pwd'
         )
 
-        model.commandList.push(
-          { text: window.location.host, type: 'bold' }
-        )
+        state.commandList.push({
+          text: window.location.host,
+          type: 'bold'
+        })
       },
 
       ls () {
-        checkArguments(
+        verifyArguments(
           actions.getCommand('ls').params || 0, 'ls'
         )
 
-        model.commandList.push(
+        state.commandList.push(
           { text: 'index.html', type: 'response' },
           { text: 'app.js', type: 'response' },
           { text: 'style.css', type: 'response' }
@@ -98,50 +107,49 @@ const actions = {
       },
 
       clear () {
-        checkArguments(
+        verifyArguments(
           actions.getCommand('clear').params || 0, 'clear'
         )
 
-        model.commandList = []
+        state.commandList = []
       },
 
       help () {
-        checkArguments(
+        verifyArguments(
           actions.getCommand('help').params || 0, 'help'
         )
 
-        const commands = model.commands
-        model.commandList.push(
-          { text: 'Available Commands:', type: 'bold' }
-        )
-        commands.forEach((avalCommand, i) => {
+        state.commandList.push({
+          text: 'Available Commands:',
+          type: 'bold'
+        })
+
+        state.commands.forEach((avalCommand, i) => {
           if (avalCommand.ignored !== true && avalCommand.text !== '') {
             const response = (avalCommand.params !== null)
               ? `- ${avalCommand.text} [${avalCommand.params.toLocaleString()}]`
               : `- ${avalCommand.text}`
 
-            model.commandList.push(
-              { text: response, type: 'response' }
-            )
+            state.commandList.push({
+              text: response,
+              type: 'response'
+            })
           }
         })
       },
 
       open () {
-        const openResume = () => {
-          self.updateOutput({ resume: model.data })
-        }
+        const resume = () => { self.updateOutput({ resume: state.data }) }
+        const pdf = () => { window.open("http://johnsylvain.me/resume.pdf") }
 
-        const pdf = () => {
-          window.open("http://johnsylvain.me/resume.pdf")
-        }
-        if (comArgs.length === 1) {
-          model.commandList.push(
-            { text: `type 'open [${actions.getCommand('open').params}]'`, type: 'warning' }
-          )
+        if (command.length === 1) {
+          state.commandList.push({
+            text: `type 'open [${actions.getCommand('open').params}]'`,
+            type: 'warning'
+          })
         } else {
           return {
-            resume: openResume,
+            resume: resume,
             pdf: pdf
           }
         }
@@ -150,14 +158,15 @@ const actions = {
       show () {
         const showSection = (section) => () => {
           self.updateOutput({
-            [section]: model.data[section]
+            [section]: state.data[section]
           })
         }
 
-        if (comArgs.length === 1) {
-          model.commandList.push(
-            { text: `type 'show [${actions.getCommand('show').params}]'`, type: 'warning' }
-          )
+        if (command.length === 1) {
+          state.commandList.push({
+            text: `type 'show [${actions.getCommand('show').params}]'`,
+            type: 'warning'
+          })
         } else {
           return {
             education: showSection('education'),
@@ -168,23 +177,16 @@ const actions = {
         }
       },
 
-      email () {
-        const subject = comArgs
-          .slice(1)
-          .reduce((s, w) => `${s} ${w}`)
-
-        window.open(`mailto:hi@johnsylvain.me?subject=${subject}`)
-      },
-
       social () {
         const openLink = (site) => () => {
-          window.open(model.data.contact.social[site])
+          window.open(state.data.contact.social[site])
         }
 
-        if (comArgs.length === 1) {
-          model.commandList.push(
-            { text: `type 'social [${actions.getCommand('social').params}]'`, type: 'warning' }
-          )
+        if (command.length === 1) {
+          state.commandList.push({
+            text: `type 'social [${actions.getCommand('social').params}]'`,
+            type: 'warning'
+          })
         } else {
           return{
             github: openLink('github'),
@@ -195,12 +197,13 @@ const actions = {
 
       rm () {
         const rf = () => {
+          const $commandInput = document.querySelector('#command-input')
           const targets = [
             document.querySelector('.wrap'),
             document.querySelectorAll('.trash'),
           ]
 
-          document.querySelector('#command-input').disabled = true
+          $commandInput.disabled = true
           targets.forEach((el) => {
             if (Array.from(el)[0]) {
               el.forEach(e => { e.classList.add('crash') })
@@ -209,7 +212,7 @@ const actions = {
             }
           })
           window.setTimeout(() => {
-            document.querySelector('#command-input').disabled = false
+            $commandInput.disabled = false
             targets.forEach((el) => {
               if (Array.from(el)[0]) {
                 el.forEach(e => { e.classList.remove('crash') })
@@ -217,14 +220,15 @@ const actions = {
                 el.classList.remove('crash')
               }
             })
-            document.querySelector('#command-input').focus()
+            $commandInput.focus()
           }, 4000)
         }
 
-        if (comArgs.length === 1) {
-          model.commandList.push(
-            { text: `please specify a path`, type: 'warning' }
-          )
+        if (command.length === 1) {
+          state.commandList.push({
+            text: `please specify a path`,
+            type: 'warning'
+          })
         } else {
           return {
             '-rf': rf
@@ -233,23 +237,23 @@ const actions = {
       }
     }
 
-    model.enteredCommands.pointer = 0
-    model.enteredCommands.currentCommand = ''
+    state.enteredCommands.pointer = 0
+    state.enteredCommands.currentCommand = ''
 
-    if (comArgs[0] !== '' && comArgs.length === 1 || comArgs[0] === 'email') {
-      commands[comArgs[0]]()
-    } else if (comArgs.length > 1){
-      const subCommand = commands[comArgs[0]]()
-      if(subCommand[comArgs[1]]) {
-        subCommand[comArgs[1]]()
+    if (command[0] !== '' && command.length === 1) {
+      commands[command[0]]()
+    } else if (command.length > 1){
+      const subCommand = commands[command[0]]()
+      if(subCommand[command[1]]) {
+        subCommand[command[1]]()
       } else {
-        model.commandList.push(
-          { text: comArgs[1] + ' is not a proper parameter of \'' + comArgs[0] + '\'', type: 'error' }
+        state.commandList.push(
+          { text: command[1] + ' is not a proper parameter of \'' + command[0] + '\'', type: 'error' }
         )
       }
     }
-    events.emit('resumeContentViewRender')
-    events.emit('consoleViewRender')
+    events.emit('resume.render')
+    events.emit('console.render')
   }
 }
 

@@ -4,12 +4,11 @@ import { h } from '../utils/vdom'
 
 export default {
   render () {
-    const data = actions.getCurrentOutput()
     const json = compose(
-      (d) => JSON.stringify(d, null, '  '),
+      (d) => JSON.stringify(d, null, '   '),
       textToJSON,
       findUrls
-    )(data)
+    )(actions.getCurrentOutput())
 
     return (
       <div>

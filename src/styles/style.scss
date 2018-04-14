@@ -94,7 +94,7 @@ body {
     .hide-interactive {
       display: none;
     }
-  
+
     .show-interactive {
       display: inherit;
     }
@@ -176,7 +176,7 @@ footer {
 
     li {
       margin: 0px -10px;
-      
+
       a {
         padding: 5px 10px;
         display: block;
@@ -232,7 +232,7 @@ footer {
   font-weight: $font-bold;
   text-decoration: none;
   color: $gray;
-  
+
   &.active {
     background: $royal-blue;
     color: white;
@@ -260,9 +260,8 @@ footer {
 }
 
 .console {
-  border: 15px solid #303E4E;
   background-color: #303E4E;
-  padding: 10px;
+  padding: 25px;
   height: 100vh;
   overflow-y: scroll;
   color: white;
@@ -273,28 +272,28 @@ footer {
     margin: 0;
     padding: 0;
 
-    .console__command-list-item {
+    .console__item {
       padding: inherit;
       line-height: 130%;
 
-      &:not(.console__command-list-item--command) {
+      &:not(.console__item--command) {
         margin-left: 2ch;
       }
 
-      &.console__command-list-item--error {
+      &.console__item--error {
         color: #e74c3c;
       }
 
-      &.console__command-list-item--response {
+      &.console__item--response {
         color: lighten(#303E4E, 35%);
       }
 
-      &.console__command-list-item--bold {
+      &.console__item--bold {
         font-weight: $font-bold;
         color: lighten(#303E4E, 45%);
       }
 
-      &.console__command-list-item--warning {
+      &.console__item--warning {
         color: #e67e22;
       }
     }

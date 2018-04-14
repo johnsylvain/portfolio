@@ -1,4 +1,4 @@
-import json from './data.json'
+import json from './resume.json'
 
 export default {
   keyCommands: [
@@ -29,11 +29,10 @@ export default {
     { text: 'clear', params: null },
     { text: 'pwd', params: null, ignored: true },
     { text: 'ls', params: null, ignored: true },
-    { text: 'email', params: ['<subject>'] },
     { text: 'open', params: ['resume', 'pdf'] },
     { text: 'show', params: ['education', 'skills', 'xp', 'projects'] },
     { text: 'social', params: ['github', 'linkedin'] },
     { text: 'rm', params: ['-rf'], ignored: true }
   ],
-  data: json.resumeData
+  data: json.resume
 }

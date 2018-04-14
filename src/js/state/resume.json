@@ -1,5 +1,5 @@
 {
-  "resumeData": {
+  "resume": {
     "name": "John Sylvain",
     "title": "Software Engineer",
     "contact": {
@@ -82,13 +82,13 @@
     ],
     "skills": {
       "languages": [
-        "JavaScript (ES 2018)", "HTML", "CSS (Sass, Less)", "C"
+        "JavaScript (ES Next)", "HTML", "CSS (Sass, Less)", "C"
       ],
       "frameworks-and-libraries": [
-        "React", "Redux", "Express", "Angular", "Node"
+        "React", "Redux", "Express", "Node", "Angular"
       ],
       "web-tooling": [
-        "git", "webpack", "gulp", "ssh", "CSS preprocessors"
+        "git", "webpack", "gulp", "ssh"
       ],
       "database": [
         "SQL", "MongoDB", "Mongoose"
