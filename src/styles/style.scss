@@ -30,42 +30,9 @@ body {
 .container {
   max-width: 730px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 1rem;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-  grid-gap: 15px;
-  padding: 2rem 1rem;
-
-  .item {
-    padding: 1.3rem;
-    font-size: 14px;
-    background-color: #fff;
-    border-radius: 3px;
-    box-shadow: 0 3px 20px -10px rgba($default-text, 0.7);
-    opacity: 0;
-
-    &.no-pad {
-      padding: 0;
-    }
-  }
-
-  .span-row {
-    grid-column-start: 1; 
-    grid-column-end: -1; 
-  }
-
-  .span-2 {
-    grid-column: span 2;
-  }
-
-  .span-2-vertical {
-    grid-row: span 2;
-  }
-
-}
 
 .wrap {
   transition: padding 0.4s ease;
@@ -78,10 +45,6 @@ body {
 
   & > div {
     width: 100%;
-  }
-
-  .hide-interactive {
-    display: inherit;
   }
 
   .show-interactive {
@@ -107,6 +70,27 @@ body {
     position: relative;
 		z-index: 1000;
 	}
+}
+
+.item {
+  padding: 1.3rem;
+  margin-bottom: 15px;
+  font-size: 14px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 3px 20px -10px rgba($default-text, 0.7);
+  opacity: 0;
+}
+
+.masonry {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  grid-gap: 0px 15px;
+
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 header {
