@@ -72,7 +72,7 @@
         }
       },
       {
-        "title": "Reddit Showerthoughts Newtab" ,
+        "title": "Reddit Showerthoughts Newtab",
         "description": "Chrome Extension",
         "links": {
           "download": "http://johnsylva.in/showerthoughts",
@@ -81,18 +81,16 @@
       }
     ],
     "skills": {
-      "languages": [
-        "JavaScript (ES Next)", "HTML", "CSS (Sass, Less)", "C"
-      ],
+      "languages": ["JavaScript (ES Next)", "HTML", "CSS (Sass, Less)", "C"],
       "frameworks-and-libraries": [
-        "React", "Redux", "Express", "Node", "Angular"
+        "React",
+        "Redux",
+        "Express",
+        "Node",
+        "Angular"
       ],
-      "web-tooling": [
-        "git", "webpack", "gulp", "ssh"
-      ],
-      "database": [
-        "SQL", "MongoDB", "Mongoose"
-      ]
+      "web-tooling": ["git", "webpack", "gulp", "ssh"],
+      "database": ["SQL", "MongoDB", "Mongoose"]
     }
   }
 }

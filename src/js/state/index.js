@@ -1,4 +1,4 @@
-import json from './resume.json'
+import json from './resume.json';
 
 export default {
   keyCommands: [
@@ -8,14 +8,14 @@ export default {
   ],
   commandList: [
     {
-      text: 'type \'help\' to view commands',
+      text: "type 'help' to view commands",
       type: 'response'
     }
   ],
   enteredCommands: {
     data: [],
     currentCommand: '',
-    pointer: 0,
+    pointer: 0
   },
   currentOutput: {
     instructions: [
@@ -24,7 +24,7 @@ export default {
     ]
   },
   commands: [
-    { text: '',	params: null },
+    { text: '', params: null },
     { text: 'help', params: null },
     { text: 'clear', params: null },
     { text: 'pwd', params: null, ignored: true },
@@ -35,4 +35,4 @@ export default {
     { text: 'rm', params: ['-rf'], ignored: true }
   ],
   data: json.resume
-}
+};

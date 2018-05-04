@@ -1,22 +1,26 @@
-import actions from '../actions'
-import { h } from '../utils/vdom'
+import actions from '../actions';
+import { h } from '../utils/vdom';
 
 export default {
-  _handleSubmit (e) {
-    e.preventDefault()
-    actions.enterCommand(e.target.prompt.value)
-    e.target.prompt.value = ''
+  _handleSubmit(e) {
+    e.preventDefault();
+    actions.enterCommand(e.target.prompt.value);
+    e.target.prompt.value = '';
   },
 
-  render () {
+  render() {
     return (
       <div className="console">
         <ul className="console__command-list">
-          {actions.getCommandList().map(command =>
-            <li className={`console__item console__item--${command.type}`}>
-              {(command.type === 'command') ? `$ ${command.text}` : command.text}
-            </li>
-          )}
+          {actions
+            .getCommandList()
+            .map(command => (
+              <li className={`console__item console__item--${command.type}`}>
+                {command.type === 'command'
+                  ? `$ ${command.text}`
+                  : command.text}
+              </li>
+            ))}
         </ul>
         <form onSubmit={this._handleSubmit}>
           <span>$&nbsp;</span>
@@ -30,6 +34,6 @@ export default {
           />
         </form>
       </div>
-    )
+    );
   }
-}
+};
