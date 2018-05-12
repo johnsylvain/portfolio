@@ -6,5 +6,6 @@ module.exports = exports = {
     sourceType: 'module'
   },
   parser: 'babel-eslint',
-  extends: ['plugin:prettier/recommended']
+  extends: ['plugin:prettier/recommended'],
+  rules: ['prettier/prettier']
 };

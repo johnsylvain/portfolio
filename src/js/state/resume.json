@@ -23,8 +23,9 @@
         "position": "Software Engineer",
         "date": "October 2017 - present",
         "description": [
-          "Developed impactful UIs for multiple large-scale consumer web products",
-          "Created A/B tested interfaces, increasing conversions upwards of 10%",
+          "Constructed and maintained an internal, cross-product UI component library",
+          "Developed UIs for multiple large-scale consumer web products",
+          "Created insightful A/B tests, leading to increased conversions",
           "Refactored multiple front-end codebases to follow industry-wide standards"
         ]
       },
@@ -81,7 +82,7 @@
       }
     ],
     "skills": {
-      "languages": ["JavaScript (ES Next)", "HTML", "CSS (Sass, Less)", "C"],
+      "languages": ["JavaScript (ES Next)", "TypeScript", "CSS (SASS, Less)", "HTML", "C"],
       "frameworks-and-libraries": [
         "React",
         "Redux",

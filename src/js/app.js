@@ -1,4 +1,4 @@
-import Router from './utils/router.js';
+import Router from './utils/router';
 import events from './utils/events';
 import { throttle } from './utils/helpers';
 import { render } from './utils/vdom';
@@ -6,8 +6,6 @@ import { render } from './utils/vdom';
 import actions from './actions';
 import resumeView from './views/resume';
 import consoleView from './views/console';
-
-import '../styles/style.scss';
 
 const app = {
   breakpoint: 768,
