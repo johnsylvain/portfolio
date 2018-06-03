@@ -13,7 +13,7 @@ $font-sans-serif: -apple-system,
 
 $blue: #3498db;
 $gray: #9f9f9f;
-$light-gray: #f9f9f9;
+$light-gray: #f4f4f7;
 $default-text: #484868;
 $royal-blue: #5985F7;
 
@@ -122,11 +122,11 @@ header {
 }
 
 footer {
-  font-size: 0.8rem;
   padding: 1rem 0 2rem;
   color: $gray;
 
   & > div {
+    font-size: 0.8rem;
     display: flex;
     width: 100%;
   }
@@ -161,6 +161,7 @@ footer {
 
   p {
     line-height: 130%;
+    font-size: 1rem;
   }
 
   p:not(:last-child) {
