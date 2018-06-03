@@ -23,16 +23,16 @@ const app = {
       '.date'
     ).textContent = new Date().getFullYear().toString();
 
-    document.querySelectorAll('.item').forEach((item, i) => {
-      setTimeout(() => {
-        item.classList.add('fade-up');
-      }, i * 70);
+    // document.querySelectorAll('.item').forEach((item, i) => {
+    //   setTimeout(() => {
+    //     item.classList.add('fade-up');
+    //   }, i * 60);
 
-      item.addEventListener('animationend', () => {
-        item.style.opacity = 1;
-        item.classList.remove('fade-up');
-      });
-    });
+    //   item.addEventListener('animationend', () => {
+    //     item.style.opacity = 1;
+    //     item.classList.remove('fade-up');
+    //   });
+    // });
   },
 
   bindRoutes() {

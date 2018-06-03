@@ -32,44 +32,38 @@
 
 @keyframes trash-can {
 	20% {
-		top: calc(100vh - 300px);
+		transform: translate(-50%, -300px);
 	}
 
 	37% {
-		transform:translateX(-50%) rotateZ(0deg);
+		transform: translate(-50%, -300px);
 	}
 
 	40% {
-		transform:translateX(-50%) rotateZ(2deg);
+		transform: translate(-50%, -290px);
 	}
 
-	45% {
-		transform:translateX(-50%) rotateZ(-1deg);
+	50% {
+		transform: translate(-50%, -303px);
 	}
 
 	60% {
-		transform: translateX(-50%) rotateZ(0deg);
-		top: calc(100vh - 300px);
+		transform: translate(-50%, -300px);
 	}
 
 	70% {
-		top: 100vh;
+		transform: translate(-50%, 0px);
 	}
 }
 
 .fade-up {
-  animation: fade-up 800ms forwards;
+  animation: fade-up 400ms ease forwards;
 }
 
 @keyframes fade-up {
   0% {
     opacity: 0;
-    transform: translateY(30px);
-  }
-
-  50% {
-    opacity: 1;
-    transform: translateY(-5px);
+    transform: translateY(10px);
   }
 
   100% {

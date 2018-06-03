@@ -19,12 +19,11 @@
     },
     "experience": [
       {
-        "company": "Rocket Travel, Inc.",
+        "company": "Rocketmiles",
         "position": "Software Engineer",
         "date": "October 2017 - present",
         "description": [
           "Constructed and maintained an internal, cross-product UI component library",
-          "Developed UIs for multiple large-scale consumer web products",
           "Created insightful A/B tests, leading to increased conversions",
           "Refactored multiple front-end codebases to follow industry-wide standards"
         ]
@@ -82,7 +81,7 @@
       }
     ],
     "skills": {
-      "languages": ["JavaScript (ES Next)", "TypeScript", "CSS (SASS, Less)", "HTML", "C"],
+      "languages": ["JavaScript (ES Next)", "TypeScript", "CSS (Sass, Less)", "HTML"],
       "frameworks-and-libraries": [
         "React",
         "Redux",
