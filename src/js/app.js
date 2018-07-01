@@ -22,17 +22,6 @@ const app = {
     document.querySelector(
       '.date'
     ).textContent = new Date().getFullYear().toString();
-
-    // document.querySelectorAll('.item').forEach((item, i) => {
-    //   setTimeout(() => {
-    //     item.classList.add('fade-up');
-    //   }, i * 60);
-
-    //   item.addEventListener('animationend', () => {
-    //     item.style.opacity = 1;
-    //     item.classList.remove('fade-up');
-    //   });
-    // });
   },
 
   bindRoutes() {
@@ -62,8 +51,6 @@ const app = {
   },
 
   bindEvents() {
-    const $console = document.querySelector('.console');
-
     window.addEventListener(
       'resize',
       throttle(

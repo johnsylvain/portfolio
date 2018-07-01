@@ -13,7 +13,7 @@ $font-sans-serif: -apple-system,
 
 $blue: #3498db;
 $gray: #9f9f9f;
-$light-gray: #f4f4f7;
+$light-gray: #f7f7fa;
 $default-text: #484868;
 $royal-blue: #5985F7;
 
@@ -118,6 +118,10 @@ header {
       font-size: 1.2rem;
       color: $gray;
     }
+  }
+
+  nav a {
+    font-size: 1.2rem;
   }
 }
 
