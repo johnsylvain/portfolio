@@ -138,9 +138,6 @@ const actions = {
         const resume = () => {
           self.updateOutput({ resume: state.data });
         };
-        const pdf = () => {
-          window.open('http://johnsylvain.me/resume.pdf');
-        };
 
         if (command.length === 1) {
           state.commandList.push({
@@ -149,8 +146,7 @@ const actions = {
           });
         } else {
           return {
-            resume: resume,
-            pdf: pdf
+            resume
           };
         }
       },

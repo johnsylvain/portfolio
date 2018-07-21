@@ -13,7 +13,7 @@ $font-sans-serif: -apple-system,
 
 $blue: #3498db;
 $gray: #9f9f9f;
-$light-gray: #f7f7fa;
+$light-gray: #f6f6f9;
 $default-text: #484868;
 $royal-blue: #5985F7;
 
@@ -36,7 +36,7 @@ html, body {
 }
 
 .wrap {
-  transition: padding 0.4s ease;
+  transition: padding 0.3s ease;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -250,7 +250,7 @@ footer {
   width: 27%;
   max-width: 450px;
   opacity: 0;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition: transform 0.3s ease, opacity 0.4s ease;
   transform: translateX(-200px);
   will-change: transform, opacity;
   left: 0;

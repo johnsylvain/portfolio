@@ -54,7 +54,7 @@ const app = {
     window.addEventListener(
       'resize',
       throttle(
-        event => {
+        () => {
           if (window.innerWidth <= this.breakpoint) {
             this.router.go('#/');
           }

@@ -29,7 +29,7 @@ export default {
     { text: 'clear', params: null },
     { text: 'pwd', params: null, ignored: true },
     { text: 'ls', params: null, ignored: true },
-    { text: 'open', params: ['resume', 'pdf'] },
+    { text: 'open', params: ['resume'] },
     { text: 'show', params: ['education', 'skills', 'xp', 'projects'] },
     { text: 'social', params: ['github', 'linkedin'] },
     { text: 'rm', params: ['-rf'], ignored: true }
