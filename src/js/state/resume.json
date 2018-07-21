@@ -1,5 +1,5 @@
 {
-  "resumeData": {
+  "resume": {
     "name": "John Sylvain",
     "title": "Software Engineer",
     "contact": {
@@ -21,16 +21,20 @@
       {
         "company": "Rocketmiles",
         "position": "Software Engineer",
-        "date": "October 2017 - present"
+        "date": "October 2017 - present",
+        "description": [
+          "Constructed and maintained an internal, cross-product UI component library",
+          "Created insightful A/B tests, leading to increased conversions",
+          "Refactored multiple front-end codebases to follow industry-wide standards"
+        ]
       },
       {
         "company": "USAA",
         "position": "Software Development Intern",
         "date": "Summer 2016",
         "description": [
-          "Worked on a small, agile team primarily focused on enterprise applications.",
-          "Developed an AngularJS application to manage business rules.",
-          "Analyzed data and created visualizations for the Enterprise Systems Division."
+          "Worked on an agile team primarily focused on enterprise applications",
+          "Developed a Restful application to manage business rules"
         ]
       },
       {
@@ -38,7 +42,7 @@
         "position": "Web Development Intern",
         "date": "Summer 2015",
         "description": [
-          "Developed websites and dynamic emails for a number of blue chip clients.",
+          "Developed websites and dynamic emails for a number of blue chip clients",
           "Aided in the relaunch of the global Blast Radius website"
         ]
       }
@@ -68,7 +72,7 @@
         }
       },
       {
-        "title": "Reddit Showerthoughts Newtab" ,
+        "title": "Reddit Showerthoughts Newtab",
         "description": "Chrome Extension",
         "links": {
           "download": "http://johnsylva.in/showerthoughts",
@@ -77,18 +81,16 @@
       }
     ],
     "skills": {
-      "languages": [
-        "JavaScript (ES 2018)", "HTML", "CSS (Sass, Less)", "C"
-      ],
+      "languages": ["JavaScript (ES Next)", "TypeScript", "CSS (Sass, Less)", "HTML"],
       "frameworks-and-libraries": [
-        "React", "Redux", "Express", "Angular", "Node"
+        "React",
+        "Redux",
+        "Express",
+        "Node",
+        "Angular"
       ],
-      "web-tooling": [
-        "git", "webpack", "gulp", "ssh", "CSS preprocessors"
-      ],
-      "database": [
-        "SQL", "MongoDB", "Mongoose"
-      ]
+      "web-tooling": ["git", "webpack", "gulp", "ssh"],
+      "database": ["SQL", "MongoDB", "Mongoose"]
     }
   }
 }

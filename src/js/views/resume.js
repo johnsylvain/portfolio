@@ -1,47 +1,19 @@
-import controller from '../controller'
-import events from '../utils/events'
-import * as filters from '../utils/filters'
-import { compose } from '../utils/helpers'
-import { h, render } from '../utils/vdom'
+import actions from '../actions';
+import { compose, textToJSON, findUrls } from '../utils/helpers';
+import { h } from '../utils/vdom';
 
 export default {
-  init () {
-    this.bindEvents()
-    this.render()
-  },
-
-  bindEvents () {
-    events.on('resumeContentViewRender', data => {
-      this.render()
-    })
-  },
-
-  render () {
-    const data = controller.getCurrentOutput()
+  render() {
     const json = compose(
-      (d) => JSON.stringify(d, null, '  '),
-      filters.textToJSON,
-      filters.findUrls
-    )(data)
+      d => JSON.stringify(d, null, '   '),
+      textToJSON,
+      findUrls
+    )(actions.getCurrentOutput());
 
-    const Resume = () =>
+    return (
       <div>
-        <div className="menu-bar">
-          <div className="menu-bar__circle"></div>
-          <div className="menu-bar__circle"></div>
-          <div className="menu-bar__circle"></div>
-          <span className="menu-bar__title">
-            {controller.getFileName()}.json
-          </span>
-        </div>
-        <div id="resume-content">
-          <pre dangerouslySetInnerHTML={{ __html: json }}></pre>
-        </div>
+        <pre dangerouslySetInnerHTML={{ __html: json }} />
       </div>
-
-    render(
-      <Resume />, 
-      document.querySelector('#resume-selector')
-    )
+    );
   }
-}
+};

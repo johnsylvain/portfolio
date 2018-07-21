@@ -4,26 +4,26 @@ pre {
 	white-space: -pre-wrap;      /* Opera 4-6 */
 	white-space: -o-pre-wrap;    /* Opera 7 */
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
-	line-height:150%;
+	line-height: 170%;
 	font-family: $font-mono;
-	font-weight: 100;
-	font-size: 11pt;
+	font-size: 0.7rem;
 	margin: 0;
 	padding: 0;
-	color: #a0a0a0;
+	color: #c9c9c9;
 
-	.string { color: $green; }
+	.string { color: #3cb66f; }
 	.number { color: darkorange; }
 	.boolean { color: #f1c40f; }
 	.null { color: magenta; }
-	.key { color: #b0b0b0; }
+	.key { color: #909090; }
+
 	a {
-		color:$green;
+		color: #3cb66f;
 		text-decoration: none;
-		border-bottom: 2px solid rgba($green, 0.2);
+		border-bottom: 2px solid rgba(#3cb66f, 0.2);
 
 		&:hover {
-			border-bottom: 2px solid rgba($green, 0.8);
+			border-bottom: 2px solid rgba(#3cb66f, 0.8);
 		}
 	}
 }

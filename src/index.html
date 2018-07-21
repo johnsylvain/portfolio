@@ -1,124 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>John Sylvain &#8226; Software Engineer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="I am a software engineer focused on creating performant JavaScript web applications and developer tools.">
-  <meta name="keywords" content="John Sylvain, web development,html,css,javascript,web design,purdue,angular,nodejs,react,redux,fullstack,front end">
+  <meta name="keywords" content="John Sylvain,web development,html,css,javascript,software,preact,nodejs,react,redux,fullstack,frontend">
   <meta name="author" content="John Sylvain">
   <link rel="icon" href="assets/favicon.png" />
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700|Karla:400,500,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Source+Code+Pro" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/style.scss">
 </head>
+
 <body>
-  <div id="wrapper">
-    <div id="console-selector"></div> <!-- JavaScript Selector -->
-
-    <div id="page-wrap">
-      <div class="container" id="container-selector">
-        <div class="content" id="content">
-          <header>
-            <div>
-              <h1>John Sylvain</h1>
-              <p>Software Engineer</p>
-            </div>
-            <!-- JavaScript Selector -->
-            <a href="#/resume" id="toggle-interactive" class="toggle-btn"></a>
-          </header>
-          <section id="landing-wrapper">
-
-            <div class="section about">
-              <p>I am a passionate software engineer focused on creating performant JavaScript web applications and developer tools. Currently, I develop impactful UIs for large scale consumer web products at <a href="https://rocketmiles.com" target="_blank">Rocketmiles</a>.</p>
-              <p class="mobile-hide">If you would like to learn more about me and my experience, feel free to check out my <a href="#/resume" class="toggle-btn">interactive resume</a>.</p>
-            </div>
-
-            <div class="section">
-              <div class="projects">
-
-                <div class="project">
-                  <img src="./assets/mortyv2.svg" alt="" class="project__image"/>
-                  <div class="project__caption">
-                    <h3 class="project__title">PlaceMorty</h3>
-                    <p class="project__description">PlaceMorty provides quick access to placeholder images via AWS S3 storage, Redis caching, and an admin dashboard for curation.</p>
-                    <a href="https://placemorty.us" target="_blank" class="project__link">Demo</a>
-                    <a href="http://github.com/johnsylvain/placemorty/" target="_blank" class="project__link">GitHub</a>
-                  </div>
-                </div>
-
-                <div class="project">
-                  <img src="./assets/pagine.svg" alt="" class="project__image"/>
-                  <div class="project__caption">
-                    <h3 class="project__title">Pagine</h3>
-                    <p class="project__description">Pagine is a system that makes it easy to generate websites directly in the browser with no need for compiling.</p>
-                    <a href="https://johnsylvain.github.io/pagine" class="mobile-hide-link project__link" target="_blank">Website</a>
-                    <a href="http://github.com/johnsylvain/pagine/" target="_blank" class="project__link">GitHub</a>
-                  </div>
-                </div>
-
-                <div class="project">
-                  <img src="./assets/st-extensionv2.svg" alt="" class="project__image"/>
-                  <div class="project__caption">
-                    <h3 class="project__title">Shower Thoughts Newtab</h3>
-                    <p class="project__description">This Chrome Extension creates a fun newtab page, leveraging Chrome storage for caching reddit data and storing user options.</p>
-                    <a href="https://chrome.google.com/webstore/detail/reddit-rshowerthoughts-ne/pcmdclajhocfphjlgbhniglijghlmlfg?hl=en-US&gl=US" target="_blank" class="project__link">Download</a>
-                    <a href="http://github.com/johnsylvain/reddit-showerthoughts-newtab/" target="_blank" class="project__link">GitHub</a>
-                  </div>
-                </div>
-
-                <div class="project">
-                  <img src="./assets/jslinkv3.svg" alt="" class="project__image"/>
-                  <div class="project__caption">
-                    <h3 class="project__title">Personal URL Shortener</h3>
-                    <p class="project__description">This MERN webapp generates unique links for frequented websites, complete with an admin dashboard and JWT authentication.</p>
-                    <a href="http://github.com/johnsylvain/url-shortener-node/" target="_blank" class="project__link">GitHub</a>
-                  </div>
-                </div>
-
-                <!-- <div class="project">
-                  <img src="./assets/streamit.svg" alt="" class="project__image"/>
-                  <div class="project__caption">
-                    <h3 class="project__title">Streamit</h3>
-                    <p class="project__description">Streamit is a PWA </p>
-                    <a href="http://github.com/johnsylvain/url-shortener-node/" target="_blank" class="project__link">GitHub</a>
-                  </div>
-                </div> -->
-
-              </div>
-            </div>
-          </section>
-          <div id="resume-selector"></div> <!-- JavaScript Selector -->
-        </div>
-        <footer class="footer">
+  <div class="wrap">
+    <div id="console-selector"></div>
+    <div class="container">
+      <div class="item">
+        <header>
           <div>
-            &#0169; John Sylvain <span id="date-selector"></span> <!-- JavaScript Selector -->
+            <h1>John Sylvain</h1>
+            <p>Software Engineer</p>
           </div>
-          <div class="footer__links">
-            <a href="http://github.com/johnsylvain" target="_blank">GitHub</a>
-            <a href="http://linkedin.com/in/johnsylvain" target="_blank">LinkedIn</a>
-            <a href="mailto:hi@johnsylvain.me" target="_blank">Email</a>
+          <nav class="nav mobile-hide">
+            <a href="#/" class="active round-link">Porfolio</a>
+            <a href="#/resume" class="round-link">Resume</a>
+          </nav>
+        </header>
+      </div>
+
+      <div class="item item--inverse show-interactive">
+        <div id="resume-selector"></div>
+      </div>
+
+      <div class="item content hide-interactive">
+        <h3>Hey! 👋</h3>
+        <p>
+          I'm John, a passionate software engineer focused on creating performant JavaScript web applications and developer tools.
+        </p>
+        <p>
+          Currently, I develop consumer web products at
+          <a href="https://rocketmiles.com" class="link" target="_blank">Rocketmiles</a>.
+        </p>
+      </div>
+
+      <div class="masonry hide-interactive">
+        <div class="column">
+          <div class="item item--inverse content">
+            <h3>
+              <span class="badge">3</span>
+              <span>Web Apps</span>
+            </h3>
+            <ul class="project">
+              <li>
+                <a href="https://streamit.space" target="_blank">
+                  <span class="project__title">Streamit</span>
+                  <span class="project__subtitle">Reddit video streamer</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://placemorty.us" target="_blank">
+                  <span class="project__title">PlaceMorty</span>
+                  <span class="project__subtitle">Placeholder image generator</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://johnsylva.in" target="_blank">
+                  <span class="project__title">johnsylva.in</span>
+                  <span class="project__subtitle">Personal URL shortener</span>
+                </a>
+              </li>
+            </ul>
           </div>
-        </footer>
+
+          <div class="item item--inverse span-2-vertical content">
+            <h3>
+              <span class="badge">1</span>
+              <span>Chrome Extensions</span>
+            </h3>
+            <ul class="project">
+              <li>
+                <a href="https://chrome.google.com/webstore/detail/reddit-rshowerthoughts-ne/pcmdclajhocfphjlgbhniglijghlmlfg" target="_blank">
+                  <span class="project__title">Showerthoughts Newtab</span>
+                  <span class="project__subtitle">Newtab replacement</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="column">
+          <div class="item item--inverse content">
+            <h3>
+              <span class="badge">5</span>
+              <span>Open Source</span>
+            </h3>
+            <ul class="project">
+              <li>
+                <a href="https://github.com/johnsylvain/pagine" target="_blank">
+                  <span class="project__title">pagine</span>
+                  <span class="project__subtitle">Client-side website generator</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/johnsylvain/kobra" target="_blank">
+                  <span class="project__title">kobra</span>
+                  <span class="project__subtitle">JavaScript Framework</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/johnsylvain/air-router/" target="_blank">
+                  <span class="project__title">air-router</span>
+                  <span class="project__subtitle">Small browser route handler</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/johnsylvain/frecent/" target="_blank">
+                  <span class="project__title">frecent</span>
+                  <span class="project__subtitle">Object ranking algorithm</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/johnsylvain/object-path-resolve/" target="_blank">
+                  <span class="project__title">object-path-resolve</span>
+                  <span class="project__subtitle">Tiny object path resolver</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
+
+    <footer>
+      <div class="container">
+        <div class="copyright">
+          &copy; John Sylvain
+          <span class="date"></span>
+        </div>
+        <div>
+          <a href="https://github.com/johnsylvain" target="_blank">GitHub</a>
+          <a href="https://linkedin.com/in/johnsylvain" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
   </div>
 
   <!-- Shh... Easter Egg -->
   <div class="trash">
-    <img src="assets/trash.png" alt="">
+    <img src="assets/trash.png" alt="" />
   </div>
   <div class="trash trash__front">
-    <img src="assets/trash-front.png" alt="">
+    <img src="assets/trash-front.png" alt="" />
   </div>
   <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-60696638-3', 'auto');
     ga('send', 'pageview');
-  </script> 
+  </script>
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
   <script src="./js/app.js"></script>
 </body>
+
 </html>
