@@ -49,26 +49,26 @@
     ],
     "projects": [
       {
+        "title": "Streamit",
+        "description": "Reddit Video streamer",
+        "links": {
+          "demo": "https://streamit.space",
+          "github": "http://github.com/johnsylvain/streamit"
+        }
+      },
+      {
+        "title": "Kobra",
+        "description": "Minimal JavaScript Framework",
+        "links": {
+          "github": "https://github.com/johnsylvain/kobra"
+        }
+      },
+      {
         "title": "PlaceMorty",
         "description": "Placeholder Image Generator",
         "links": {
           "demo": "http://www.placemorty.us",
           "github": "http://github.com/johnsylvain/placemorty"
-        }
-      },
-      {
-        "title": "Pagine",
-        "description": "Serverless Markdown website generator",
-        "links": {
-          "demo": "https://johnsylvain.github.io/pagine",
-          "github": "https://github.com/johnsylvain/pagine"
-        }
-      },
-      {
-        "title": "URL Shortener",
-        "description": "Personal URL shortener",
-        "links": {
-          "github": "http://github.com/johnsylvain/url-shortener-node"
         }
       },
       {
