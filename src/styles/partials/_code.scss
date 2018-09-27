@@ -6,16 +6,16 @@ pre {
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	line-height: 170%;
 	font-family: $font-mono;
-	font-size: 0.7rem;
+	font-size: 0.72rem;
 	margin: 0;
 	padding: 0;
-	color: #c9c9c9;
+	color: #909090;
 
 	.string { color: #3cb66f; }
 	.number { color: darkorange; }
 	.boolean { color: #f1c40f; }
 	.null { color: magenta; }
-	.key { color: #909090; }
+	.key { color: $gray; }
 
 	a {
 		color: #3cb66f;

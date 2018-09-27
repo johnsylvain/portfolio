@@ -12,8 +12,8 @@ $font-sans-serif: -apple-system,
   "Segoe UI Symbol";
 
 $blue: #3498db;
-$gray: #9f9f9f;
-$light-gray: #f2f2f7;
+$gray: rgb(107, 119, 140);
+$light-gray: #F4F5F7;
 $default-text: #484868;
 $royal-blue: #5985F7;
 
@@ -78,7 +78,7 @@ html, body {
   margin-bottom: 15px;
 
   &.item--inverse {
-    background-color: $light-gray;
+    background: $light-gray;
     padding: 1.3rem;
     border-radius: 3px;
   }
@@ -181,10 +181,20 @@ footer {
       a {
         padding: 5px 10px;
         display: block;
-        border-radius: 2px;
+        border-radius: 3px;
+        position: relative;
 
         &:hover {
-          background: darken($light-gray, 2);
+          background: rgba(9, 30, 66, 0.04);
+        }
+
+        &:active {
+          background: #DEEBFF;
+        }
+
+        &:focus {
+          box-shadow: inset 0 0 0 2px $royal-blue;
+          outline: none;
         }
       }
     }
@@ -197,6 +207,7 @@ footer {
 
     .project__subtitle {
       color: $gray;
+      font-size: 0.9rem;
     }
 
     a {

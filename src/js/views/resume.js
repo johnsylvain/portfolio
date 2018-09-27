@@ -5,7 +5,7 @@ import { h } from '../utils/vdom';
 export default {
   render() {
     const json = compose(
-      d => JSON.stringify(d, null, '   '),
+      d => JSON.stringify(d, null, '  '),
       textToJSON,
       findUrls
     )(actions.getCurrentOutput());
