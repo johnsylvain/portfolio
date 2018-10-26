@@ -117,17 +117,15 @@ const actions = {
           type: 'bold'
         });
 
-        state.commands.forEach((avalCommand, i) => {
-          if (avalCommand.ignored !== true && avalCommand.text !== '') {
-            const response =
-              avalCommand.params !== null
-                ? `- ${
-                    avalCommand.text
-                  } [${avalCommand.params.toLocaleString()}]`
-                : `- ${avalCommand.text}`;
-
+        state.commands.forEach(availableCommand => {
+          if (!availableCommand.ignored) {
             state.commandList.push({
-              text: response,
+              text:
+                availableCommand.params !== null
+                  ? `- ${
+                      availableCommand.text
+                    } <${availableCommand.params.toLocaleString()}>`
+                  : `- ${availableCommand.text}`,
               type: 'response'
             });
           }
@@ -135,10 +133,6 @@ const actions = {
       },
 
       open() {
-        const resume = () => {
-          self.updateOutput({ resume: state.data });
-        };
-
         if (command.length === 1) {
           state.commandList.push({
             text: `type 'open [${actions.getCommand('open').params}]'`,
@@ -146,7 +140,9 @@ const actions = {
           });
         } else {
           return {
-            resume
+            resume: () => {
+              self.updateOutput({ resume: state.data });
+            }
           };
         }
       },
@@ -193,35 +189,31 @@ const actions = {
 
       rm() {
         const rf = () => {
-          const $commandInput = document.querySelector('#command-input');
-          const targets = [
-            document.querySelector('.wrap'),
-            document.querySelectorAll('.trash')
-          ];
+          const commandInputElement = document.querySelector('#command-input');
+          commandInputElement.disabled = true;
 
-          $commandInput.disabled = true;
-          targets.forEach(el => {
-            if (Array.from(el)[0]) {
-              el.forEach(e => {
-                e.classList.add('crash');
-              });
-            } else {
-              el.classList.add('crash');
-            }
-          });
+          toggleClass('add');
+
           window.setTimeout(() => {
-            $commandInput.disabled = false;
-            targets.forEach(el => {
+            commandInputElement.disabled = false;
+            toggleClass('remove');
+            commandInputElement.focus();
+          }, 4000);
+
+          function toggleClass(type) {
+            [
+              document.querySelector('.wrap'),
+              document.querySelectorAll('.trash')
+            ].forEach(el => {
               if (Array.from(el)[0]) {
                 el.forEach(e => {
-                  e.classList.remove('crash');
+                  e.classList[type]('crash');
                 });
               } else {
-                el.classList.remove('crash');
+                el.classList[type]('crash');
               }
             });
-            $commandInput.focus();
-          }, 4000);
+          }
         };
 
         if (command.length === 1) {
@@ -240,7 +232,7 @@ const actions = {
     state.enteredCommands.pointer = 0;
     state.enteredCommands.currentCommand = '';
 
-    if (command[0] !== '' && command.length === 1) {
+    if (command[0] && command.length === 1) {
       commands[command[0]]();
     } else if (command.length > 1) {
       const subCommand = commands[command[0]]();

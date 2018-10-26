@@ -7,61 +7,55 @@ import actions from './actions';
 import resumeView from './views/resume';
 import consoleView from './views/console';
 
-const app = {
-  breakpoint: 768,
-  interactiveMode: false,
-  router: undefined,
+class App {
+  constructor() {
+    this.breakpoint = 768;
+    this.interactiveMode = false;
+    this.elements = {
+      nav: Array.from(document.querySelector('.nav').children),
+      date: document.querySelector('.date')
+    };
+    this.router = undefined;
 
-  init() {
     this.bindEvents();
     this.bindRoutes();
 
     events.emit('console.render');
     events.emit('resume.render');
 
-    document.querySelector(
-      '.date'
-    ).textContent = new Date().getFullYear().toString();
-  },
+    this.elements.date.textContent = new Date().getFullYear().toString();
+  }
 
   bindRoutes() {
     this.router = new Router({
       '/': () => {
         this.switchModes({ interactive: true });
-        setActiveNavButton('#/');
       },
       '/resume': () => {
         this.switchModes({ interactive: false });
-        setActiveNavButton('#/resume');
         if (window.innerWidth <= this.breakpoint) {
           this.router.go('#/');
         }
       }
     });
 
-    function setActiveNavButton(path) {
-      const children = Array.from(document.querySelector('.nav').children);
+    this.router.onRouteChange(path => {
+      this.elements.nav.forEach(a => a.classList.remove('active'));
 
-      children.forEach(a => a.classList.remove('active'));
-
-      children
-        .find(a => a.getAttribute('href') === path)
+      this.elements.nav
+        .find(a => a.getAttribute('href') === `#${path}`)
         .classList.add('active');
-    }
-  },
+    });
+  }
 
   bindEvents() {
     window.addEventListener(
       'resize',
-      throttle(
-        () => {
-          if (window.innerWidth <= this.breakpoint) {
-            this.router.go('#/');
-          }
-        },
-        250,
-        this
-      )
+      throttle(() => {
+        if (window.innerWidth <= this.breakpoint) {
+          this.router.go('#/');
+        }
+      }, 250)
     );
 
     window.addEventListener('keyup', e => {
@@ -90,7 +84,7 @@ const app = {
     events.on('resume.render', () => {
       render(resumeView.render(), document.querySelector('#resume-selector'));
     });
-  },
+  }
 
   switchModes({ interactive }) {
     const targets = [
@@ -107,6 +101,6 @@ const app = {
       this.interactiveMode = !this.interactiveMode;
     }
   }
-};
+}
 
-app.init();
+new App();

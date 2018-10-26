@@ -2,7 +2,7 @@ import actions from '../actions';
 import { h } from '../utils/vdom';
 
 export default {
-  _handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
     actions.enterCommand(e.target.prompt.value);
     e.target.prompt.value = '';
@@ -22,7 +22,7 @@ export default {
               </li>
             ))}
         </ul>
-        <form onSubmit={this._handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <span>$&nbsp;</span>
           <input
             type="text"

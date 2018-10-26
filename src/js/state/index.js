@@ -24,7 +24,7 @@ export default {
     ]
   },
   commands: [
-    { text: '', params: null },
+    { text: '', params: null, ignored: true },
     { text: 'help', params: null },
     { text: 'clear', params: null },
     { text: 'pwd', params: null, ignored: true },

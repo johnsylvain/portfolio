@@ -1,16 +1,10 @@
-export function h(nodeName, attributes) {
-  let rest = [];
-  let length = arguments.length;
-  let children = [];
-
-  while (length-- > 2) children.push(arguments[length]);
-
+export function h(nodeName, attributes, ...children) {
   return typeof nodeName === 'function'
-    ? nodeName(attributes || {}, children.reverse())
+    ? nodeName(attributes || {}, children)
     : {
         nodeName,
         attributes: attributes || {},
-        children: [].concat.apply([], children.reverse())
+        children: [].concat.apply([], children)
       };
 }
 
