@@ -1,11 +1,12 @@
 import Router from './utils/router';
-import events from './utils/events';
-import { throttle } from './utils/helpers';
-import { render } from './utils/vdom';
+import Utils from './utils/helpers';
+import { render, h } from './utils/vdom';
 
-import actions from './actions';
-import resumeView from './views/resume';
-import consoleView from './views/console';
+import Store from './store';
+import state from './state';
+
+import Resume from './views/resume';
+import Console from './views/console';
 
 class App {
   constructor() {
@@ -16,12 +17,12 @@ class App {
       date: document.querySelector('.date')
     };
     this.router = undefined;
+    this.store = new Store(state);
 
     this.bindEvents();
     this.bindRoutes();
 
-    events.emit('console.render');
-    events.emit('resume.render');
+    this.store.inform();
 
     this.elements.date.textContent = new Date().getFullYear().toString();
   }
@@ -39,7 +40,7 @@ class App {
       }
     });
 
-    this.router.onRouteChange(path => {
+    this.router.subscribe(path => {
       this.elements.nav.forEach(a => a.classList.remove('active'));
 
       this.elements.nav
@@ -51,7 +52,7 @@ class App {
   bindEvents() {
     window.addEventListener(
       'resize',
-      throttle(() => {
+      Utils.throttle(() => {
         if (window.innerWidth <= this.breakpoint) {
           this.router.go('#/');
         }
@@ -59,30 +60,33 @@ class App {
     );
 
     window.addEventListener('keyup', e => {
-      const keyPress = actions
-        .getKeyCommands()
-        .find(
-          key =>
-            key.shortcut
-              ? key.code === e.which && e[key.shortcut]
-              : key.code === e.which
-        );
+      const keyPress = this.store.state.keyCommands.find(
+        key => key.code === e.which
+      );
 
-      if (keyPress && document.activeElement.id === 'command-input')
-        actions.executeKeypress(keyPress.action);
+      if (keyPress && document.activeElement.id === 'command-input') {
+        this.store.executeKeypress(keyPress.action);
+      }
     });
 
-    document.querySelector('#console-selector').addEventListener('click', e => {
+    this.store.subscribe(() => {
+      render(
+        <Resume output={this.store.state.currentOutput} />,
+        document.querySelector('#resume-selector')
+      );
+
+      render(
+        <Console
+          commandList={this.store.state.commandList}
+          onEnterCommand={this.store.enterCommand.bind(this.store)}
+          previousCommand={
+            this.store.state.enteredCommands.currentCommand || { text: '' }
+          }
+        />,
+        document.querySelector('#console-selector')
+      );
+
       document.querySelector('#command-input').focus();
-    });
-
-    events.on('console.render', () => {
-      render(consoleView.render(), document.querySelector('#console-selector'));
-      document.querySelector('#command-input').focus();
-    });
-
-    events.on('resume.render', () => {
-      render(resumeView.render(), document.querySelector('#resume-selector'));
     });
   }
 

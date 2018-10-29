@@ -1,19 +1,16 @@
-import actions from '../actions';
-import { compose, textToJSON, findUrls } from '../utils/helpers';
+import Utils from '../utils/helpers';
 import { h } from '../utils/vdom';
 
-export default {
-  render() {
-    const json = compose(
-      d => JSON.stringify(d, null, '  '),
-      textToJSON,
-      findUrls
-    )(actions.getCurrentOutput());
+export default function Resume({ output }) {
+  const json = Utils.compose(
+    d => JSON.stringify(d, null, '  '),
+    Utils.textToJSON,
+    Utils.findUrls
+  )(output);
 
-    return (
-      <div>
-        <pre dangerouslySetInnerHTML={{ __html: json }} />
-      </div>
-    );
-  }
-};
+  return (
+    <div>
+      <pre dangerouslySetInnerHTML={{ __html: json }} />
+    </div>
+  );
+}

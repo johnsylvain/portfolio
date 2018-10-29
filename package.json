@@ -6,14 +6,12 @@
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./",
-    "lint": "eslint --ignore-path .gitignore --ignore-path .prettierignore \"src/js/*.js\"",
+    "lint":
+      "eslint --ignore-path .gitignore --ignore-path .prettierignore \"src/js/*.js\"",
     "lint:fix": "npm run lint --fix"
   },
   "lint-staged": {
-    "*.{js}": [
-      "eslint --fix",
-      "git add"
-    ]
+    "*.{js}": ["eslint --fix", "git add"]
   },
   "author": "John Sylvain <john.n.sylvain@gmail.com>",
   "license": "ISC",

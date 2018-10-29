@@ -1,81 +1,98 @@
-import events from '../utils/events';
-import state from '../state';
+export default class Store {
+  constructor(state) {
+    this.state = {};
+    this.onChanges = [];
 
-const actions = {
-  getCurrentOutput: () => state.currentOutput,
-  getKeyCommands: () => state.keyCommands,
-  getCommand: text => state.commands.find(c => c.text === text),
-  getCommandList: () => state.commandList,
-  getEnteredCommands: () =>
-    state.enteredCommands.currentCommand
-      ? state.enteredCommands.currentCommand
-      : { text: '' },
+    this.setState(state);
+  }
 
-  updateOutput(newOutput) {
-    state.currentOutput = newOutput;
-  },
+  getCommand(text) {
+    return this.state.commands.find(c => c.text === text);
+  }
+
+  subscribe(fn) {
+    this.onChanges.push(fn);
+  }
+
+  inform() {
+    this.onChanges.forEach(cb => cb.call(undefined));
+  }
+
+  setState(newState) {
+    Object.assign(this.state, newState);
+    this.inform();
+  }
+
+  pushCommand(newCommand) {
+    this.setState({
+      commandList: this.state.commandList.concat(newCommand)
+    });
+  }
 
   executeKeypress(key) {
     switch (key) {
       case 'UP': {
-        if (state.enteredCommands.pointer < state.enteredCommands.data.length)
-          state.enteredCommands.pointer++;
-
-        const pos =
-          state.enteredCommands.data.length - state.enteredCommands.pointer;
-        state.enteredCommands.currentCommand = state.enteredCommands.data[pos];
+        if (
+          this.state.enteredCommands.pointer <
+          this.state.enteredCommands.data.length
+        ) {
+          this.state.enteredCommands.pointer++;
+        }
         break;
       }
       case 'DOWN': {
-        if (state.enteredCommands.pointer > 0) state.enteredCommands.pointer--;
-
-        const pos =
-          state.enteredCommands.data.length - state.enteredCommands.pointer;
-        state.enteredCommands.currentCommand = state.enteredCommands.data[pos];
+        if (this.state.enteredCommands.pointer > 0) {
+          this.state.enteredCommands.pointer--;
+        }
         break;
       }
-      case 'CLEAR':
-        this.executeCommand('clear');
-        break;
     }
 
-    events.emit('console.render');
-  },
+    this.setState({
+      enteredCommands: Object.assign({}, this.state.enteredCommands, {
+        currentCommand: this.state.enteredCommands.data[
+          this.state.enteredCommands.data.length -
+            this.state.enteredCommands.pointer
+        ]
+      })
+    });
+  }
 
   enterCommand(command) {
     command = command.trim();
 
     const args = command.split(' ');
     const newCommand = { text: command, type: 'command' };
-    const lastCommand =
-      state.enteredCommands.data[state.enteredCommands.data.length - 1];
-    const flag = state.commands.find(o => o.text === args[0]);
+    const lastCommand = this.state.enteredCommands.data[
+      this.state.enteredCommands.data.length - 1
+    ];
+    const flag = this.state.commands.find(o => o.text === args[0]);
 
-    state.commandList.push(newCommand);
+    this.pushCommand(newCommand);
 
-    if (args[0] !== '' && (!lastCommand || command !== lastCommand.text))
-      state.enteredCommands.data.push(newCommand);
+    if (args[0] !== '' && (!lastCommand || command !== lastCommand.text)) {
+      this.state.enteredCommands.data.push(newCommand);
+    }
 
-    state.enteredCommands.pointer = 0;
+    this.state.enteredCommands.pointer = 0;
 
     if (!flag) {
-      state.commandList.push(
+      this.pushCommand([
         { text: 'command not found: ' + args[0], type: 'error' },
         { text: 'to view available commands type: help', type: 'response' }
-      );
-      events.emit('console.render');
+      ]);
     } else {
       this.executeCommand(command);
     }
-  },
+  }
 
   executeCommand(command) {
     const self = this;
     command = command.split(' ');
 
-    const verifyArguments = (expected, name) => {
+    const verifyArguments = (expected = 0, name) => {
       if (command.length - 1 !== expected) {
-        state.commandList.push({
+        this.pushCommand({
           text: `'${name}' does not need any arguments`,
           type: 'error'
         });
@@ -85,41 +102,43 @@ const actions = {
 
     const commands = {
       pwd() {
-        verifyArguments(actions.getCommand('pwd').params || 0, 'pwd');
+        verifyArguments(self.getCommand('pwd').params, 'pwd');
 
-        state.commandList.push({
+        self.pushCommand({
           text: window.location.host,
           type: 'bold'
         });
       },
 
       ls() {
-        verifyArguments(actions.getCommand('ls').params || 0, 'ls');
+        verifyArguments(self.getCommand('ls').params, 'ls');
 
-        state.commandList.push(
+        self.pushCommand([
           { text: 'index.html', type: 'response' },
           { text: 'app.js', type: 'response' },
           { text: 'style.css', type: 'response' }
-        );
+        ]);
       },
 
       clear() {
-        verifyArguments(actions.getCommand('clear').params || 0, 'clear');
+        verifyArguments(self.getCommand('clear').params, 'clear');
 
-        state.commandList = [];
+        self.setState({
+          commandList: []
+        });
       },
 
       help() {
-        verifyArguments(actions.getCommand('help').params || 0, 'help');
+        verifyArguments(self.getCommand('help').params, 'help');
 
-        state.commandList.push({
+        self.pushCommand({
           text: 'Available Commands:',
           type: 'bold'
         });
 
-        state.commands.forEach(availableCommand => {
+        this.state.commands.forEach(availableCommand => {
           if (!availableCommand.ignored) {
-            state.commandList.push({
+            self.pushCommand({
               text:
                 availableCommand.params !== null
                   ? `- ${
@@ -134,14 +153,18 @@ const actions = {
 
       open() {
         if (command.length === 1) {
-          state.commandList.push({
-            text: `type 'open [${actions.getCommand('open').params}]'`,
+          self.pushCommand({
+            text: `type 'open [${self.getCommand('open').params}]'`,
             type: 'warning'
           });
         } else {
           return {
             resume: () => {
-              self.updateOutput({ resume: state.data });
+              self.setState({
+                currentOutput: {
+                  resume: this.state.data
+                }
+              });
             }
           };
         }
@@ -149,14 +172,16 @@ const actions = {
 
       show() {
         const showSection = section => () => {
-          self.updateOutput({
-            [section]: state.data[section]
+          self.setState({
+            currentOutput: {
+              [section]: this.state.data[section]
+            }
           });
         };
 
         if (command.length === 1) {
-          state.commandList.push({
-            text: `type 'show [${actions.getCommand('show').params}]'`,
+          self.pushCommand({
+            text: `type 'show [${self.getCommand('show').params}]'`,
             type: 'warning'
           });
         } else {
@@ -175,8 +200,8 @@ const actions = {
         };
 
         if (command.length === 1) {
-          state.commandList.push({
-            text: `type 'social [${actions.getCommand('social').params}]'`,
+          self.pushCommand({
+            text: `type 'social [${self.getCommand('social').params}]'`,
             type: 'warning'
           });
         } else {
@@ -217,7 +242,7 @@ const actions = {
         };
 
         if (command.length === 1) {
-          state.commandList.push({
+          self.pushCommand({
             text: `please specify a path`,
             type: 'warning'
           });
@@ -229,8 +254,8 @@ const actions = {
       }
     };
 
-    state.enteredCommands.pointer = 0;
-    state.enteredCommands.currentCommand = '';
+    this.state.enteredCommands.pointer = 0;
+    this.state.enteredCommands.currentCommand = '';
 
     if (command[0] && command.length === 1) {
       commands[command[0]]();
@@ -239,16 +264,12 @@ const actions = {
       if (subCommand[command[1]]) {
         subCommand[command[1]]();
       } else {
-        state.commandList.push({
+        this.pushCommand({
           text:
             command[1] + " is not a proper parameter of '" + command[0] + "'",
           type: 'error'
         });
       }
     }
-    events.emit('resume.render');
-    events.emit('console.render');
   }
-};
-
-export default actions;
+}

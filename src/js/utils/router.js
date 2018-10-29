@@ -7,7 +7,7 @@ export default class Router {
     window.addEventListener('load', this.go.bind(this, undefined));
   }
 
-  onRouteChange(cb) {
+  subscribe(cb) {
     this.callbacks.push(cb);
   }
 

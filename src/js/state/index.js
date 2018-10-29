@@ -3,8 +3,7 @@ import json from './resume.json';
 export default {
   keyCommands: [
     { code: 38, shortcut: null, action: 'UP' },
-    { code: 40, shortcut: null, action: 'DOWN' },
-    { code: 75, shortcut: 'ctrlKey', action: 'CLEAR' }
+    { code: 40, shortcut: null, action: 'DOWN' }
   ],
   commandList: [
     {
