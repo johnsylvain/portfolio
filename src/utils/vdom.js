@@ -97,8 +97,6 @@ function diffAttributes(newNode, oldNode) {
     }
   });
 
-  console.log('patches', patches);
-
   return patches;
 }
 

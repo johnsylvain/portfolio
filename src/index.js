@@ -2,10 +2,8 @@ import Router from './utils/router';
 import Utils from './utils/helpers';
 import { render, h } from './utils/vdom';
 
-import { Store } from './store.js';
-
-import Resume from './views/resume';
-import Console from './views/console';
+import { Store } from './store';
+import App from './components/app';
 
 import resumeJson from './data/resume.json';
 
@@ -61,27 +59,7 @@ const router = new Router({
 const store = new Store(initialState);
 
 store.subscribe(() => {
-  render(
-    <div>
-      <div
-        className={`console-selector ${
-          store.state.interactiveMode ? 'interactive-mode' : ''
-        }`}
-      >
-        <Console
-          commandList={store.state.commandList}
-          onEnterCommand={store.enterCommand.bind(store)}
-          promptValue={
-            store.state.enteredCommands.currentCommand || { text: '' }
-          }
-        />
-      </div>
-      <div className="resume-selector item item--inverse show-interactive">
-        <Resume output={store.state.currentOutput} />
-      </div>
-    </div>,
-    document.querySelector('#app-selector')
-  );
+  render(<App store={store} />, document.querySelector('#app-selector'));
 });
 
 router.subscribe(path => {

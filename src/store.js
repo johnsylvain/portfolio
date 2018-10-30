@@ -115,8 +115,6 @@ export class Store {
       clear() {
         verifyArguments(self.getCommand('clear').params, 'clear');
 
-        console.log(self.state.commandList);
-
         self.setState({
           commandList: [new ConsoleListItem('')]
         });
