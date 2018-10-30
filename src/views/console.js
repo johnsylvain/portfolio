@@ -1,10 +1,6 @@
 import { h } from '../utils/vdom';
 
-export default function Console({
-  commandList,
-  onEnterCommand,
-  previousCommand
-}) {
+export default function Console({ commandList, onEnterCommand, promptValue }) {
   const handleSubmit = e => {
     e.preventDefault();
     onEnterCommand(e.target.prompt.value);
@@ -32,7 +28,7 @@ export default function Console({
           id="command-input"
           className="console__prompt"
           autocomplete="off"
-          value={previousCommand.text}
+          value={promptValue.text}
         />
       </form>
     </div>

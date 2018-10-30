@@ -1,54 +1,10 @@
-// export function h(nodeName, attributes, ...children) {
-//   return typeof nodeName === 'function'
-//     ? nodeName(attributes || {}, children)
-//     : {
-//         nodeName,
-//         attributes: attributes || {},
-//         children: [].concat.apply([], children)
-//       };
-// }
-
-// export function render(vnodes, parent) {
-//   const el = createElement(vnodes);
-
-//   while (parent.firstChild) parent.removeChild(parent.firstChild);
-
-//   parent.appendChild(el);
-// }
-
-// function createElement(vnode) {
-//   let node =
-//     typeof vnode === 'string' || typeof vnode === 'number'
-//       ? document.createTextNode(vnode)
-//       : document.createElement(vnode.nodeName);
-
-//   if (vnode.attributes) {
-//     setAttributes(node, vnode.attributes);
-
-//     vnode.children.map(createElement).forEach(node.appendChild.bind(node));
-//   }
-
-//   return node;
-// }
-
-// function setAttributes(node, attributes) {
-//   for (let name in attributes) {
-//     if (/^on/.test(name)) {
-//       node.addEventListener(name.slice(2).toLowerCase(), attributes[name]);
-//     } else {
-//       switch (name) {
-//         case 'className':
-//           node.setAttribute('class', attributes[name]);
-//           break;
-//         case 'dangerouslySetInnerHTML':
-//           node.innerHTML = attributes[name].__html;
-//           break;
-//         default:
-//           node.setAttribute(name, attributes[name]);
-//       }
-//     }
-//   }
-// }
+const CREATE = 'CREATE';
+const REMOVE = 'REMOVE';
+const REPLACE = 'REPLACE';
+const UPDATE = 'UPDATE';
+const SET_ATTRIBUTE = 'SET_ATTRIBUTE';
+const REMOVE_ATTRIBUTE = 'REMOVE_ATTRIBUTE';
+let tree = null;
 
 export function h(nodeName, attributes, ...children) {
   children = [].concat.apply([], children);
@@ -58,8 +14,6 @@ export function h(nodeName, attributes, ...children) {
     ? nodeName(attributes, children)
     : { nodeName, attributes, children };
 }
-
-let tree = null;
 
 export function render(newNode, parent) {
   const patches = diff(newNode, tree);
@@ -83,21 +37,32 @@ function createElement(vnode) {
 }
 
 function setAttribute(node, name, value) {
-  if (name === 'className') node.setAttribute('class', value);
-  else if (name === 'dangerouslySetInnerHTML') node.innerHTML = value.__html;
-  else node.setAttribute(name, value);
+  if (name === 'className') {
+    node.setAttribute('class', value);
+  } else if (name === 'dangerouslySetInnerHTML') {
+    node.innerHTML = value.__html;
+  } else {
+    node.setAttribute(name, value);
+  }
 }
 
-function removeAttribute(node, name, value) {
-  if (name === 'className') node.remove('class');
-  else if (name === 'dangerouslySetInnerHTML') node.innerHTML = '';
-  else node.removeAttribute(name);
+function removeAttribute(node, name) {
+  if (name === 'className') {
+    node.remove('class');
+  } else if (name === 'dangerouslySetInnerHTML') {
+    node.innerHTML = '';
+  } else {
+    node.removeAttribute(name);
+  }
 }
 
 function setAttributes(node, attributes) {
   for (let name in attributes) {
-    if (/^on/.test(name)) setEventListener(node, name, attributes[name]);
-    else setAttribute(node, name, attributes[name]);
+    if (/^on/.test(name)) {
+      setEventListener(node, name, attributes[name]);
+    } else {
+      setAttribute(node, name, attributes[name]);
+    }
   }
 }
 
@@ -125,28 +90,38 @@ function diffAttributes(newNode, oldNode) {
     const newVal = newNode.attributes[name];
     const oldVal = oldNode.attributes[name];
 
-    if (!newVal)
-      patches.push({ type: 'REMOVE_ATTRIBUTE', name, value: oldVal });
-    else if (!oldVal || oldVal !== newVal)
-      patches.push({ type: 'SET_ATTRIBUTE', name, value: newVal });
+    if (!newVal) {
+      patches.push({ type: REMOVE_ATTRIBUTE, name, value: oldVal });
+    } else if (!oldVal || oldVal !== newVal) {
+      patches.push({ type: SET_ATTRIBUTE, name, value: newVal });
+    }
   });
+
+  console.log('patches', patches);
 
   return patches;
 }
 
 function diff(newNode, oldNode) {
-  if (!oldNode) return { type: 'CREATE', newNode };
+  if (!oldNode) {
+    return { type: CREATE, newNode };
+  }
 
-  if (!newNode) return { type: 'REMOVE' };
+  if (!newNode) {
+    return { type: REMOVE };
+  }
 
-  if (changed(newNode, oldNode)) return { type: 'REPLACE', newNode };
+  if (changed(newNode, oldNode)) {
+    return { type: REPLACE, newNode };
+  }
 
-  if (newNode.nodeName)
+  if (newNode.nodeName) {
     return {
-      type: 'UPDATE',
+      type: UPDATE,
       children: diffChildren(newNode, oldNode),
       attributes: diffAttributes(newNode, oldNode)
     };
+  }
 }
 
 function patchAttributes(parent, patches) {
@@ -154,8 +129,11 @@ function patchAttributes(parent, patches) {
     const attribute = patches[i];
     const { type, name, value } = attribute;
 
-    if (type === 'SET_ATTRIBUTE') setAttribute(parent, name, value);
-    else if (type === 'REMOVE_ATTRIBUTE') removeAttribute(parent, name, value);
+    if (type === SET_ATTRIBUTE) {
+      setAttribute(parent, name, value);
+    } else if (type === REMOVE_ATTRIBUTE) {
+      removeAttribute(parent, name, value);
+    }
   }
 }
 
@@ -165,19 +143,19 @@ function patch(parent, patches, index = 0) {
   const el = parent.childNodes[index];
 
   switch (patches.type) {
-    case 'CREATE': {
+    case CREATE: {
       const { newNode } = patches;
       const newElement = createElement(newNode);
       return parent.appendChild(newElement);
     }
-    case 'REMOVE':
+    case REMOVE:
       return parent.removeChild(el);
-    case 'REPLACE': {
+    case REPLACE: {
       const { newNode } = patches;
       const newElement = createElement(newNode);
       return parent.replaceChild(newElement, el);
     }
-    case 'UPDATE': {
+    case UPDATE: {
       const { children, attributes } = patches;
 
       patchAttributes(el, attributes);

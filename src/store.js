@@ -1,9 +1,15 @@
+import { ConsoleListItem } from './models/console-list-item';
+
 export class Store {
-  constructor(state, subscription) {
+  constructor(state) {
     this.state = {};
-    this.subscription = subscription;
+    this.onChanges = [];
 
     this.setState(state);
+  }
+
+  subscribe(fn) {
+    this.onChanges.push(fn);
   }
 
   getCommand(text) {
@@ -12,7 +18,7 @@ export class Store {
 
   setState(newState) {
     Object.assign(this.state, newState);
-    this.subscription.call(undefined, this);
+    this.onChanges.forEach(fn => fn.call(undefined));
   }
 
   pushCommand(newCommand) {
@@ -22,29 +28,21 @@ export class Store {
   }
 
   executeKeypress(key) {
-    switch (key) {
-      case 'UP': {
-        if (
-          this.state.enteredCommands.pointer <
-          this.state.enteredCommands.data.length
-        ) {
-          this.state.enteredCommands.pointer++;
-        }
-        break;
-      }
-      case 'DOWN': {
-        if (this.state.enteredCommands.pointer > 0) {
-          this.state.enteredCommands.pointer--;
-        }
-        break;
-      }
-    }
+    const { pointer } = this.state.enteredCommands;
+    const keyActions = {
+      UP:
+        pointer < this.state.enteredCommands.data.length
+          ? pointer + 1
+          : pointer,
+      DOWN: pointer > 0 ? pointer - 1 : pointer
+    };
+    const newPointer = keyActions[key];
 
     this.setState({
       enteredCommands: Object.assign({}, this.state.enteredCommands, {
+        pointer: newPointer,
         currentCommand: this.state.enteredCommands.data[
-          this.state.enteredCommands.data.length -
-            this.state.enteredCommands.pointer
+          this.state.enteredCommands.data.length - newPointer
         ]
       })
     });
@@ -54,7 +52,7 @@ export class Store {
     command = command.trim();
 
     const args = command.split(' ');
-    const newCommand = { text: command, type: 'command' };
+    const newCommand = new ConsoleListItem(command, 'command');
     const lastCommand = this.state.enteredCommands.data[
       this.state.enteredCommands.data.length - 1
     ];
@@ -75,8 +73,8 @@ export class Store {
 
     if (!flag) {
       this.pushCommand([
-        { text: 'command not found: ' + args[0], type: 'error' },
-        { text: 'to view available commands type: help', type: 'response' }
+        new ConsoleListItem('command not found: ' + args[0], 'error'),
+        new ConsoleListItem('to view available commands type: help')
       ]);
     } else {
       this.executeCommand(command);
@@ -90,10 +88,9 @@ export class Store {
     const verifyArguments = (expected, name) => {
       expected = expected || 0;
       if (command.length - 1 !== expected) {
-        this.pushCommand({
-          text: `'${name}' does not need any arguments`,
-          type: 'error'
-        });
+        this.pushCommand(
+          new ConsoleListItem(`'${name}' does not need any arguments`, 'error')
+        );
         return;
       }
     };
@@ -102,59 +99,62 @@ export class Store {
       pwd() {
         verifyArguments(self.getCommand('pwd').params, 'pwd');
 
-        self.pushCommand({
-          text: window.location.host,
-          type: 'bold'
-        });
+        self.pushCommand(new ConsoleListItem(window.location.host));
       },
 
       ls() {
         verifyArguments(self.getCommand('ls').params, 'ls');
 
         self.pushCommand([
-          { text: 'index.html', type: 'response' },
-          { text: 'app.js', type: 'response' },
-          { text: 'style.css', type: 'response' }
+          new ConsoleListItem('index.html'),
+          new ConsoleListItem('app.js'),
+          new ConsoleListItem('style.css')
         ]);
       },
 
       clear() {
         verifyArguments(self.getCommand('clear').params, 'clear');
 
+        console.log(self.state.commandList);
+
         self.setState({
-          commandList: []
+          commandList: [new ConsoleListItem('')]
         });
+      },
+
+      exit() {
+        window.location.hash = '';
       },
 
       help() {
         verifyArguments(self.getCommand('help').params, 'help');
 
-        self.pushCommand({
-          text: 'Available Commands:',
-          type: 'bold'
-        });
+        self.pushCommand(new ConsoleListItem('Available Commands:', 'bold'));
 
         self.state.commands.forEach(availableCommand => {
           if (!availableCommand.ignored) {
-            self.pushCommand({
-              text:
+            self.pushCommand(
+              new ConsoleListItem(
                 availableCommand.params !== null
                   ? `- ${
                       availableCommand.text
                     } <${availableCommand.params.toLocaleString()}>`
                   : `- ${availableCommand.text}`,
-              type: 'response'
-            });
+                'response'
+              )
+            );
           }
         });
       },
 
       open() {
         if (command.length === 1) {
-          self.pushCommand({
-            text: `type 'open <${self.getCommand('open').params}>'`,
-            type: 'warning'
-          });
+          self.pushCommand(
+            new ConsoleListItem(
+              `type 'open <${self.getCommand('open').params}>'`,
+              'warning'
+            )
+          );
         } else {
           return {
             resume: () => {
@@ -178,10 +178,12 @@ export class Store {
         };
 
         if (command.length === 1) {
-          self.pushCommand({
-            text: `type 'show <${self.getCommand('show').params}>'`,
-            type: 'warning'
-          });
+          self.pushCommand(
+            new ConsoleListItem(
+              `type 'show <${self.getCommand('show').params}>'`,
+              'warning'
+            )
+          );
         } else {
           return {
             education: showSection('education'),
@@ -198,10 +200,12 @@ export class Store {
         };
 
         if (command.length === 1) {
-          self.pushCommand({
-            text: `type 'social <${self.getCommand('social').params}>'`,
-            type: 'warning'
-          });
+          self.pushCommand(
+            new ConsoleListItem(
+              `type 'social <${self.getCommand('social').params}>'`,
+              'warning'
+            )
+          );
         } else {
           return {
             github: openLink('github'),
@@ -240,10 +244,9 @@ export class Store {
         };
 
         if (command.length === 1) {
-          self.pushCommand({
-            text: `please specify a path`,
-            type: 'warning'
-          });
+          self.pushCommand(
+            new ConsoleListItem(`please specify a path`, 'warning')
+          );
         } else {
           return {
             '-rf': rf
@@ -259,11 +262,12 @@ export class Store {
       if (subCommand[command[1]]) {
         subCommand[command[1]]();
       } else {
-        this.pushCommand({
-          text:
+        this.pushCommand(
+          new ConsoleListItem(
             command[1] + " is not a proper parameter of '" + command[0] + "'",
-          type: 'error'
-        });
+            'error'
+          )
+        );
       }
     }
   }
