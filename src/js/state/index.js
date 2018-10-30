@@ -1,10 +1,8 @@
 import json from './resume.json';
 
 export default {
-  keyCommands: [
-    { code: 38, shortcut: null, action: 'UP' },
-    { code: 40, shortcut: null, action: 'DOWN' }
-  ],
+  interactiveMode: false,
+  keyCommands: [{ code: 38, action: 'UP' }, { code: 40, action: 'DOWN' }],
   commandList: [
     {
       text: "type 'help' to view commands",

@@ -2,109 +2,88 @@ import Router from './utils/router';
 import Utils from './utils/helpers';
 import { render, h } from './utils/vdom';
 
-import Store from './store';
+import { Store } from './store.js';
 import state from './state';
 
 import Resume from './views/resume';
 import Console from './views/console';
 
-class App {
-  constructor() {
-    this.breakpoint = 768;
-    this.interactiveMode = false;
-    this.elements = {
-      nav: Array.from(document.querySelector('.nav').children),
-      date: document.querySelector('.date')
-    };
-    this.router = undefined;
-    this.store = new Store(state);
+const BREAK_POINT = 768;
 
-    this.bindEvents();
-    this.bindRoutes();
-
-    this.store.inform();
-
-    this.elements.date.textContent = new Date().getFullYear().toString();
-  }
-
-  bindRoutes() {
-    this.router = new Router({
-      '/': () => {
-        this.switchModes({ interactive: true });
-      },
-      '/resume': () => {
-        this.switchModes({ interactive: false });
-        if (window.innerWidth <= this.breakpoint) {
-          this.router.go('#/');
-        }
-      }
-    });
-
-    this.router.subscribe(path => {
-      this.elements.nav.forEach(a => a.classList.remove('active'));
-
-      this.elements.nav
-        .find(a => a.getAttribute('href') === `#${path}`)
-        .classList.add('active');
-    });
-  }
-
-  bindEvents() {
-    window.addEventListener(
-      'resize',
-      Utils.throttle(() => {
-        if (window.innerWidth <= this.breakpoint) {
-          this.router.go('#/');
-        }
-      }, 250)
-    );
-
-    window.addEventListener('keyup', e => {
-      const keyPress = this.store.state.keyCommands.find(
-        key => key.code === e.which
-      );
-
-      if (keyPress && document.activeElement.id === 'command-input') {
-        this.store.executeKeypress(keyPress.action);
-      }
-    });
-
-    this.store.subscribe(() => {
-      render(
-        <Resume output={this.store.state.currentOutput} />,
-        document.querySelector('#resume-selector')
-      );
-
-      render(
-        <Console
-          commandList={this.store.state.commandList}
-          onEnterCommand={this.store.enterCommand.bind(this.store)}
-          previousCommand={
-            this.store.state.enteredCommands.currentCommand || { text: '' }
-          }
-        />,
-        document.querySelector('#console-selector')
-      );
-
-      document.querySelector('#command-input').focus();
-    });
-  }
-
-  switchModes({ interactive }) {
-    const targets = [
-      document.querySelector('.wrap'),
-      document.querySelector('#resume-selector'),
-      document.querySelector('#console-selector')
-    ];
-
-    if (interactive) {
-      targets.forEach(t => t.classList.remove('interactive-mode'));
-      this.interactiveMode = false;
-    } else {
-      targets.forEach(t => t.classList.toggle('interactive-mode'));
-      this.interactiveMode = !this.interactiveMode;
+const router = new Router({
+  '/': () => {
+    switchModes({ interactive: true });
+  },
+  '/resume': () => {
+    switchModes({ interactive: false });
+    if (window.innerWidth <= BREAK_POINT) {
+      this.router.go('#/');
     }
+  }
+});
+
+const store = new Store(state, store => {
+  render(
+    <div>
+      <div
+        className={`console-selector ${
+          store.state.interactiveMode ? 'interactive-mode' : ''
+        }`}
+      >
+        <Console
+          commandList={store.state.commandList}
+          onEnterCommand={store.enterCommand.bind(store)}
+          previousCommand={
+            store.state.enteredCommands.currentCommand || { text: '' }
+          }
+        />
+      </div>
+      <div className="resume-selector item item--inverse show-interactive">
+        <Resume output={store.state.currentOutput} />
+      </div>
+    </div>,
+    document.querySelector('#app-selector')
+  );
+});
+
+router.subscribe(path => {
+  const navButtons = Array.from(document.querySelector('.nav').children);
+  navButtons.forEach(a => a.classList.remove('active'));
+
+  navButtons
+    .find(a => a.getAttribute('href') === `#${path}`)
+    .classList.add('active');
+});
+
+function switchModes({ interactive }) {
+  const target = document.querySelector('.wrap');
+
+  if (interactive) {
+    target.classList.remove('interactive-mode');
+    store.setState({
+      interactiveMode: false
+    });
+  } else {
+    target.classList.toggle('interactive-mode');
+    store.setState({
+      interactiveMode: !store.state.interactiveMode
+    });
   }
 }
 
-new App();
+window.addEventListener(
+  'resize',
+  Utils.throttle(() => {
+    if (window.innerWidth <= BREAK_POINT) {
+      router.go('#/');
+    }
+  }, 250)
+);
+
+window.addEventListener('keyup', e => {
+  const keyPress = store.state.keyCommands.find(key => key.code === e.which);
+
+  if (keyPress && document.activeElement.id === 'command-input') {
+    store.executeKeypress(keyPress.action);
+  }
+});

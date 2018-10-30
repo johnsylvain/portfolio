@@ -1,7 +1,7 @@
-export default class Store {
-  constructor(state) {
+export class Store {
+  constructor(state, subscription) {
     this.state = {};
-    this.onChanges = [];
+    this.subscription = subscription;
 
     this.setState(state);
   }
@@ -10,17 +10,9 @@ export default class Store {
     return this.state.commands.find(c => c.text === text);
   }
 
-  subscribe(fn) {
-    this.onChanges.push(fn);
-  }
-
-  inform() {
-    this.onChanges.forEach(cb => cb.call(undefined));
-  }
-
   setState(newState) {
     Object.assign(this.state, newState);
-    this.inform();
+    this.subscription.call(undefined, this);
   }
 
   pushCommand(newCommand) {
@@ -74,7 +66,12 @@ export default class Store {
       this.state.enteredCommands.data.push(newCommand);
     }
 
-    this.state.enteredCommands.pointer = 0;
+    this.setState({
+      enteredCommands: Object.assign({}, this.state.enteredCommands, {
+        pointer: 0,
+        currentCommand: ''
+      })
+    });
 
     if (!flag) {
       this.pushCommand([
@@ -90,7 +87,8 @@ export default class Store {
     const self = this;
     command = command.split(' ');
 
-    const verifyArguments = (expected = 0, name) => {
+    const verifyArguments = (expected, name) => {
+      expected = expected || 0;
       if (command.length - 1 !== expected) {
         this.pushCommand({
           text: `'${name}' does not need any arguments`,
@@ -136,7 +134,7 @@ export default class Store {
           type: 'bold'
         });
 
-        this.state.commands.forEach(availableCommand => {
+        self.state.commands.forEach(availableCommand => {
           if (!availableCommand.ignored) {
             self.pushCommand({
               text:
@@ -154,7 +152,7 @@ export default class Store {
       open() {
         if (command.length === 1) {
           self.pushCommand({
-            text: `type 'open [${self.getCommand('open').params}]'`,
+            text: `type 'open <${self.getCommand('open').params}>'`,
             type: 'warning'
           });
         } else {
@@ -162,7 +160,7 @@ export default class Store {
             resume: () => {
               self.setState({
                 currentOutput: {
-                  resume: this.state.data
+                  resume: self.state.data
                 }
               });
             }
@@ -174,14 +172,14 @@ export default class Store {
         const showSection = section => () => {
           self.setState({
             currentOutput: {
-              [section]: this.state.data[section]
+              [section]: self.state.data[section]
             }
           });
         };
 
         if (command.length === 1) {
           self.pushCommand({
-            text: `type 'show [${self.getCommand('show').params}]'`,
+            text: `type 'show <${self.getCommand('show').params}>'`,
             type: 'warning'
           });
         } else {
@@ -196,12 +194,12 @@ export default class Store {
 
       social() {
         const openLink = site => () => {
-          window.open(state.data.contact.social[site]);
+          window.open(self.state.data.contact.social[site]);
         };
 
         if (command.length === 1) {
           self.pushCommand({
-            text: `type 'social [${self.getCommand('social').params}]'`,
+            text: `type 'social <${self.getCommand('social').params}>'`,
             type: 'warning'
           });
         } else {
@@ -253,9 +251,6 @@ export default class Store {
         }
       }
     };
-
-    this.state.enteredCommands.pointer = 0;
-    this.state.enteredCommands.currentCommand = '';
 
     if (command[0] && command.length === 1) {
       commands[command[0]]();

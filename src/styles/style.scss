@@ -1,22 +1,14 @@
 $font-bold: 500;
 $font-mono: 'Source Code Pro', monospace;
-$font-sans-serif: 'Karla',
-  -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  Roboto,
-  Helvetica,
-  Arial,
-  sans-serif,
-  "Apple Color Emoji",
-  "Segoe UI Emoji",
-  "Segoe UI Symbol";
+$font-sans-serif: 'Karla', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+  'Segoe UI Symbol';
 
 $blue: #3498db;
-$gray: #6B778C;
-$light-gray: #F4F5F7;
+$gray: #6b778c;
+$light-gray: #f4f5f7;
 $default-text: #484868;
-$royal-blue: #5985F7;
+$royal-blue: #5985f7;
 
 $tablet-breakpoint: 768px;
 
@@ -24,10 +16,11 @@ $tablet-breakpoint: 768px;
 @import 'partials/reset';
 @import 'partials/code';
 
-html, body {
+html,
+body {
   color: $default-text;
   font-family: $font-sans-serif;
-  background: linear-gradient(#E0D1FA, #1173DD);
+  background: linear-gradient(#e0d1fa, #1173dd);
 }
 
 .container {
@@ -66,12 +59,12 @@ html, body {
   }
 
   &.crash {
-		overflow:hidden;
-		height:100vh;
-		animation: zoom-out 4s forwards;
+    overflow: hidden;
+    height: 100vh;
+    animation: zoom-out 4s forwards;
     position: relative;
-		z-index: 1000;
-	}
+    z-index: 1000;
+  }
 }
 
 .item {
@@ -190,7 +183,7 @@ footer {
         }
 
         &:active {
-          background: #DEEBFF;
+          background: #deebff;
         }
 
         &:focus {
@@ -256,7 +249,7 @@ footer {
   }
 }
 
-#console-selector {
+.console-selector {
   font-family: $font-mono;
   position: fixed;
   width: 27%;
@@ -266,6 +259,7 @@ footer {
   transform: translateX(-200px);
   will-change: transform, opacity;
   left: 0;
+  top: 0;
 
   &.interactive-mode {
     transform: translateX(0px);
