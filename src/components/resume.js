@@ -1,5 +1,5 @@
-import Utils from '../utils/helpers';
-import { h } from '../utils/vdom';
+import Utils from '../lib/helpers';
+import { h } from '../lib/vdom';
 
 export default function Resume({ output }) {
   const json = Utils.compose(

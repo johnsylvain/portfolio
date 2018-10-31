@@ -1,48 +1,54 @@
-import Router from './utils/router';
-import Utils from './utils/helpers';
-import { render, h } from './utils/vdom';
+import Router from './lib/router';
+import Utils from './lib/helpers';
+import { render, h } from './lib/vdom';
 
-import { Store } from './store';
-import App from './components/app';
+import store from './store/index.js';
+import Resume from './components/resume';
+import Console from './components/console';
 
-import resumeJson from './data/resume.json';
+class App {
+  constructor({ store }) {
+    this.store = store;
+    this.handleConsoleSubmit = this.handleConsoleSubmit.bind(this);
+  }
 
-const BREAK_POINT = 768;
+  handleConsoleSubmit(event) {
+    event.preventDefault();
+    this.store.dispatch('enterCommand', event.target.prompt.value);
+    event.target.prompt.value = '';
+  }
 
-const initialState = {
-  interactiveMode: false,
-  keyCommands: [{ code: 38, action: 'UP' }, { code: 40, action: 'DOWN' }],
-  commandList: [
-    {
-      text: "type 'help' to view commands",
-      type: 'response'
-    }
-  ],
-  enteredCommands: {
-    data: [],
-    currentCommand: '',
-    pointer: 0
-  },
-  currentOutput: {
-    instructions: [
-      "to view my resume, type 'open resume' in the terminal to the left",
-      "type 'help' to view other commands"
-    ]
-  },
-  commands: [
-    { text: '', params: null, ignored: true },
-    { text: 'help', params: null },
-    { text: 'clear', params: null },
-    { text: 'exit', params: null },
-    { text: 'pwd', params: null, ignored: true },
-    { text: 'ls', params: null, ignored: true },
-    { text: 'open', params: ['resume'] },
-    { text: 'show', params: ['education', 'skills', 'xp', 'projects'] },
-    { text: 'social', params: ['github', 'linkedin'] },
-    { text: 'rm', params: ['-rf'], ignored: true }
-  ],
-  data: resumeJson.resume
-};
+  render() {
+    return (
+      <div>
+        <div
+          className={`console-selector ${
+            this.store.state.interactiveMode ? 'interactive-mode' : ''
+          }`}
+        >
+          <Console
+            commandList={this.store.state.commandList}
+            onEnterCommand={this.handleConsoleSubmit}
+            promptValue={
+              this.store.state.enteredCommands.currentCommand || { text: '' }
+            }
+          />
+        </div>
+        <div className="resume-selector item item--inverse show-interactive">
+          <Resume output={this.store.state.currentOutput} />
+        </div>
+      </div>
+    );
+  }
+}
+
+const appInstance = new App({ store });
+
+store.subscribe(() => {
+  render(appInstance.render(), document.querySelector('#app-selector'));
+});
+
+appInstance.render();
 
 const router = new Router({
   '/': () => {
@@ -50,16 +56,10 @@ const router = new Router({
   },
   '/resume': () => {
     switchModes({ interactive: false });
-    if (window.innerWidth <= BREAK_POINT) {
+    if (window.innerWidth <= 768) {
       this.router.go('#/');
     }
   }
-});
-
-const store = new Store(initialState);
-
-store.subscribe(() => {
-  render(<App store={store} />, document.querySelector('#app-selector'));
 });
 
 router.subscribe(path => {
@@ -76,30 +76,26 @@ function switchModes({ interactive }) {
 
   if (interactive) {
     target.classList.remove('interactive-mode');
-    store.setState({
-      interactiveMode: false
-    });
+    store.dispatch('setInteractiveMode', false);
   } else {
     target.classList.toggle('interactive-mode');
-    store.setState({
-      interactiveMode: !store.state.interactiveMode
-    });
+    store.dispatch('setInteractiveMode', !store.state.interactiveMode);
   }
 }
 
-window.addEventListener(
-  'resize',
-  Utils.throttle(() => {
-    if (window.innerWidth <= BREAK_POINT) {
-      router.go('#/');
-    }
-  }, 250)
-);
+// window.addEventListener(
+//   'resize',
+//   Utils.throttle(() => {
+//     if (window.innerWidth <= 768) {
+//       router.go('#/');
+//     }
+//   }, 250)
+// );
 
-window.addEventListener('keyup', e => {
-  const keyPress = store.state.keyCommands.find(key => key.code === e.which);
+// window.addEventListener('keyup', e => {
+//   const keyPress = store.state.keyCommands.find(key => key.code === e.which);
 
-  if (keyPress && document.activeElement.id === 'command-input') {
-    store.executeKeypress(keyPress.action);
-  }
-});
+//   if (keyPress && document.activeElement.id === 'command-input') {
+//     store.executeKeypress(keyPress.action);
+//   }
+// });

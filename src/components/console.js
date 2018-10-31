@@ -1,12 +1,6 @@
-import { h } from '../utils/vdom';
+import { h } from '../lib/vdom';
 
 export default function Console({ commandList, onEnterCommand, promptValue }) {
-  const handleSubmit = e => {
-    e.preventDefault();
-    onEnterCommand(e.target.prompt.value);
-    e.target.prompt.value = '';
-  };
-
   const handleClick = e => {
     e.target.lastChild.prompt.focus();
   };
@@ -20,7 +14,7 @@ export default function Console({ commandList, onEnterCommand, promptValue }) {
           </li>
         ))}
       </ul>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onEnterCommand}>
         <span>$&nbsp;</span>
         <input
           type="text"
