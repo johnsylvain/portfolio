@@ -54,28 +54,30 @@ function createCommands(state) {
   };
 }
 
-export default {
-  setInteractiveMode(state, payload) {
-    return Object.assign({}, state, { interactiveMode: payload });
-  },
-
-  enterCommand(state, payload) {
-    const [keyword, argument] = payload.trim().split(' ');
-    const commands = createCommands(state);
-
-    if (!state.commands.some(command => command.text === keyword)) {
-      responses.push(
-        new ConsoleListItem(`'${keyword}' is not a command`, 'error')
-      );
+export default function reducer(action, state) {
+  switch (action.type) {
+    case 'setInteractiveMode': {
+      return Object.assign({}, state, { interactiveMode: action.payload });
     }
 
-    const { currentOutput, newCommandList } = commands[keyword](argument);
+    case 'enterCommand': {
+      const [keyword, argument] = action.payload.trim().split(' ');
+      const commands = createCommands(state);
 
-    return Object.assign({}, state, {
-      currentOutput,
-      commandList: state.commandList
-        .concat([new ConsoleListItem(payload, 'command')])
-        .concat(newCommandList)
-    });
+      if (!state.commands.some(command => command.text === keyword)) {
+        responses.push(
+          new ConsoleListItem(`'${keyword}' is not a command`, 'error')
+        );
+      }
+
+      const { currentOutput, newCommandList } = commands[keyword](argument);
+
+      return Object.assign({}, state, {
+        currentOutput,
+        commandList: state.commandList
+          .concat([new ConsoleListItem(action.payload, 'command')])
+          .concat(newCommandList)
+      });
+    }
   }
-};
+}

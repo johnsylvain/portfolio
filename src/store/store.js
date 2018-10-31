@@ -1,8 +1,10 @@
+import Utils from '../lib/helpers';
+
 export class Store {
   constructor(params) {
     const self = this;
     this.actions = {};
-    this.mutations = {};
+    this.reducer = Utils.noop;
     this.state = {};
     this.subscriptions = [];
 
@@ -10,8 +12,8 @@ export class Store {
       this.actions = params.actions;
     }
 
-    if (params.hasOwnProperty('mutations')) {
-      this.mutations = params.mutations;
+    if (params.hasOwnProperty('reducer')) {
+      this.reducer = params.reducer;
     }
 
     this.state = new Proxy(params.state || {}, {
@@ -27,28 +29,18 @@ export class Store {
     this.subscriptions.push(fn);
   }
 
-  dispatch(actionKey, payload) {
-    if (typeof this.actions[actionKey] !== 'function') {
-      console.error(`Action "${actionKey}" doesn't exist.`);
+  dispatch({ type, payload }) {
+    if (typeof this.actions[type] !== 'function') {
       return false;
     }
 
-    console.groupCollapsed(`ACTION: ${actionKey}`);
-
-    this.actions[actionKey](this, payload);
-
-    console.groupEnd();
+    this.actions[type](this, payload);
 
     return true;
   }
 
-  commit(mutationKey, payload) {
-    if (typeof this.mutations[mutationKey] !== 'function') {
-      console.error(`Mutation "${mutationKey}" doesn't exist`);
-      return false;
-    }
-
-    const newState = this.mutations[mutationKey](this.state, payload);
+  commit({ type, payload }) {
+    const newState = this.reducer({ type, payload }, this.state);
 
     this.state = Object.assign(this.state, newState);
 

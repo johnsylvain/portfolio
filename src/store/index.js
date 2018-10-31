@@ -1,10 +1,10 @@
 import actions from './actions';
-import mutations from './mutations';
+import reducer from './reducer';
 import state from './state';
 import { Store } from './store';
 
 export default new Store({
   actions,
-  mutations,
+  reducer,
   state
 });

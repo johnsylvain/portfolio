@@ -14,7 +14,10 @@ class App {
 
   handleConsoleSubmit(event) {
     event.preventDefault();
-    this.store.dispatch('enterCommand', event.target.prompt.value);
+    this.store.dispatch({
+      type: 'enterCommand',
+      payload: event.target.prompt.value
+    });
     event.target.prompt.value = '';
   }
 
@@ -76,10 +79,13 @@ function switchModes({ interactive }) {
 
   if (interactive) {
     target.classList.remove('interactive-mode');
-    store.dispatch('setInteractiveMode', false);
+    store.dispatch({ type: 'setInteractiveMode', payload: false });
   } else {
     target.classList.toggle('interactive-mode');
-    store.dispatch('setInteractiveMode', !store.state.interactiveMode);
+    store.dispatch({
+      type: 'setInteractiveMode',
+      payload: !store.state.interactiveMode
+    });
   }
 }
 
