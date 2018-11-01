@@ -1,6 +1,4 @@
 export default class Utils {
-  static noop() {}
-
   static throttle(func, threshhold) {
     let wait = false;
 

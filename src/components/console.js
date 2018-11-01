@@ -10,7 +10,7 @@ export default function Console({ commandList, onEnterCommand, promptValue }) {
       <ul className="console__command-list">
         {commandList.map(command => (
           <li className={`console__item console__item--${command.type}`}>
-            {command.type === 'command' ? `$ ${command.text}` : command.text}
+            {command.text}
           </li>
         ))}
       </ul>

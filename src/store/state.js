@@ -23,12 +23,12 @@ export default {
   commands: [
     { text: '', params: null, ignored: true },
     { text: 'help', params: null },
-    { text: 'clear', params: null },
+    { text: 'clear', params: null, ignored: true },
     { text: 'exit', params: null },
     { text: 'pwd', params: null, ignored: true },
     { text: 'ls', params: null, ignored: true },
     { text: 'open', params: ['resume'] },
-    { text: 'show', params: ['education', 'skills', 'xp', 'projects'] },
+    { text: 'show', params: ['education', 'skills', 'experience', 'projects'] },
     { text: 'social', params: ['github', 'linkedin'] },
     { text: 'rm', params: ['-rf'], ignored: true }
   ],

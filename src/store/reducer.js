@@ -1,58 +1,5 @@
-import { ConsoleListItem } from '../models/console-list-item';
-
-function createCommands(state) {
-  function help() {
-    return {
-      currentOutput: state.currentOutput,
-      newCommandList: [
-        new ConsoleListItem('Available commands:', 'bold')
-      ].concat(
-        state.commands
-          .map(availableCommand => {
-            if (!availableCommand.ignored) {
-              return new ConsoleListItem(
-                availableCommand.params !== null
-                  ? `- ${
-                      availableCommand.text
-                    } <${availableCommand.params.toLocaleString()}>`
-                  : `- ${availableCommand.text}`
-              );
-            }
-          })
-          .filter(Boolean)
-      )
-    };
-  }
-
-  function open(section) {
-    return {
-      currentOutput: { resume: state.data },
-      newCommandList: []
-    };
-  }
-
-  function exit() {
-    window.location.hash = '/';
-    return {
-      currentOutput: state.currentOutput,
-      newCommandList: []
-    };
-  }
-
-  function show(section) {
-    return {
-      currentOutput: { [section]: state.data[section] },
-      newCommandList: []
-    };
-  }
-
-  return {
-    help,
-    open,
-    exit,
-    show
-  };
-}
+import { Command } from '../models/command';
+import { Commands } from '../models/commands';
 
 export default function reducer(action, state) {
   switch (action.type) {
@@ -62,20 +9,53 @@ export default function reducer(action, state) {
 
     case 'enterCommand': {
       const [keyword, argument] = action.payload.trim().split(' ');
-      const commands = createCommands(state);
+      const commands = new Commands(state);
+      const responses = [];
 
-      if (!state.commands.some(command => command.text === keyword)) {
+      const {
+        commandText,
+        commandParam,
+        expectedParamCount,
+        acceptedParams
+      } = Command.matchCommand(state.commands, keyword, argument);
+
+      if (typeof commandText === 'undefined') {
         responses.push(
-          new ConsoleListItem(`'${keyword}' is not a command`, 'error')
+          new Command(`'${keyword}' is not a command`, 'error'),
+          new Command("type 'help' to list all commands")
         );
       }
 
-      const { currentOutput, newCommandList } = commands[keyword](argument);
+      if (typeof commandParam === 'undefined' && expectedParamCount > 0) {
+        if (!argument) {
+          responses.push(
+            new Command(`please secify an argument for'${keyword}'`, 'warning')
+          );
+        } else {
+          responses.push(
+            new Command(
+              `'${argument}' is not an argument for '${keyword}'`,
+              'error'
+            )
+          );
+        }
+
+        responses.push(new Command(`Arguments for '${keyword}':`, 'bold'));
+        acceptedParams.forEach(param => {
+          responses.push(new Command(`- ${param}`));
+        });
+      }
+
+      const {
+        currentOutput = state.currentOutput,
+        newCommandList = []
+      } = commands[keyword] ? commands[keyword](argument) : {};
 
       return Object.assign({}, state, {
         currentOutput,
         commandList: state.commandList
-          .concat([new ConsoleListItem(action.payload, 'command')])
+          .concat([new Command(action.payload, 'command')])
+          .concat(responses)
           .concat(newCommandList)
       });
     }

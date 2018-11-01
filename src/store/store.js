@@ -1,28 +1,9 @@
-import Utils from '../lib/helpers';
-
 export class Store {
-  constructor(params) {
-    const self = this;
-    this.actions = {};
-    this.reducer = Utils.noop;
-    this.state = {};
+  constructor({ actions, reducer, state }) {
+    this.actions = actions;
+    this.reducer = reducer;
+    this.state = state;
     this.subscriptions = [];
-
-    if (params.hasOwnProperty('actions')) {
-      this.actions = params.actions;
-    }
-
-    if (params.hasOwnProperty('reducer')) {
-      this.reducer = params.reducer;
-    }
-
-    this.state = new Proxy(params.state || {}, {
-      set(state, key, value) {
-        state[key] = value;
-        self.subscriptions.forEach(fn => fn.call(undefined, self.state));
-        return true;
-      }
-    });
   }
 
   subscribe(fn) {
@@ -41,8 +22,8 @@ export class Store {
 
   commit({ type, payload }) {
     const newState = this.reducer({ type, payload }, this.state);
-
     this.state = Object.assign(this.state, newState);
+    this.subscriptions.forEach(fn => fn.call(undefined, this.state));
 
     return true;
   }

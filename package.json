@@ -6,16 +6,20 @@
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./",
-    "lint":
-      "eslint --ignore-path .gitignore --ignore-path .prettierignore \"src/js/*.js\"",
+    "lint": "eslint --ignore-path .gitignore --ignore-path .prettierignore \"src/js/*.js\"",
     "lint:fix": "npm run lint --fix"
   },
   "lint-staged": {
-    "*.{js}": ["eslint --fix", "git add"]
+    "*.{js}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "author": "John Sylvain <john.n.sylvain@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^8.2.3",
     "babel-plugin-transform-react-jsx": "^6.24.1",
