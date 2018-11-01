@@ -1,6 +1,11 @@
 import { h } from '../lib/vdom';
 
-export default function Console({ commandList, onEnterCommand, promptValue }) {
+export default function Console({
+  commandList,
+  onEnterCommand,
+  onInputKeypress,
+  promptValue
+}) {
   const handleClick = e => {
     e.target.lastChild.prompt.focus();
   };
@@ -17,6 +22,7 @@ export default function Console({ commandList, onEnterCommand, promptValue }) {
       <form onSubmit={onEnterCommand}>
         <span>$&nbsp;</span>
         <input
+          onKeyup={onInputKeypress}
           type="text"
           name="prompt"
           id="command-input"

@@ -4,7 +4,28 @@ import { Commands } from '../models/commands';
 export default function reducer(action, state) {
   switch (action.type) {
     case 'setInteractiveMode': {
-      return Object.assign({}, state, { interactiveMode: action.payload });
+      return { ...state, interactiveMode: action.payload };
+    }
+
+    case 'executeKeypress': {
+      const { pointer } = state.enteredCommands;
+      const keyActions = {
+        UP: pointer < state.enteredCommands.data.length ? pointer + 1 : pointer,
+        DOWN: pointer > 0 ? pointer - 1 : pointer
+      };
+      const newPointer = keyActions[action.payload];
+
+      return {
+        ...state,
+        enteredCommands: {
+          ...state.enteredCommands,
+          pointer: newPointer,
+          currentCommand:
+            state.enteredCommands.data[
+              state.enteredCommands.data.length - newPointer
+            ]
+        }
+      };
     }
 
     case 'enterCommand': {
@@ -51,13 +72,20 @@ export default function reducer(action, state) {
         newCommandList = []
       } = commands[keyword] ? commands[keyword](argument) : {};
 
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentOutput,
         commandList: state.commandList
           .concat([new Command(action.payload, 'command')])
           .concat(responses)
-          .concat(newCommandList)
-      });
+          .concat(newCommandList),
+        enteredCommands: {
+          ...state.enteredCommands,
+          data: state.enteredCommands.data.concat(new Command(action.payload)),
+          pointer: 0,
+          currentCommand: ''
+        }
+      };
     }
   }
 }

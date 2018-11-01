@@ -68,4 +68,51 @@ export class Commands {
       newCommandList: [new Command(window.location.host)]
     };
   }
+
+  cd(dirname) {
+    switch (dirname) {
+      case undefined:
+      case '/':
+      case '.':
+      case '..':
+        return {};
+      default:
+        return {
+          newCommandList: [
+            new Command(`cd: no such file or directory: ${dirname}`)
+          ]
+        };
+    }
+  }
+
+  rm(flag) {
+    if (flag === '-rf') {
+      const commandInputElement = document.querySelector('#command-input');
+      commandInputElement.disabled = true;
+
+      toggleClass('add');
+
+      window.setTimeout(() => {
+        commandInputElement.disabled = false;
+        toggleClass('remove');
+        commandInputElement.focus();
+      }, 4000);
+
+      function toggleClass(type) {
+        [
+          document.querySelector('.wrap'),
+          document.querySelectorAll('.trash')
+        ].forEach(el => {
+          if (Array.from(el)[0]) {
+            el.forEach(e => {
+              e.classList[type]('crash');
+            });
+          } else {
+            el.classList[type]('crash');
+          }
+        });
+      }
+    }
+    return {};
+  }
 }

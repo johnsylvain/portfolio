@@ -5,5 +5,9 @@ export default {
 
   enterCommand(context, payload) {
     context.commit({ type: 'enterCommand', payload });
+  },
+
+  executeKeypress(context, payload) {
+    context.commit({ type: 'executeKeypress', payload });
   }
 };

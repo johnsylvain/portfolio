@@ -1,4 +1,4 @@
-import Utils from '../lib/helpers';
+import Utils from '../lib/utils';
 import { h } from '../lib/vdom';
 
 export default function Resume({ output }) {
