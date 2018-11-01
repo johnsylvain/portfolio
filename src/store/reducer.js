@@ -8,22 +8,18 @@ export default function reducer(action, state) {
     }
 
     case 'executeKeypress': {
-      const { pointer } = state.enteredCommands;
-      const keyActions = {
-        UP: pointer < state.enteredCommands.data.length ? pointer + 1 : pointer,
+      const { pointer, data } = state.enteredCommands;
+      const newPointer = {
+        UP: pointer < data.length ? pointer + 1 : pointer,
         DOWN: pointer > 0 ? pointer - 1 : pointer
-      };
-      const newPointer = keyActions[action.payload];
+      }[action.payload];
 
       return {
         ...state,
         enteredCommands: {
           ...state.enteredCommands,
           pointer: newPointer,
-          currentCommand:
-            state.enteredCommands.data[
-              state.enteredCommands.data.length - newPointer
-            ]
+          currentCommand: data[data.length - newPointer]
         }
       };
     }
@@ -34,20 +30,19 @@ export default function reducer(action, state) {
       const responses = [];
 
       const {
-        commandText,
-        commandParam,
+        command,
         expectedParamCount,
         acceptedParams
       } = Command.matchCommand(state.commands, keyword, argument);
 
-      if (typeof commandText === 'undefined') {
+      if (typeof command.text === 'undefined') {
         responses.push(
           new Command(`'${keyword}' is not a command`, 'error'),
           new Command("type 'help' to list all commands")
         );
       }
 
-      if (typeof commandParam === 'undefined' && expectedParamCount > 0) {
+      if (typeof command.param === 'undefined' && expectedParamCount > 0) {
         if (!argument) {
           responses.push(
             new Command(`please secify an argument for'${keyword}'`, 'warning')

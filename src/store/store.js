@@ -22,7 +22,7 @@ export class Store {
 
   commit({ type, payload }) {
     const newState = this.reducer({ type, payload }, this.state);
-    this.state = Object.assign(this.state, newState);
+    this.state = Object.assign({}, this.state, newState);
     this.subscriptions.forEach(fn => fn.call(undefined, this.state));
 
     return true;

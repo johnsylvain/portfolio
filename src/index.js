@@ -75,7 +75,7 @@ class App {
 
   render() {
     return (
-      <div onResize={this.handleResize}>
+      <div>
         <div
           className={`console-selector ${
             this.store.state.interactiveMode ? 'interactive-mode' : ''

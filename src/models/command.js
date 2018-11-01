@@ -7,8 +7,10 @@ export class Command {
       : undefined;
 
     return {
-      commandText: text,
-      commandParam: match,
+      command: {
+        text,
+        param: match
+      },
       expectedParamCount: params ? params.length : 0,
       acceptedParams: params
     };

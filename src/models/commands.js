@@ -14,9 +14,9 @@ export class Commands {
             if (!availableCommand.ignored) {
               return new Command(
                 availableCommand.params !== null
-                  ? `- ${
-                      availableCommand.text
-                    } <${availableCommand.params.toLocaleString()}>`
+                  ? `- ${availableCommand.text} <${availableCommand.params.join(
+                      ', '
+                    )}>`
                   : `- ${availableCommand.text}`
               );
             }
