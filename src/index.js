@@ -70,6 +70,8 @@ class App {
         type: 'executeKeypress',
         payload: keyPress.action
       });
+      event.target.value =
+        (this.store.state.enteredCommands.currentCommand || {}).text || '';
     }
   }
 
@@ -85,9 +87,6 @@ class App {
             commandList={this.store.state.commandList}
             onEnterCommand={this.handleConsoleSubmit}
             onInputKeypress={this.handleConsoleKeypress}
-            promptValue={
-              this.store.state.enteredCommands.currentCommand || { text: '' }
-            }
           />
         </div>
         <div className="resume-selector item item--inverse show-interactive">

@@ -3,11 +3,10 @@ import { h } from '../lib/vdom';
 export default function Console({
   commandList,
   onEnterCommand,
-  onInputKeypress,
-  promptValue
+  onInputKeypress
 }) {
-  const handleClick = e => {
-    e.target.lastChild.prompt.focus();
+  const handleClick = () => {
+    document.querySelector('#command-input').focus();
   };
 
   return (
@@ -28,7 +27,6 @@ export default function Console({
           id="command-input"
           className="console__prompt"
           autocomplete="off"
-          value={promptValue.text}
         />
       </form>
     </div>

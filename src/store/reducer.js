@@ -28,12 +28,18 @@ export default function reducer(action, state) {
       const [keyword, argument] = action.payload.trim().split(' ');
       const commands = new Commands(state);
       const responses = [];
-
       const {
-        command,
-        expectedParamCount,
-        acceptedParams
-      } = Command.matchCommand(state.commands, keyword, argument);
+        enteredCommands: { data }
+      } = state;
+      const { command, expectedParamCount, acceptedParams } = Command.match(
+        state.commands,
+        keyword,
+        argument
+      );
+      const {
+        currentOutput = state.currentOutput,
+        newCommandList = []
+      } = commands[keyword] ? commands[keyword](argument) : {};
 
       if (typeof command.text === 'undefined') {
         responses.push(
@@ -62,11 +68,6 @@ export default function reducer(action, state) {
         });
       }
 
-      const {
-        currentOutput = state.currentOutput,
-        newCommandList = []
-      } = commands[keyword] ? commands[keyword](argument) : {};
-
       return {
         ...state,
         currentOutput,
@@ -76,7 +77,10 @@ export default function reducer(action, state) {
           .concat(newCommandList),
         enteredCommands: {
           ...state.enteredCommands,
-          data: state.enteredCommands.data.concat(new Command(action.payload)),
+          data:
+            (data[data.length - 1] || {}).text === action.payload
+              ? data
+              : data.concat(new Command(action.payload)),
           pointer: 0,
           currentCommand: ''
         }

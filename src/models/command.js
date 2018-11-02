@@ -1,5 +1,5 @@
 export class Command {
-  static matchCommand(commands, keyword, argument) {
+  static match(commands, keyword, argument) {
     const { text, params } =
       commands.find(command => command.text === keyword) || {};
     const match = Array.isArray(params)
