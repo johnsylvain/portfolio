@@ -15,17 +15,25 @@ export default {
     "type 'help' to view other commands"
   ],
   commands: [
-    { text: '', params: null, ignored: true },
-    { text: 'help', params: null },
-    { text: 'clear', params: null, ignored: true },
-    { text: 'exit', params: null },
-    { text: 'pwd', params: null, ignored: true },
-    { text: 'ls', params: null, ignored: true },
-    { text: 'cd', params: null, ignored: true },
-    { text: 'open', params: ['resume'] },
-    { text: 'show', params: ['education', 'skills', 'experience', 'projects'] },
-    { text: 'social', params: ['github', 'linkedin'] },
-    { text: 'rm', params: ['-rf'], ignored: true }
+    { text: '', description: '', params: null, ignored: true },
+    { text: 'help', description: '', params: null },
+    { text: 'clear', description: '', params: null, ignored: true },
+    { text: 'exit', description: '', params: null },
+    { text: 'pwd', description: '', params: null, ignored: true },
+    { text: 'ls', description: '', params: null, ignored: true },
+    { text: 'cd', description: '', params: null, ignored: true },
+    { text: 'open', description: 'file', params: ['resume'] },
+    {
+      text: 'show',
+      description: 'section',
+      params: ['education', 'skills', 'experience', 'projects']
+    },
+    {
+      text: 'social',
+      description: 'profile',
+      params: ['github', 'linkedin']
+    },
+    { text: 'rm', description: '', params: ['-rf'], ignored: true }
   ],
   data: resumeJson.resume
 };

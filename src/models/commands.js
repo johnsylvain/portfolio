@@ -8,19 +8,21 @@ export class Commands {
   help() {
     const { commands } = this.state;
     return {
-      newCommandList: [new Command('Available commands:', 'bold')].concat(
+      newCommandList: [new Command('terminal usage:', 'bold')].concat(
         commands
           .map(availableCommand => {
             if (!availableCommand.ignored) {
-              return new Command(
-                availableCommand.params !== null
-                  ? `- ${availableCommand.text} <${availableCommand.params.join(
-                      ', '
-                    )}>`
-                  : `- ${availableCommand.text}`
-              );
+              return [
+                new Command(
+                  `  ${availableCommand.text}${availableCommand.description &&
+                    ` <${availableCommand.description}>`}`
+                ),
+                availableCommand.params &&
+                  new Command(`    ${availableCommand.params.join(', ')}`)
+              ];
             }
           })
+          .reduce((acc, cur) => acc.concat(cur), [])
           .filter(Boolean)
       )
     };

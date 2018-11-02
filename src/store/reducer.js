@@ -64,7 +64,7 @@ export default function reducer(action, state) {
 
         responses.push(new Command(`Arguments for '${keyword}':`, 'bold'));
         acceptedParams.forEach(param => {
-          responses.push(new Command(`- ${param}`));
+          responses.push(new Command(`  ${param}`));
         });
       }
 
