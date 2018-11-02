@@ -1,59 +1,59 @@
 @keyframes zoom-out {
-	15% {
-		transform:scale(0.23) translateY(0%);
-		opacity: 1;
-	}
+  15% {
+    transform: scale(0.23) translateY(0%);
+    opacity: 1;
+  }
 
-	30% {
-		transform:scale(0.25) translateY(0%);
-		opacity: 1;
-	}
+  30% {
+    transform: scale(0.25) translateY(0%);
+    opacity: 1;
+  }
 
-	60% {
-		transform: scale(0.25) translateY(300%);
-	}
+  60% {
+    transform: scale(0.25) translateY(300%);
+  }
 
-	61% {
-		opacity: 0;
-	}
+  61% {
+    opacity: 0;
+  }
 
-	63% {
-		transform: scale(1) translateY(0%);
-	}
+  63% {
+    transform: scale(1) translateY(0%);
+  }
 
-	65% {
-		opacity: 0;
-	}
+  65% {
+    opacity: 0;
+  }
 
-	100% {
-		opacity: 1;
-	}
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes trash-can {
-	20% {
-		transform: translate(-50%, -300px);
-	}
+  20% {
+    transform: translate(-50%, -300px);
+  }
 
-	37% {
-		transform: translate(-50%, -300px);
-	}
+  37% {
+    transform: translate(-50%, -300px);
+  }
 
-	40% {
-		transform: translate(-50%, -290px);
-	}
+  40% {
+    transform: translate(-50%, -290px);
+  }
 
-	50% {
-		transform: translate(-50%, -303px);
-	}
+  50% {
+    transform: translate(-50%, -303px);
+  }
 
-	60% {
-		transform: translate(-50%, -300px);
-	}
+  60% {
+    transform: translate(-50%, -300px);
+  }
 
-	70% {
-		transform: translate(-50%, 0px);
-	}
+  70% {
+    transform: translate(-50%, 0px);
+  }
 }
 
 .fade-up {

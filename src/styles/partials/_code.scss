@@ -1,29 +1,29 @@
 pre {
-	white-space: pre-wrap;       /* Since CSS 2.1 */
-	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-	white-space: -pre-wrap;      /* Opera 4-6 */
-	white-space: -o-pre-wrap;    /* Opera 7 */
-	word-wrap: break-word;       /* Internet Explorer 5.5+ */
-	line-height: 170%;
-	font-family: $font-mono;
-	font-size: 0.72rem;
-	margin: 0;
-	padding: 0;
-	color: #909090;
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  line-height: 170%;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  margin: 0;
+  padding: 0;
+  color: #909090;
 
-	.string { color: #3cb66f; }
-	.number { color: darkorange; }
-	.boolean { color: #f1c40f; }
-	.null { color: magenta; }
-	.key { color: $gray; }
+  .string { color: #3cb66f; }
+  .number { color: darkorange; }
+  .boolean { color: #f1c40f; }
+  .null { color: magenta; }
+  .key { color: $gray; }
 
-	a {
-		color: #3cb66f;
-		text-decoration: none;
-		border-bottom: 2px solid rgba(#3cb66f, 0.2);
+  a {
+    color: #3cb66f;
+    text-decoration: none;
+    border-bottom: 2px solid rgba(#3cb66f, 0.2);
 
-		&:hover {
-			border-bottom: 2px solid rgba(#3cb66f, 0.8);
-		}
-	}
+    &:hover {
+      border-bottom: 2px solid rgba(#3cb66f, 0.8);
+    }
+  }
 }

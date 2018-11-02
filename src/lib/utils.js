@@ -1,9 +1,9 @@
-export function throttle(func, threshhold, scope) {
+export function throttle(func, threshhold) {
   let wait = false;
 
   return function() {
     if (!wait) {
-      func.apply(scope, arguments);
+      func.apply(undefined, arguments);
       wait = true;
       setTimeout(function() {
         wait = false;

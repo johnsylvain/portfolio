@@ -1,21 +1,14 @@
 $font-bold: 500;
 $font-mono: 'Source Code Pro', monospace;
-$font-sans-serif: -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  Roboto,
-  Helvetica,
-  Arial,
-  sans-serif,
-  "Apple Color Emoji",
-  "Segoe UI Emoji",
-  "Segoe UI Symbol";
+$font-sans-serif: 'Avenir Next', Avenir, -apple-system, BlinkMacSystemFont,
+  'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol';
 
 $blue: #3498db;
-$gray: rgb(107, 119, 140);
-$light-gray: #F4F5F7;
+$gray: #6b778c;
+$light-gray: #f4f5f7;
 $default-text: #484868;
-$royal-blue: #5985F7;
+$royal-blue: #5985f7;
 
 $tablet-breakpoint: 768px;
 
@@ -23,10 +16,11 @@ $tablet-breakpoint: 768px;
 @import 'partials/reset';
 @import 'partials/code';
 
-html, body {
+html,
+body {
   color: $default-text;
-  font-family: 'Karla';
-  background: linear-gradient(rgb(224, 209, 250), rgb(17, 115, 221));
+  font-family: $font-sans-serif;
+  background: linear-gradient(#e0d1fa, #1173dd);
 }
 
 .container {
@@ -53,7 +47,7 @@ html, body {
   }
 
   &.interactive-mode {
-    padding-left: 27%;
+    padding-left: 30%;
 
     .hide-interactive {
       display: none;
@@ -65,12 +59,12 @@ html, body {
   }
 
   &.crash {
-		overflow:hidden;
-		height:100vh;
-		animation: zoom-out 4s forwards;
+    overflow: hidden;
+    height: 100vh;
+    animation: zoom-out 4s forwards;
     position: relative;
-		z-index: 1000;
-	}
+    z-index: 1000;
+  }
 }
 
 .item {
@@ -111,7 +105,7 @@ header {
       font-weight: normal;
       font-size: 2rem;
       margin-bottom: 5px;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     p {
@@ -161,6 +155,7 @@ footer {
     margin-bottom: 0.8rem;
     display: flex;
     align-items: center;
+    font-weight: $font-bold;
   }
 
   p {
@@ -189,7 +184,7 @@ footer {
         }
 
         &:active {
-          background: #DEEBFF;
+          background: #deebff;
         }
 
         &:focus {
@@ -255,16 +250,17 @@ footer {
   }
 }
 
-#console-selector {
+.console-selector {
   font-family: $font-mono;
   position: fixed;
-  width: 27%;
+  width: 30%;
   max-width: 450px;
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.4s ease;
   transform: translateX(-200px);
   will-change: transform, opacity;
   left: 0;
+  top: 0;
 
   &.interactive-mode {
     transform: translateX(0px);
@@ -288,6 +284,7 @@ footer {
     .console__item {
       padding: inherit;
       line-height: 130%;
+      white-space: pre-wrap;
 
       &:not(.console__item--command) {
         margin-left: 2ch;

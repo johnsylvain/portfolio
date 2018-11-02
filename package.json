@@ -18,6 +18,8 @@
   "author": "John Sylvain <john.n.sylvain@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^8.2.3",
     "babel-plugin-transform-react-jsx": "^6.24.1",
