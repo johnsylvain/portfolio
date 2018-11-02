@@ -1,6 +1,13 @@
 import { Command } from '../models/command';
 import { Commands } from '../models/commands';
 
+let commandCache;
+
+function createCommands(state) {
+  if (commandCache) return commandCache;
+  return (commandCache = new Commands(state));
+}
+
 export default function reducer(action, state) {
   switch (action.type) {
     case 'setInteractiveMode': {
@@ -26,12 +33,12 @@ export default function reducer(action, state) {
 
     case 'enterCommand': {
       const [keyword, argument] = action.payload.trim().split(' ');
-      const commands = new Commands(state);
+      const commands = createCommands(state);
       const responses = [];
       const {
         enteredCommands: { data }
       } = state;
-      const { command, expectedParamCount, acceptedParams } = Command.match(
+      const { command, expectedParamCount, acceptedParams } = Commands.match(
         state.commands,
         keyword,
         argument

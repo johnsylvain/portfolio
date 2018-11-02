@@ -284,7 +284,7 @@ footer {
     .console__item {
       padding: inherit;
       line-height: 130%;
-      white-space: pre;
+      white-space: pre-wrap;
 
       &:not(.console__item--command) {
         margin-left: 2ch;

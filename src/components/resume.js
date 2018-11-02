@@ -1,11 +1,11 @@
-import Utils from '../lib/utils';
+import { compose, textToJSON, findUrls } from '../lib/utils';
 import { h } from '../lib/vdom';
 
 export default function Resume({ output }) {
-  const json = Utils.compose(
+  const json = compose(
     d => JSON.stringify(d, null, '  '),
-    Utils.textToJSON,
-    Utils.findUrls
+    textToJSON,
+    findUrls
   )(output);
 
   return (

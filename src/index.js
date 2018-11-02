@@ -1,5 +1,5 @@
 import Router from './lib/router';
-import Utils from './lib/utils';
+import { throttle } from './lib/utils';
 import { render, h } from './lib/vdom';
 
 import store from './store/index.js';
@@ -43,7 +43,7 @@ class App {
   bindEvents() {
     window.addEventListener(
       'resize',
-      Utils.throttle(() => {
+      throttle(() => {
         if (window.innerWidth <= BREAKPOINT) {
           this.router.go('#/');
         }

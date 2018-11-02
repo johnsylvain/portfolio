@@ -1,6 +1,23 @@
 import { Command } from './command';
 
 export class Commands {
+  static match(commands, keyword, argument) {
+    const { text, params } =
+      commands.find(command => command.text === keyword) || {};
+    const match = Array.isArray(params)
+      ? params.find(param => param === argument)
+      : undefined;
+
+    return {
+      command: {
+        text,
+        param: match
+      },
+      expectedParamCount: params ? params.length : 0,
+      acceptedParams: params
+    };
+  }
+
   constructor(state) {
     this.state = state;
   }
