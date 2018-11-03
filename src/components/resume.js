@@ -1,16 +1,16 @@
 import { compose, textToJSON, findUrls } from '../lib/utils';
 import { h } from '../lib/vdom';
 
-export default function Resume({ output }) {
-  const json = compose(
-    d => JSON.stringify(d, null, '  '),
-    textToJSON,
-    findUrls
-  )(output);
+const formatJson = compose(
+  d => JSON.stringify(d, null, '  '),
+  textToJSON,
+  findUrls
+);
 
+export default function Resume({ output }) {
   return (
     <div>
-      <pre dangerouslySetInnerHTML={{ __html: json }} />
+      <pre dangerouslySetInnerHTML={{ __html: formatJson(output) }} />
     </div>
   );
 }

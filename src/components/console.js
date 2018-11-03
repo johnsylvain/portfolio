@@ -1,14 +1,14 @@
 import { h } from '../lib/vdom';
 
+const handleClick = () => {
+  document.querySelector('#command-input').focus();
+};
+
 export default function Console({
   commandList,
   onEnterCommand,
   onInputKeypress
 }) {
-  const handleClick = () => {
-    document.querySelector('#command-input').focus();
-  };
-
   return (
     <div className="console" onClick={handleClick}>
       <ul className="console__command-list">
