@@ -3,11 +3,8 @@
     "name": "John Sylvain",
     "title": "Software Engineer",
     "contact": {
-      "email": "hi@johnsylvain.me",
-      "social": {
-        "github": "http://github.com/johnsylvain",
-        "linkedin": "http://linkedin.com/in/johnsylvain"
-      }
+      "github": "http://github.com/johnsylvain",
+      "linkedin": "http://linkedin.com/in/johnsylvain"
     },
     "education": {
       "school": "Purdue University",
@@ -23,6 +20,7 @@
         "position": "Software Engineer",
         "date": "October 2017 - present",
         "description": [
+          "Architected profitable features for the company’s flagship white-label product",
           "Constructed and maintained an internal, cross-product UI component library",
           "Created insightful A/B tests, leading to increased conversions",
           "Refactored multiple front-end codebases to follow industry-wide standards"
@@ -81,7 +79,12 @@
       }
     ],
     "skills": {
-      "languages": ["JavaScript (ES Next)", "TypeScript", "CSS (Sass, Less)", "HTML"],
+      "languages": [
+        "JavaScript (ES Next)",
+        "TypeScript",
+        "CSS (Sass, Less)",
+        "HTML"
+      ],
       "frameworks-and-libraries": [
         "React",
         "Redux",
@@ -89,8 +92,17 @@
         "Node",
         "Angular"
       ],
-      "web-tooling": ["git", "webpack", "gulp", "ssh"],
-      "database": ["SQL", "MongoDB", "Mongoose"]
+      "web-tooling": [
+        "git",
+        "webpack",
+        "gulp",
+        "ssh"
+      ],
+      "database": [
+        "SQL",
+        "MongoDB",
+        "Mongoose"
+      ]
     }
   }
 }

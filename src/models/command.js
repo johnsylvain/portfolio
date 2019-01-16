@@ -1,12 +1,12 @@
 export class Command {
+  static typeMap = {
+    error: 'Error: ',
+    warning: 'Warning: ',
+    command: '$ '
+  };
+
   constructor(text, type = 'response') {
-    const typeMap = {
-      error: 'Error: ',
-      warning: 'Warning: ',
-      command: '$ '
-    };
     this.type = type;
-    this.text =
-      typeMap[this.type] !== undefined ? typeMap[this.type] + text : text;
+    this.text = (Command.typeMap[this.type] || '') + text;
   }
 }
