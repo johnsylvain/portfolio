@@ -47,6 +47,14 @@
     ],
     "projects": [
       {
+        "title": "Slack Colors",
+        "description": "AI Slack themes",
+        "links": {
+          "demo": "https://slackcolors.com",
+          "github": "http://github.com/johnsylvain/slack-colors"
+        }
+      },
+      {
         "title": "Streamit",
         "description": "Reddit Video streamer",
         "links": {
@@ -59,22 +67,6 @@
         "description": "Minimal JavaScript Framework",
         "links": {
           "github": "https://github.com/johnsylvain/kobra"
-        }
-      },
-      {
-        "title": "PlaceMorty",
-        "description": "Placeholder Image Generator",
-        "links": {
-          "demo": "http://www.placemorty.us",
-          "github": "http://github.com/johnsylvain/placemorty"
-        }
-      },
-      {
-        "title": "Reddit Showerthoughts Newtab",
-        "description": "Chrome Extension",
-        "links": {
-          "download": "http://johnsylva.in/showerthoughts",
-          "github": "http://github.com/johnsylvain/reddit-showerthoughts-newtab"
         }
       }
     ],
