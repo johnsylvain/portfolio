@@ -3,11 +3,8 @@
     "name": "John Sylvain",
     "title": "Software Engineer",
     "contact": {
-      "email": "hi@johnsylvain.me",
-      "social": {
-        "github": "http://github.com/johnsylvain",
-        "linkedin": "http://linkedin.com/in/johnsylvain"
-      }
+      "github": "http://github.com/johnsylvain",
+      "linkedin": "http://linkedin.com/in/johnsylvain"
     },
     "education": {
       "school": "Purdue University",
@@ -23,6 +20,7 @@
         "position": "Software Engineer",
         "date": "October 2017 - present",
         "description": [
+          "Architected profitable features for the company’s flagship white-label product",
           "Constructed and maintained an internal, cross-product UI component library",
           "Created insightful A/B tests, leading to increased conversions",
           "Refactored multiple front-end codebases to follow industry-wide standards"
@@ -49,6 +47,14 @@
     ],
     "projects": [
       {
+        "title": "Slack Colors",
+        "description": "AI Slack themes",
+        "links": {
+          "demo": "https://slackcolors.com",
+          "github": "http://github.com/johnsylvain/slack-colors"
+        }
+      },
+      {
         "title": "Streamit",
         "description": "Reddit Video streamer",
         "links": {
@@ -62,26 +68,15 @@
         "links": {
           "github": "https://github.com/johnsylvain/kobra"
         }
-      },
-      {
-        "title": "PlaceMorty",
-        "description": "Placeholder Image Generator",
-        "links": {
-          "demo": "http://www.placemorty.us",
-          "github": "http://github.com/johnsylvain/placemorty"
-        }
-      },
-      {
-        "title": "Reddit Showerthoughts Newtab",
-        "description": "Chrome Extension",
-        "links": {
-          "download": "http://johnsylva.in/showerthoughts",
-          "github": "http://github.com/johnsylvain/reddit-showerthoughts-newtab"
-        }
       }
     ],
     "skills": {
-      "languages": ["JavaScript (ES Next)", "TypeScript", "CSS (Sass, Less)", "HTML"],
+      "languages": [
+        "JavaScript (ES Next)",
+        "TypeScript",
+        "CSS (Sass, Less)",
+        "HTML"
+      ],
       "frameworks-and-libraries": [
         "React",
         "Redux",
@@ -89,8 +84,17 @@
         "Node",
         "Angular"
       ],
-      "web-tooling": ["git", "webpack", "gulp", "ssh"],
-      "database": ["SQL", "MongoDB", "Mongoose"]
+      "web-tooling": [
+        "git",
+        "webpack",
+        "gulp",
+        "ssh"
+      ],
+      "database": [
+        "SQL",
+        "MongoDB",
+        "Mongoose"
+      ]
     }
   }
 }
