@@ -32,10 +32,10 @@ export class Commands {
               return [
                 new Command(
                   `  ${availableCommand.text}${availableCommand.description &&
-                    ` <${availableCommand.description}>`}`
+                  ` <${availableCommand.description}>`}`
                 ),
                 availableCommand.params &&
-                  new Command(`    ${availableCommand.params.join(', ')}`)
+                new Command(`    ${availableCommand.params.join(', ')}`)
               ];
             }
           })
@@ -65,7 +65,7 @@ export class Commands {
   }
 
   social(profile) {
-    const link = this.state.data.contact.social[profile];
+    const link = this.state.data.contact[profile];
     if (link) {
       window.open(link);
     }
