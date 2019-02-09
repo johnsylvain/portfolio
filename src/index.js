@@ -86,7 +86,7 @@ class App {
         <div
           className={`console-selector ${
             this.store.state.interactiveMode ? 'interactive-mode' : ''
-            }`}
+          }`}
         >
           <Console
             commandList={this.store.state.commandList}

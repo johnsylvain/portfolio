@@ -11,21 +11,26 @@ export default class Router {
     this.callbacks.push(cb);
   }
 
+  get isRoute() {
+    return !!this.routes[window.location.pathname];
+  }
+
   go(path) {
-    if (path) {
-      history.pushState(undefined, undefined, path);
-      window.dispatchEvent(new PopStateEvent('popstate'));
-    }
+    if (path !== window.location.pathname) {
+      if (path) {
+        history.pushState(undefined, undefined, path);
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      }
 
-    const url = window.location.pathname || '/';
+      const url = this.isRoute ? window.location.pathname || '/' : '/';
 
-    if (this.routes[url]) {
       this.routes[url]();
-    } else {
-      this.routes['/']();
-      history.pushState(undefined, undefined, '/');
-    }
 
-    this.callbacks.forEach(cb => cb.call(undefined, url));
+      if (!this.isRoute) {
+        history.pushState(undefined, undefined, '/');
+      }
+
+      this.callbacks.forEach(cb => cb.call(undefined, url));
+    }
   }
 }
