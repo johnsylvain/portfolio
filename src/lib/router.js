@@ -3,7 +3,7 @@ export default class Router {
     this.routes = routes;
     this.callbacks = [];
 
-    window.addEventListener('hashchange', this.go.bind(this, undefined));
+    window.addEventListener('popstate', this.go.bind(this, undefined));
     window.addEventListener('load', this.go.bind(this, undefined));
   }
 
@@ -12,15 +12,18 @@ export default class Router {
   }
 
   go(path) {
-    if (path) history.replaceState(undefined, undefined, path);
+    if (path) {
+      history.pushState(undefined, undefined, path);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    }
 
-    const url = location.hash.slice(1) || '/';
+    const url = window.location.pathname || '/';
 
     if (this.routes[url]) {
       this.routes[url]();
     } else {
       this.routes['/']();
-      history.replaceState(undefined, undefined, '/');
+      history.pushState(undefined, undefined, '/');
     }
 
     this.callbacks.forEach(cb => cb.call(undefined, url));

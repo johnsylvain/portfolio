@@ -13,7 +13,6 @@ class App {
     this.store = store;
     this.handleConsoleSubmit = this.handleConsoleSubmit.bind(this);
     this.handleConsoleKeypress = this.handleConsoleKeypress.bind(this);
-
     this.router = new Router({
       '/': () => {
         this.store.dispatch({ type: 'setInteractiveMode', payload: false });
@@ -23,7 +22,7 @@ class App {
         this.store.dispatch({ type: 'setInteractiveMode', payload: true });
         document.querySelector('.wrap').classList.add('interactive-mode');
         if (window.innerWidth <= BREAKPOINT) {
-          this.router.go('#/');
+          this.router.go('/');
         }
       }
     });
@@ -33,7 +32,7 @@ class App {
       navButtons.forEach(a => a.classList.remove('active'));
 
       navButtons
-        .find(a => a.getAttribute('href') === `#${path}`)
+        .find(a => a.attributes['data-to'].value === path)
         .classList.add('active');
     });
 
@@ -41,11 +40,17 @@ class App {
   }
 
   bindEvents() {
+    window.addEventListener('click', event => {
+      if (event.target.attributes['data-to']) {
+        this.router.go(event.target.attributes['data-to'].value);
+      }
+    });
+
     window.addEventListener(
       'resize',
       throttle(() => {
         if (window.innerWidth <= BREAKPOINT) {
-          this.router.go('#/');
+          this.router.go('/');
         }
       }, 250)
     );
@@ -81,7 +86,7 @@ class App {
         <div
           className={`console-selector ${
             this.store.state.interactiveMode ? 'interactive-mode' : ''
-          }`}
+            }`}
         >
           <Console
             commandList={this.store.state.commandList}
@@ -102,5 +107,3 @@ const appInstance = new App({ store });
 store.subscribe(() => {
   render(appInstance.render(), document.querySelector('#app-selector'));
 });
-
-appInstance.render();
