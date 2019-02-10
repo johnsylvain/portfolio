@@ -10,11 +10,11 @@ function createCommands(state) {
 
 export default function reducer(action, state) {
   switch (action.type) {
-    case 'setInteractiveMode': {
+    case 'SET_INTERACTIVE_MODE': {
       return { ...state, interactiveMode: action.payload };
     }
 
-    case 'executeKeypress': {
+    case 'EXECUTE_KEYPRESS': {
       const { pointer, data } = state.enteredCommands;
       const newPointer = {
         UP: pointer < data.length ? pointer + 1 : pointer,
@@ -31,7 +31,7 @@ export default function reducer(action, state) {
       };
     }
 
-    case 'enterCommand': {
+    case 'ENTER_COMMAND': {
       const [keyword, argument] = action.payload.trim().split(' ');
       const commands = createCommands(state);
       const responses = [];
@@ -93,5 +93,8 @@ export default function reducer(action, state) {
         }
       };
     }
+
+    default:
+      return state;
   }
 }

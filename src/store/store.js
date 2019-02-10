@@ -1,30 +1,17 @@
 export class Store {
-  constructor({ actions, reducer, state }) {
-    this.actions = actions;
+  constructor({ reducer, state }) {
     this.reducer = reducer;
     this.state = state;
     this.subscriptions = [];
   }
 
-  subscribe(fn) {
-    this.subscriptions.push(fn);
+  subscribe(handler) {
+    this.subscriptions.push(handler);
   }
 
-  dispatch({ type, payload }) {
-    if (typeof this.actions[type] !== 'function') {
-      return false;
-    }
-
-    this.actions[type](this, payload);
-
-    return true;
-  }
-
-  commit({ type, payload }) {
-    const newState = this.reducer({ type, payload }, this.state);
+  dispatch(action) {
+    const newState = this.reducer(action, this.state);
     this.state = Object.assign({}, this.state, newState);
-    this.subscriptions.forEach(fn => fn.call(undefined, this.state));
-
-    return true;
+    this.subscriptions.forEach(handler => handler.call(undefined, this.state));
   }
 }
