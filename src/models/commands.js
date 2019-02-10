@@ -32,10 +32,10 @@ export class Commands {
               return [
                 new Command(
                   `  ${availableCommand.text}${availableCommand.description &&
-                  ` <${availableCommand.description}>`}`
+                    ` <${availableCommand.description}>`}`
                 ),
                 availableCommand.params &&
-                new Command(`    ${availableCommand.params.join(', ')}`)
+                  new Command(`    ${availableCommand.params.join(', ')}`)
               ];
             }
           })
@@ -50,11 +50,6 @@ export class Commands {
     return {
       currentOutput: section === 'resume' ? { resume: data } : currentOutput
     };
-  }
-
-  exit() {
-    window.location.hash = '/';
-    return {};
   }
 
   show(section) {

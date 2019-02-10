@@ -18,7 +18,6 @@ export default {
     { text: '', description: '', params: null, ignored: true },
     { text: 'help', description: '', params: null },
     { text: 'clear', description: '', params: null, ignored: true },
-    { text: 'exit', description: '', params: null },
     { text: 'pwd', description: '', params: null, ignored: true },
     { text: 'ls', description: '', params: null, ignored: true },
     { text: 'cd', description: '', params: null, ignored: true },
