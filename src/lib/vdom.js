@@ -10,9 +10,13 @@ export function h(nodeName, attributes, ...children) {
   children = [].concat.apply([], children);
   attributes = attributes || {};
 
-  return typeof nodeName === 'function'
-    ? nodeName(attributes, children)
-    : { nodeName, attributes, children };
+  return nodeName.type === 'CLASS_COMPONENT'
+    ? nodeName.instance
+      ? nodeName.instance.render()
+      : (nodeName.instance = new nodeName(attributes)).render()
+    : typeof nodeName === 'function'
+      ? nodeName(attributes, children)
+      : { nodeName, attributes, children };
 }
 
 export function render(newNode, parent) {

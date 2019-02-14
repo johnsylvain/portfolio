@@ -1,9 +1,12 @@
-import { render } from './lib/vdom';
-import store from './store/index.js';
+import { render, h } from './lib/vdom';
+import { createStore } from './lib/store';
+import reducer from './reducer';
 import App from './components/app';
 
-const appInstance = new App({ store });
+const store = createStore(reducer);
 
 store.subscribe(() => {
-  render(appInstance.render(), document.querySelector('#app-selector'));
+  render(<App store={store} />, document.querySelector('#app-selector'));
 });
+
+store.dispatch({ type: '@@INIT' });

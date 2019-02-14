@@ -7,6 +7,8 @@ import Console from './console';
 const BREAKPOINT = 768;
 
 export default class App {
+  static type = 'CLASS_COMPONENT';
+
   constructor({ store }) {
     this.store = store;
     this.handleConsoleSubmit = this.handleConsoleSubmit.bind(this);
