@@ -1,18 +1,18 @@
-export default class Router {
-  constructor(routes) {
-    this.routes = routes;
+class Router {
+  constructor() {
+    this.routes = {};
     this.callbacks = [];
 
     window.addEventListener('popstate', this.go.bind(this, undefined));
     window.addEventListener('load', this.go.bind(this, undefined));
   }
 
-  subscribe(cb) {
-    this.callbacks.push(cb);
+  on(path, handler) {
+    this.routes[path] = handler;
   }
 
-  get isRoute() {
-    return !!this.routes[window.location.pathname];
+  subscribe(cb) {
+    this.callbacks.push(cb);
   }
 
   go(path) {
@@ -22,11 +22,13 @@ export default class Router {
         window.dispatchEvent(new PopStateEvent('popstate'));
       }
 
-      const url = this.isRoute ? window.location.pathname || '/' : '/';
+      const url = !!this.routes[window.location.pathname]
+        ? window.location.pathname || '/'
+        : '/';
 
       this.routes[url]();
 
-      if (!this.isRoute) {
+      if (!this.routes[window.location.pathname]) {
         history.pushState(undefined, undefined, '/');
       }
 
@@ -34,3 +36,5 @@ export default class Router {
     }
   }
 }
+
+export const router = new Router();

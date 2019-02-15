@@ -10,10 +10,8 @@ export function h(nodeName, attributes, ...children) {
   children = [].concat.apply([], children);
   attributes = attributes || {};
 
-  return nodeName.type === 'CLASS_COMPONENT'
-    ? nodeName.instance
-      ? nodeName.instance.render()
-      : (nodeName.instance = new nodeName(attributes)).render()
+  return nodeName.isClass
+    ? new nodeName(attributes, children).render()
     : typeof nodeName === 'function'
       ? nodeName(attributes, children)
       : { nodeName, attributes, children };
@@ -45,7 +43,7 @@ function setAttribute(node, name, value) {
     node.setAttribute('class', value);
   } else if (name === 'dangerouslySetInnerHTML') {
     node.innerHTML = value.__html;
-  } else {
+  } else if (!/^on/.test(name)) {
     node.setAttribute(name, value);
   }
 }

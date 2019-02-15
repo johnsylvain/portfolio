@@ -7,7 +7,7 @@ const formatJson = compose(
   findUrls
 );
 
-export default function Resume({ output }) {
+export function Resume({ output }) {
   return (
     <div>
       <pre dangerouslySetInnerHTML={{ __html: formatJson(output) }} />

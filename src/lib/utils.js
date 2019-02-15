@@ -1,11 +1,11 @@
 export function throttle(func, threshhold) {
   let wait = false;
 
-  return function() {
+  return () => {
     if (!wait) {
       func.apply(undefined, arguments);
       wait = true;
-      setTimeout(function() {
+      setTimeout(() => {
         wait = false;
       }, threshhold);
     }
