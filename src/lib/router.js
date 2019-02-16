@@ -1,3 +1,5 @@
+import { throttle } from './utils';
+
 class Router {
   constructor() {
     this.routes = {};
@@ -5,6 +7,19 @@ class Router {
 
     window.addEventListener('popstate', this.go.bind(this, undefined));
     window.addEventListener('load', this.go.bind(this, undefined));
+    window.addEventListener('click', event => {
+      if (event.target.attributes['data-to']) {
+        this.go(event.target.attributes['data-to'].value);
+      }
+    });
+    window.addEventListener(
+      'resize',
+      throttle(() => {
+        if (window.innerWidth <= 768) {
+          this.go('/');
+        }
+      }, 250)
+    );
   }
 
   on(path, handler) {

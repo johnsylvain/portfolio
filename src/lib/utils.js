@@ -12,10 +12,9 @@ export function throttle(func, threshhold) {
   };
 }
 
-export const compose = (...fns) => initialValue =>
-  fns.reduce((val, fn) => fn(val), initialValue);
+export const formatJSON = data => findUrls(textToJSON(data));
 
-export function textToJSON(json) {
+function textToJSON(json) {
   if (typeof json !== 'string') json = JSON.stringify(json, null, 2);
 
   json = json
@@ -38,7 +37,7 @@ export function textToJSON(json) {
   });
 }
 
-export function findUrls(text) {
+function findUrls(text) {
   const reg = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)(?:[\.\!\/\\\w]*))?)/g;
 
   return text.replace(reg, match => {

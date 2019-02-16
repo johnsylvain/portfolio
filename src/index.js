@@ -1,6 +1,4 @@
-import { router } from './lib/router';
-import { render, h } from './lib/vdom';
-import { createStore } from './lib/store';
+import { render, h, router, createStore } from './lib';
 import { reducer } from './reducer';
 import { App } from './components/app';
 import { SET_INTERACTIVE_MODE } from './constants/actions';
@@ -29,11 +27,16 @@ router.on('/resume', () => {
   }
 });
 
+router.subscribe(path => {
+  const navButtons = Array.from(document.querySelector('.nav').children);
+  navButtons.forEach(a => a.classList.remove('active'));
+  navButtons
+    .find(a => a.attributes['data-to'].value === path)
+    .classList.add('active');
+});
+
 store.subscribe(() => {
-  render(
-    <App store={store} router={router} />,
-    document.querySelector('#app-selector')
-  );
+  render(<App store={store} />, document.querySelector('#app-selector'));
 });
 
 store.dispatch({ type: '@@INIT' });

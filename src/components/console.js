@@ -1,5 +1,4 @@
-import { h } from '../lib/vdom';
-import { Component } from '../lib/component';
+import { Component, h } from '../lib';
 
 export class Console extends Component {
   constructor(props) {
