@@ -10,9 +10,11 @@ export function h(nodeName, attributes, ...children) {
   children = [].concat.apply([], children);
   attributes = attributes || {};
 
-  return typeof nodeName === 'function'
-    ? nodeName(attributes, children)
-    : { nodeName, attributes, children };
+  return nodeName.isClass
+    ? new nodeName(attributes, children).render()
+    : typeof nodeName === 'function'
+      ? nodeName(attributes, children)
+      : { nodeName, attributes, children };
 }
 
 export function render(newNode, parent) {
@@ -41,7 +43,7 @@ function setAttribute(node, name, value) {
     node.setAttribute('class', value);
   } else if (name === 'dangerouslySetInnerHTML') {
     node.innerHTML = value.__html;
-  } else {
+  } else if (!/^on/.test(name)) {
     node.setAttribute(name, value);
   }
 }

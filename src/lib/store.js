@@ -1,7 +1,7 @@
-export class Store {
-  constructor({ reducer, state }) {
+class Store {
+  constructor(reducer) {
     this.reducer = reducer;
-    this.state = state;
+    this.state = undefined;
     this.subscriptions = [];
   }
 
@@ -10,8 +10,12 @@ export class Store {
   }
 
   dispatch(action) {
-    const newState = this.reducer(action, this.state);
-    this.state = Object.assign({}, this.state, newState);
+    this.state = {
+      ...this.state,
+      ...this.reducer(this.state, action)
+    };
     this.subscriptions.forEach(handler => handler.call(undefined, this.state));
   }
 }
+
+export const createStore = reducer => new Store(reducer);

@@ -1,6 +1,28 @@
 import { Command } from './command';
+import resume from '../constants/resume-data';
 
 export class Commands {
+  static commands = [
+    { text: '', description: '', params: null, ignored: true },
+    { text: 'help', description: '', params: null },
+    { text: 'clear', description: '', params: null, ignored: true },
+    { text: 'pwd', description: '', params: null, ignored: true },
+    { text: 'ls', description: '', params: null, ignored: true },
+    { text: 'cd', description: '', params: null, ignored: true },
+    { text: 'open', description: 'file', params: ['resume'] },
+    {
+      text: 'show',
+      description: 'section',
+      params: ['education', 'skills', 'experience', 'projects']
+    },
+    {
+      text: 'social',
+      description: 'profile',
+      params: ['github', 'linkedin']
+    },
+    { text: 'rm', description: '', params: ['-rf'], ignored: true }
+  ];
+
   static match(commands, keyword, argument) {
     const { text, params } =
       commands.find(command => command.text === keyword) || {};
@@ -18,12 +40,8 @@ export class Commands {
     };
   }
 
-  constructor(state) {
-    this.state = state;
-  }
-
   help() {
-    const { commands } = this.state;
+    const { commands } = Commands;
     return {
       newCommandList: [new Command('terminal usage:', 'bold')].concat(
         commands
@@ -46,21 +64,21 @@ export class Commands {
   }
 
   open(section) {
-    const { currentOutput, data } = this.state;
     return {
-      currentOutput: section === 'resume' ? { resume: data } : currentOutput
+      currentOutput: section === 'resume' ? { resume } : undefined
     };
   }
 
   show(section) {
-    const { data } = this.state;
     return {
-      currentOutput: data[section] ? { [section]: data[section] } : undefined
+      currentOutput: resume[section]
+        ? { [section]: resume[section] }
+        : undefined
     };
   }
 
   social(profile) {
-    const link = this.state.data.contact[profile];
+    const link = resume.contact[profile];
     if (link) {
       window.open(link);
     }

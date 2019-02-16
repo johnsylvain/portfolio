@@ -1,20 +1,35 @@
-import { Command } from '../models/command';
-import { Commands } from '../models/commands';
+import { Command } from './models/command';
+import { Commands } from './models/commands';
+import {
+  SET_INTERACTIVE_MODE,
+  EXECUTE_KEYPRESS,
+  ENTER_COMMAND
+} from './constants/actions';
 
 let commandCache;
 
-function createCommands(state) {
-  if (commandCache) return commandCache;
-  return (commandCache = new Commands(state));
-}
+const initialState = {
+  interactiveMode: false,
+  keyCommands: [{ code: 38, action: 'UP' }, { code: 40, action: 'DOWN' }],
+  commandList: [new Command("type 'help' to view commands")],
+  enteredCommands: {
+    data: [],
+    currentCommand: '',
+    pointer: 0
+  },
+  currentOutput: [
+    "to view my resume, type 'open resume' in the terminal to the left",
+    "type 'help' to view other commands"
+  ]
+};
 
-export default function reducer(action, state) {
+export function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'SET_INTERACTIVE_MODE': {
+    case SET_INTERACTIVE_MODE: {
       return { ...state, interactiveMode: action.payload };
     }
 
-    case 'EXECUTE_KEYPRESS': {
+    case EXECUTE_KEYPRESS: {
       const { pointer, data } = state.enteredCommands;
       const newPointer = {
         UP: pointer < data.length ? pointer + 1 : pointer,
@@ -31,15 +46,15 @@ export default function reducer(action, state) {
       };
     }
 
-    case 'ENTER_COMMAND': {
+    case ENTER_COMMAND: {
       const [keyword, argument] = action.payload.trim().split(' ');
-      const commands = createCommands(state);
+      const commands = commandCache || (commandCache = new Commands());
       const responses = [];
       const {
         enteredCommands: { data }
       } = state;
       const { command, expectedParamCount, acceptedParams } = Commands.match(
-        state.commands,
+        Commands.commands,
         keyword,
         argument
       );
