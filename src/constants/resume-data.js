@@ -83,7 +83,7 @@ export default {
       'Node',
       'Angular'
     ],
-    'web-tooling': ['git', 'webpack', 'gulp', 'ssh'],
+    'web-tooling': ['git', 'webpack', 'gulp', 'shell'],
     database: ['SQL', 'MongoDB', 'Mongoose']
   }
 };
