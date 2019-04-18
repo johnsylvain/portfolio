@@ -21,6 +21,9 @@ $slow-duration: 600ms;
 @import 'partials/animations';
 @import 'partials/reset';
 @import 'partials/code';
+@import 'partials/header';
+@import 'partials/footer';
+@import 'partials/app';
 @import 'partials/console';
 @import 'partials/resume';
 
@@ -143,61 +146,6 @@ section {
 
   .sub-heading {
     font-weight: $font-bold;
-  }
-}
-
-header {
-  display: flex;
-  align-items: center;
-  transition: padding $slow-duration ease-in-out;
-  padding: 3rem 0;
-
-  div {
-    flex-grow: 1;
-
-    h1 {
-      font-weight: normal;
-      font-size: 1.8rem;
-      font-weight: $font-bold;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: $gray;
-    }
-  }
-
-  nav a {
-    font-size: 1.2rem;
-    cursor: pointer;
-    user-select: none;
-  }
-}
-
-footer {
-  padding: 1rem 0 2rem;
-  color: $gray;
-  font-size: 0.8rem;
-  display: flex;
-  width: 100%;
-
-  .copyright {
-    flex-grow: 1;
-  }
-
-  a {
-    font-weight: $font-bold;
-    text-decoration: none;
-    color: $gray;
-    opacity: 0.8;
-
-    &:not(:first-child) {
-      margin-left: 7px;
-    }
-
-    &:hover {
-      opacity: 1;
-    }
   }
 }
 

@@ -42,16 +42,12 @@ export class App extends Component {
           this.props.store.state.interactiveMode ? 'interactive-mode' : ''
         }`}
       >
-        <div className="console-selector">
-          <Console
-            commandList={this.props.store.state.commandList}
-            onEnterCommand={this.handleConsoleSubmit}
-            onInputKeypress={this.handleConsoleKeypress}
-          />
-        </div>
-        <div className="resume-selector item item--inverse show-interactive">
-          <Resume output={this.props.store.state.currentOutput} />
-        </div>
+        <Console
+          commandList={this.props.store.state.commandList}
+          onEnterCommand={this.handleConsoleSubmit}
+          onInputKeypress={this.handleConsoleKeypress}
+        />
+        <Resume output={this.props.store.state.currentOutput} />
       </div>
     );
   }
