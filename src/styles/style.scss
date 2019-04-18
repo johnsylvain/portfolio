@@ -64,6 +64,10 @@ body {
       max-width: 100%;
     }
 
+    header {
+      padding: 2rem 0;
+    }
+
     main {
       opacity: 0;
     }
@@ -110,8 +114,8 @@ section {
       text-decoration: none;
       color: $text;
 
-      svg {
-        transition: $fast-duration ease;
+      span {
+        transition: $fast-duration ease-in-out;
         transform: translateX(-5px);
         opacity: 0;
         display: inline-block;
@@ -120,33 +124,19 @@ section {
 
       &.slack-colors {
         color: #4C9689;
-
-        svg  path {
-          fill: #4C9689;
-        }
       }
 
       &.streamit {
         color: #A773A4;
-
-        svg  path {
-          fill: #A773A4;
-        }
       }
 
       &.kobra {
         color: #5AB4F8;
-
-        svg  path {
-          fill: #5AB4F8;
-        }
       }
 
-      &:hover {
-        svg {
-          opacity: 0.5;
-          transform: translateX(0px);
-        }
+      &:hover span {
+        opacity: 1;
+        transform: translateX(0px);
       }
     }
   }
@@ -159,7 +149,8 @@ section {
 header {
   display: flex;
   align-items: center;
-  padding: 2rem 0;
+  transition: padding $slow-duration ease-in-out;
+  padding: 3rem 0;
 
   div {
     flex-grow: 1;
