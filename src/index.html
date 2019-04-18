@@ -20,8 +20,8 @@
 
 <body>
   <div class="wrap">
-    <div class="container">
-      <div class="item">
+    <div class="inner-wrap">
+      <div class="container">
         <header>
           <div>
             <h1>John Sylvain</h1>
@@ -29,135 +29,111 @@
           </div>
           <nav class="nav mobile-hide">
             <a data-to="/"
-              class="active round-link">Porfolio</a>
+              class="active round-link">Portfolio</a>
             <a data-to="/resume"
               class="round-link">Resume</a>
           </nav>
         </header>
-      </div>
 
-      <div id="app-selector"></div>
+        <main>
+          <section class="about">
+            <h3>Hey! 👋</h3>
+            <p>
+              I'm John, a passionate software engineer focused on creating performant JavaScript web applications and
+              developer tools.
+            </p>
+            <p>
+              Currently, I develop consumer web products at
+              <a href="https://rocketmiles.com"
+                class="link"
+                target="_blank">Rocketmiles</a>.
+            </p>
+          </section>
 
-      <div class="item content hide-interactive">
-        <h3>Hey! 👋</h3>
-        <p>
-          I'm John, a passionate software engineer focused on creating performant JavaScript web applications and
-          developer tools.
-        </p>
-        <p>
-          Currently, I develop consumer web products at
-          <a href="https://rocketmiles.com"
-            class="link"
-            target="_blank">Rocketmiles</a>.
-        </p>
-      </div>
+          <section class="project">
+            <h4>
+              <a href="https://slackcolors.com"
+                class="slack-colors"
+                target="_blank">Slack Colors <svg width="17"
+                  height="18"
+                  viewBox="0 0 17 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M17 0.00489807V7.0049L14.207 4.2119L6 12.4189L4.586 11.0049L12.793 2.7979L10 0.00489807H17ZM14 17.0049H0V3.0049H8V5.0049H2V15.0049H12V9.0049H14V17.0049Z" />
+                </svg>
+              </a>
 
-      <div class="masonry hide-interactive">
-        <div class="column">
-          <div class="item item--inverse content">
-            <h3>
-              <span class="badge">3</span>
-              <span>Web Apps</span>
-            </h3>
-            <ul class="project">
-              <li>
-                <a href="https://slackcolors.com"
-                  target="_blank">
-                  <span class="project__title">Slack Colors</span>
-                  <span class="project__subtitle">AI Slack themes</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://streamit.space"
-                  target="_blank">
-                  <span class="project__title">Streamit</span>
-                  <span class="project__subtitle">Reddit video streamer</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://placemorty.us"
-                  target="_blank">
-                  <span class="project__title">PlaceMorty</span>
-                  <span class="project__subtitle">Placeholder image generator</span>
-                </a>
-              </li>
-            </ul>
+            </h4>
+            <p class="sub-heading">Slack Colors is a web app for creating beautiful color themes for Slack.</p>
+            <p>It uses a simple voting system to train a Neural Network. In turn, the app generates a set of recommended
+              themes.</p>
+            <p>Slack Colors was featured on <a href="#"
+                class="link">Product Hunt</a>.</p>
+          </section>
+
+          <section class="project">
+            <h4>
+              <a href="https://streamit.space"
+                class="streamit"
+                target="_blank">Streamit <svg width="17"
+                  height="18"
+                  viewBox="0 0 17 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M17 0.00489807V7.0049L14.207 4.2119L6 12.4189L4.586 11.0049L12.793 2.7979L10 0.00489807H17ZM14 17.0049H0V3.0049H8V5.0049H2V15.0049H12V9.0049H14V17.0049Z" />
+                </svg>
+              </a>
+
+            </h4>
+            <p class="sub-heading">Streamit is a playlist maker for video content from Reddit.</p>
+            <p>Search for your favorite sub-reddit and sit back and enjoy a simplified viewing experience.</p>
+            <p>Streamit is built with Preact and CSS Modules.</p>
+          </section>
+
+          <section class="project">
+            <h4>
+              <a href="https://github.com/johnsylvain/kobra"
+                class="kobra"
+                target="_blank">Kobra <svg width="17"
+                  height="18"
+                  viewBox="0 0 17 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M17 0.00489807V7.0049L14.207 4.2119L6 12.4189L4.586 11.0049L12.793 2.7979L10 0.00489807H17ZM14 17.0049H0V3.0049H8V5.0049H2V15.0049H12V9.0049H14V17.0049Z" />
+                </svg>
+              </a>
+
+            </h4>
+            <p class="sub-heading">Kobra is a minimal JavaScript framework.</p>
+            <p>Kobra includes a built-in router, Redux style actions/state management, and a small bundle size (~2.5 kb
+              gzipped).</p>
+          </section>
+        </main>
+
+        <footer>
+          <div class="copyright">
+            &copy; John Sylvain 2019
           </div>
-          <div class="item item--inverse content">
-            <h3>
-              <span class="badge">1</span>
-              <span>Chrome Extensions</span>
-            </h3>
-            <ul class="project">
-              <li>
-                <a href="https://chrome.google.com/webstore/detail/reddit-rshowerthoughts-ne/pcmdclajhocfphjlgbhniglijghlmlfg"
-                  target="_blank">
-                  <span class="project__title">Showerthoughts Newtab</span>
-                  <span class="project__subtitle">Newtab replacement</span>
-                </a>
-              </li>
-            </ul>
+          <div>
+            <a href="https://blog.johnsylvain.me"
+              target="_blank">Blog</a>
+            <a href="https://github.com/johnsylvain"
+              target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/johnsylvain"
+              target="_blank">LinkedIn</a>
           </div>
-        </div>
-        <div class="column">
-          <div class="item item--inverse content">
-            <h3>
-              <span class="badge">4</span>
-              <span>Open Source</span>
-            </h3>
-            <ul class="project">
-              <li>
-                <a href="https://github.com/johnsylvain/kobra"
-                  target="_blank">
-                  <span class="project__title">kobra</span>
-                  <span class="project__subtitle">JavaScript Framework</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/johnsylvain/cbb"
-                  target="_blank">
-                  <span class="project__title">cbb</span>
-                  <span class="project__subtitle">College Basketball CLI</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/johnsylvain/air-router"
-                  target="_blank">
-                  <span class="project__title">air-router</span>
-                  <span class="project__subtitle">Small browser route handler</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/johnsylvain/frecent"
-                  target="_blank">
-                  <span class="project__title">frecent</span>
-                  <span class="project__subtitle">Object ranking model</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        </footer>
       </div>
     </div>
-
-    <footer>
-      <div class="container">
-        <div class="copyright">
-          &copy; John Sylvain 2019
-        </div>
-        <div>
-          <a href="https://blog.johnsylvain.me"
-            target="_blank">Blog</a>
-          <a href="https://github.com/johnsylvain"
-            target="_blank">GitHub</a>
-          <a href="https://linkedin.com/in/johnsylvain"
-            target="_blank">LinkedIn</a>
-        </div>
-      </div>
-    </footer>
+    <div id="root"></div>
   </div>
 
-  <!-- Shh... Easter Egg -->
   <div class="trash">
     <img src="assets/trash.png"
       alt="" />
@@ -166,6 +142,7 @@
     <img src="assets/trash-front.png"
       alt="" />
   </div>
+
   <script>
     (function (i, s, o, g, r, a, m) {
       i['GoogleAnalyticsObject'] = r;

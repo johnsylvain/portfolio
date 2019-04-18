@@ -37,12 +37,12 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
-        <div
-          className={`console-selector ${
-            this.props.store.state.interactiveMode ? 'interactive-mode' : ''
-          }`}
-        >
+      <div
+        className={`app-selector ${
+          this.props.store.state.interactiveMode ? 'interactive-mode' : ''
+        }`}
+      >
+        <div className="console-selector">
           <Console
             commandList={this.props.store.state.commandList}
             onEnterCommand={this.handleConsoleSubmit}

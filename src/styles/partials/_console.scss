@@ -1,0 +1,71 @@
+.app-selector {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: $slow-duration ease-in-out;
+
+  &.interactive-mode {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.console-selector {
+  font-family: $font-mono;
+
+  .console {
+    background-color: $medium-gray;
+    padding: 25px;
+    height: calc(100vh - 125px);
+    overflow-y: scroll;
+    color: $text;
+    font-size: 0.75rem;
+
+    .console__command-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .console__item {
+        padding: inherit;
+        line-height: 130%;
+        white-space: pre-wrap;
+
+        &:not(.console__item--command) {
+          margin-left: 2ch;
+        }
+
+        &.console__item--error {
+          color: #e74c3c;
+        }
+
+        &.console__item--response {
+          color: transparentize($text, 0.4);
+        }
+
+        &.console__item--bold {
+          font-weight: 700;
+          color: transparentize($text, 0.25);
+        }
+
+        &.console__item--warning {
+          color: #e67e22;
+        }
+      }
+    }
+
+    .console__prompt {
+      background-color: transparent;
+      font-family: $font-mono;
+      outline: none;
+      border: none;
+      font-size: 0.75rem;
+      margin: 0;
+      padding: 0;
+      color: $text;
+      width: 90%;
+      line-height: 100%;
+    }
+  }
+}

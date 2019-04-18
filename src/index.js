@@ -36,7 +36,7 @@ router.subscribe(path => {
 });
 
 store.subscribe(() => {
-  render(<App store={store} />, document.querySelector('#app-selector'));
+  render(<App store={store} />, document.querySelector('#root'));
 });
 
 store.dispatch({ type: '@@INIT' });
