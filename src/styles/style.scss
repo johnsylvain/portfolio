@@ -1,5 +1,5 @@
-$font-bold: 600;
-$font-bolder: 700;
+$font-bold: 500;
+$font-bolder: 600;
 $font-mono: 'Source Code Pro', monospace;
 $font-sans-serif: 'Avenir Next', Avenir, -apple-system, BlinkMacSystemFont,
   'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
@@ -10,7 +10,7 @@ $light-gray: #f4f5f7;
 $medium-gray: darken($light-gray, 3%);
 $dark-gray: darken($light-gray, 10%);
 $text: #484868;
-$primary: #e77f67;
+$primary: #3cb66f;
 
 $tablet-breakpoint: 768px;
 $fast-duration: 150ms;
@@ -27,12 +27,13 @@ $slow-duration: 600ms;
 body {
   color: $text;
   font-family: $font-sans-serif;
-  background: $dark-gray;
   font-size: 14pt;
+  background: linear-gradient(#e0d1fa, #1173dd);
 }
 
 #root {
   position: absolute;
+  background-color: $dark-gray;
   width: 100%;
   height: 100%;
 }
@@ -89,10 +90,11 @@ section {
   opacity: 0;
   margin-bottom: 200px;
   display: block;
+  line-height: 1.5;
 
   @for $i from 1 through 4 {
     &:nth-child(#{$i}) {
-      animation-delay: 100ms * $i;
+      animation-delay: 150ms * $i;
     }
   }
 
