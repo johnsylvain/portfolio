@@ -27,7 +27,7 @@ export default {
     },
     {
       company: 'USAA',
-      position: 'Software Development Intern',
+      position: 'Software Developer',
       date: 'Summer 2016',
       description: [
         'Worked on an agile team primarily focused on enterprise applications',
@@ -36,12 +36,8 @@ export default {
     },
     {
       company: 'Blast Radius',
-      position: 'Web Development Intern',
-      date: 'Summer 2015',
-      description: [
-        'Developed websites and dynamic emails for a number of blue chip clients',
-        'Aided in the relaunch of the global Blast Radius website'
-      ]
+      position: 'Web Developer',
+      date: 'Summer 2015'
     }
   ],
   projects: [

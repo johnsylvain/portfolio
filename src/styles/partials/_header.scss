@@ -1,0 +1,27 @@
+header {
+  display: flex;
+  align-items: center;
+  transition: padding $slow-duration ease-in-out;
+  padding: 3rem 0;
+
+  div {
+    flex-grow: 1;
+
+    h1 {
+      font-weight: normal;
+      font-size: 1.8rem;
+      font-weight: $font-bolder;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: $gray;
+    }
+  }
+
+  nav a {
+    font-size: 1.2rem;
+    cursor: pointer;
+    user-select: none;
+  }
+}
