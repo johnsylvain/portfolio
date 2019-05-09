@@ -1,17 +1,3 @@
-export function throttle(func, threshhold) {
-  let wait = false;
-
-  return () => {
-    if (!wait) {
-      func.apply(undefined, arguments);
-      wait = true;
-      setTimeout(() => {
-        wait = false;
-      }, threshhold);
-    }
-  };
-}
-
 export const formatJSON = data => findUrls(textToJSON(data));
 
 function textToJSON(json) {

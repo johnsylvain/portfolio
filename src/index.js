@@ -1,42 +1,52 @@
-import { render, h, router, createStore } from './lib';
-import { reducer } from './reducer';
-import { App } from './components/app';
+import { render, h, router, store } from './lib';
+import { CLI } from './components/cli';
 import { SET_INTERACTIVE_MODE } from './constants/actions';
 
-const store = createStore(reducer);
+const pageWrap = document.querySelector('.wrap');
 
-router.on('/', () => {
-  store.dispatch({
-    type: SET_INTERACTIVE_MODE,
-    payload: false
-  });
+const routes = [
+  [
+    '/',
+    () => {
+      store.dispatch({
+        type: SET_INTERACTIVE_MODE,
+        payload: false
+      });
 
-  document.querySelector('.wrap').classList.remove('interactive-mode');
-});
+      pageWrap.classList.remove('interactive-mode');
+    }
+  ],
+  [
+    '/resume',
+    () => {
+      if (window.innerWidth >= 768) {
+        store.dispatch({
+          type: SET_INTERACTIVE_MODE,
+          payload: true
+        });
 
-router.on('/resume', () => {
-  store.dispatch({
-    type: SET_INTERACTIVE_MODE,
-    payload: true
-  });
+        pageWrap.classList.add('interactive-mode');
+      } else {
+        router.go('/');
+      }
+    }
+  ]
+];
 
-  document.querySelector('.wrap').classList.add('interactive-mode');
-
-  if (window.innerWidth <= 768) {
-    router.go('/');
-  }
-});
-
-router.subscribe(path => {
-  const navButtons = Array.from(document.querySelector('.nav').children);
-  navButtons.forEach(a => a.classList.remove('active'));
-  navButtons
-    .find(a => a.attributes['data-to'].value === path)
-    .classList.add('active');
+routes.forEach(([route, handler]) => {
+  router.on(route, handler);
 });
 
 store.subscribe(() => {
-  render(<App store={store} />, document.querySelector('#root'));
+  render(<CLI store={store} />, document.querySelector('#root'));
 });
 
 store.dispatch({ type: '@@INIT' });
+
+const media = window.matchMedia('(max-width: 768px)');
+
+media.addListener(() => {
+  if (media.matches) {
+    router.go('/');
+  }
+});

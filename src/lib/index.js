@@ -1,7 +1,7 @@
 import { h, render } from './vdom';
 import { Component } from './component';
 import { router } from './router';
-import { createStore } from './store';
+import { store } from './store';
 import { formatJSON, throttle } from './utils';
 
 export default {
@@ -9,9 +9,9 @@ export default {
   render,
   Component,
   router,
-  createStore,
+  store,
   formatJSON,
   throttle
 };
 
-export { h, render, Component, router, createStore, formatJSON, throttle };
+export { h, render, Component, router, store, formatJSON, throttle };

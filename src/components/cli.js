@@ -1,9 +1,9 @@
 import { Component, h } from '../lib';
-import { Resume } from './resume';
+import { Output } from './output';
 import { Console } from './console';
 import { EXECUTE_KEYPRESS, ENTER_COMMAND } from '../constants/actions';
 
-export class App extends Component {
+export class CLI extends Component {
   constructor(props) {
     super(props);
   }
@@ -13,7 +13,7 @@ export class App extends Component {
 
     this.props.store.dispatch({
       type: ENTER_COMMAND,
-      payload: event.target.prompt.value
+      payload: event.target.prompt.value.trim()
     });
 
     event.target.prompt.value = '';
@@ -47,7 +47,7 @@ export class App extends Component {
           onEnterCommand={this.handleConsoleSubmit}
           onInputKeypress={this.handleConsoleKeypress}
         />
-        <Resume output={this.props.store.state.currentOutput} />
+        <Output output={this.props.store.state.currentOutput} />
       </div>
     );
   }

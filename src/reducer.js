@@ -93,10 +93,11 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         currentOutput,
-        commandList: state.commandList
-          .concat([new Command(action.payload, 'command')])
-          .concat(responses)
-          .concat(newCommandList),
+        commandList: state.commandList.concat(
+          [new Command(action.payload, 'command')],
+          responses,
+          newCommandList
+        ),
         enteredCommands: {
           ...state.enteredCommands,
           data:
