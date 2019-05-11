@@ -1,5 +1,15 @@
 export const formatJSON = data => findUrls(textToJSON(data));
 
+export function mediaQuery(query, handler) {
+  const media = window.matchMedia(query);
+  const listener = () => {
+    if (media.matches) {
+      handler();
+    }
+  };
+  media.addListener(listener);
+}
+
 function textToJSON(json) {
   if (typeof json !== 'string') json = JSON.stringify(json, null, 2);
 

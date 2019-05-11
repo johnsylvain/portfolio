@@ -7,12 +7,8 @@ class Router {
     window.addEventListener('popstate', this.go.bind(this, undefined));
     window.addEventListener('load', this.go.bind(this, undefined));
     window.addEventListener('click', event => {
-      const {
-        target: { attributes }
-      } = event;
-
-      if (attributes['data-to']) {
-        this.go(attributes['data-to'].value);
+      if (event.target.attributes['data-to']) {
+        this.go(event.target.attributes['data-to'].value);
       }
     });
   }

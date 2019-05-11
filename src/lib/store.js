@@ -1,5 +1,3 @@
-import { reducer } from '../reducer';
-
 class Store {
   constructor(reducer) {
     this.reducer = reducer;
@@ -20,4 +18,4 @@ class Store {
   }
 }
 
-export const store = new Store(reducer);
+export const createStore = reducer => new Store(reducer);
