@@ -20,7 +20,8 @@ export class Commands {
       description: 'profile',
       params: ['github', 'linkedin']
     },
-    { text: 'rm', description: '', params: ['-rf'], ignored: true }
+    { text: 'rm', description: '', params: ['-rf'], ignored: true },
+    { text: 'exit', description: '', params: null }
   ];
 
   static match(commands, keyword, argument) {
@@ -38,6 +39,12 @@ export class Commands {
       expectedParamCount: params ? params.length : 0,
       acceptedParams: params
     };
+  }
+
+  exit() {
+    history.pushState(undefined, undefined, '/');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+    return {};
   }
 
   help() {
