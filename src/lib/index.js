@@ -2,7 +2,7 @@ import { h, render } from './vdom';
 import { Component } from './component';
 import { router } from './router';
 import { createStore } from './store';
-import { formatJSON, throttle } from './utils';
+import { formatJSON, mediaQuery } from './utils';
 
 export default {
   h,
@@ -11,7 +11,7 @@ export default {
   router,
   createStore,
   formatJSON,
-  throttle
+  mediaQuery
 };
 
-export { h, render, Component, router, createStore, formatJSON, throttle };
+export { h, render, Component, router, createStore, formatJSON, mediaQuery };

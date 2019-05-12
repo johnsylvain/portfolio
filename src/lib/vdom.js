@@ -7,7 +7,7 @@ const REMOVE_ATTRIBUTE = 'REMOVE_ATTRIBUTE';
 let tree = null;
 
 export function h(nodeName, attributes, ...children) {
-  children = [].concat.apply([], children);
+  children = [].concat(...children);
   attributes = attributes || {};
 
   return nodeName.isClass

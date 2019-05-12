@@ -1,18 +1,14 @@
-export function throttle(func, threshhold) {
-  let wait = false;
+export const formatJSON = data => findUrls(textToJSON(data));
 
-  return () => {
-    if (!wait) {
-      func.apply(undefined, arguments);
-      wait = true;
-      setTimeout(() => {
-        wait = false;
-      }, threshhold);
+export function mediaQuery(query, handler) {
+  const media = window.matchMedia(query);
+  const listener = () => {
+    if (media.matches) {
+      handler();
     }
   };
+  media.addListener(listener);
 }
-
-export const formatJSON = data => findUrls(textToJSON(data));
 
 function textToJSON(json) {
   if (typeof json !== 'string') json = JSON.stringify(json, null, 2);

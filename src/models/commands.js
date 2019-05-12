@@ -2,30 +2,31 @@ import { Command } from './command';
 import resume from '../constants/resume-data';
 
 export class Commands {
-  static commands = [
-    { text: '', description: '', params: null, ignored: true },
-    { text: 'help', description: '', params: null },
-    { text: 'clear', description: '', params: null, ignored: true },
-    { text: 'pwd', description: '', params: null, ignored: true },
-    { text: 'ls', description: '', params: null, ignored: true },
-    { text: 'cd', description: '', params: null, ignored: true },
-    { text: 'open', description: 'file', params: ['resume'] },
-    {
-      text: 'show',
+  static commands = {
+    help: { description: '', params: null },
+    clear: { description: '', params: null, ignored: true },
+    pwd: { description: '', params: null, ignored: true },
+    ls: { description: '', params: null, ignored: true },
+    cd: { description: '', params: null, ignored: true },
+    open: { description: 'file', params: ['resume'] },
+    show: {
       description: 'section',
-      params: ['education', 'skills', 'experience', 'projects']
+      params: Object.keys(resume).filter(
+        param => param !== 'name' && param !== 'title'
+      )
     },
-    {
-      text: 'social',
+    social: {
       description: 'profile',
-      params: ['github', 'linkedin']
+      params: Object.keys(resume.contact)
     },
-    { text: 'rm', description: '', params: ['-rf'], ignored: true }
-  ];
+    rm: { description: '', params: ['-rf'], ignored: true }
+  };
 
-  static match(commands, keyword, argument) {
-    const { text, params } =
-      commands.find(command => command.text === keyword) || {};
+  static match(keyword, argument) {
+    const matchedCommand = Object.entries(Commands.commands).find(
+      ([text]) => text === keyword
+    );
+    const [text, { params }] = matchedCommand || [undefined, {}];
     const match = Array.isArray(params)
       ? params.find(param => param === argument)
       : undefined;
@@ -44,17 +45,20 @@ export class Commands {
     const { commands } = Commands;
     return {
       newCommandList: [new Command('terminal usage:', 'bold')].concat(
-        commands
-          .map(availableCommand => {
-            if (!availableCommand.ignored) {
+        Object.entries(commands)
+          .map(([keyword, commandDetails]) => {
+            if (!commandDetails.ignored) {
               return [
                 new Command(
-                  `  ${availableCommand.text}${availableCommand.description &&
-                    ` <${availableCommand.description}>`}`
-                ),
-                availableCommand.params &&
-                  new Command(`    ${availableCommand.params.join(', ')}`)
-              ];
+                  `  ${keyword}${commandDetails.description &&
+                    ` <${commandDetails.description}>`}`
+                )
+              ].concat(
+                commandDetails.params &&
+                  commandDetails.params.map(
+                    param => new Command(`    ${param}`, 'light')
+                  )
+              );
             }
           })
           .reduce((acc, cur) => acc.concat(cur), [])
@@ -71,7 +75,7 @@ export class Commands {
 
   show(section) {
     return {
-      currentOutput: resume[section]
+      currentOutput: Commands.commands.show.params.includes(section)
         ? { [section]: resume[section] }
         : undefined
     };

@@ -1,10 +1,9 @@
-import { throttle } from './utils';
-
 class Router {
-  constructor() {
-    this.routes = {};
-    this.callbacks = [];
+  routes = {};
+  navButtons = Array.from(document.querySelectorAll('[data-to]'));
+  activeClass = this.navButtons[0].getAttribute('data-to-active-class');
 
+  constructor() {
     window.addEventListener('popstate', this.go.bind(this, undefined));
     window.addEventListener('load', this.go.bind(this, undefined));
     window.addEventListener('click', event => {
@@ -12,43 +11,30 @@ class Router {
         this.go(event.target.attributes['data-to'].value);
       }
     });
-    window.addEventListener(
-      'resize',
-      throttle(() => {
-        if (window.innerWidth <= 768) {
-          this.go('/');
-        }
-      }, 250)
-    );
   }
 
   on(path, handler) {
     this.routes[path] = handler;
   }
 
-  subscribe(cb) {
-    this.callbacks.push(cb);
-  }
-
   go(path) {
-    if (path !== window.location.pathname) {
-      if (path) {
-        history.pushState(undefined, undefined, path);
-        window.dispatchEvent(new PopStateEvent('popstate'));
-      }
+    if (path === window.location.pathname) return;
 
-      const url = !!this.routes[window.location.pathname]
-        ? window.location.pathname || '/'
-        : '/';
-
-      this.routes[url]();
-
-      if (!this.routes[window.location.pathname]) {
-        history.pushState(undefined, undefined, '/');
-      }
-
-      this.callbacks.forEach(cb => cb.call(undefined, url));
+    if (path) {
+      history.pushState(undefined, undefined, path);
+      window.dispatchEvent(new PopStateEvent('popstate'));
     }
+
+    (this.routes[window.location.pathname] || this.routes['/'])();
+
+    if (!this.routes[window.location.pathname]) {
+      history.pushState(undefined, undefined, '/');
+    }
+
+    this.navButtons.forEach(a => a.classList.remove(this.activeClass));
+    this.navButtons
+      .find(a => a.attributes['data-to'].value === window.location.pathname)
+      .classList.add(this.activeClass);
   }
 }
 

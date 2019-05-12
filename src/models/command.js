@@ -1,5 +1,5 @@
 export class Command {
-  static typeMap = {
+  static prefixes = {
     error: 'Error: ',
     warning: 'Warning: ',
     command: '$ '
@@ -7,6 +7,6 @@ export class Command {
 
   constructor(text, type = 'response') {
     this.type = type;
-    this.text = (Command.typeMap[this.type] || '') + text;
+    this.text = (Command.prefixes[this.type] || '') + text;
   }
 }
