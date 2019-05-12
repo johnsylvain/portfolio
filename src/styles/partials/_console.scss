@@ -26,7 +26,11 @@
       }
 
       &.console__item--response {
-        color: transparentize($text, 0.4);
+        color: transparentize($text, 0.3);
+      }
+
+      &.console__item--light {
+        color: transparentize($text, 0.5);
       }
 
       &.console__item--bold {

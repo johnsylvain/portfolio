@@ -54,7 +54,6 @@ export function reducer(state = initialState, action) {
         enteredCommands: { data }
       } = state;
       const { command, expectedParamCount, acceptedParams } = Commands.match(
-        Commands.commands,
         keyword,
         argument
       );
@@ -63,14 +62,18 @@ export function reducer(state = initialState, action) {
         newCommandList = []
       } = commands[keyword] ? commands[keyword](argument) : {};
 
-      if (typeof command.text === 'undefined') {
+      if (keyword && typeof command.text === 'undefined') {
         responses.push(
           new Command(`'${keyword}' is not a command`, 'error'),
           new Command("type 'help' to list all commands")
         );
       }
 
-      if (typeof command.param === 'undefined' && expectedParamCount > 0) {
+      if (
+        keyword &&
+        typeof command.param === 'undefined' &&
+        expectedParamCount > 0
+      ) {
         if (!argument) {
           responses.push(
             new Command(`please secify an argument for'${keyword}'`, 'warning')
