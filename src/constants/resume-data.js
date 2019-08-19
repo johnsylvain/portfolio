@@ -50,6 +50,14 @@ export default {
       }
     },
     {
+      title: 'Popcover',
+      description: 'Spotify Playlist Creator',
+      links: {
+        demo: 'https://popcover.pro',
+        github: 'http://github.com/johnsylvain/pop-cover'
+      }
+    },
+    {
       title: 'Streamit',
       description: 'Reddit Video streamer',
       links: {
