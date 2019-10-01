@@ -7,7 +7,7 @@ export default {
   },
   education: {
     school: 'Purdue University',
-    gradutionDate: 'May 2017',
+    graduationDate: 'May 2017',
     study: {
       major: 'Computer Graphics Technology',
       minor: 'Computer Information Technology'
@@ -50,6 +50,14 @@ export default {
       }
     },
     {
+      title: 'Popcover',
+      description: 'Spotify Playlist Creator',
+      links: {
+        demo: 'https://popcover.pro',
+        github: 'http://github.com/johnsylvain/pop-cover'
+      }
+    },
+    {
       title: 'Streamit',
       description: 'Reddit Video streamer',
       links: {
@@ -79,7 +87,7 @@ export default {
       'Node',
       'Angular'
     ],
-    'web-tooling': ['git', 'webpack', 'gulp', 'shell'],
+    'web-tooling': ['git', 'webpack', 'gulp', 'bash'],
     database: ['SQL', 'MongoDB', 'Mongoose']
   }
 };

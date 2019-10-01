@@ -75,7 +75,6 @@ body {
     }
 
     > .inner-wrap {
-      box-shadow: 0 -5px 15px rgba($text, 0.1);
       transform: translateY(calc(100vh - 125px));
     }
   }
@@ -120,7 +119,7 @@ section {
         color: #4C9689;
       }
 
-      &.streamit {
+      &.pop-cover {
         color: #A773A4;
       }
 
