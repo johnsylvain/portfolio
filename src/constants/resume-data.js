@@ -69,6 +69,7 @@ export default {
       title: 'Kobra',
       description: 'Minimal JavaScript Framework',
       links: {
+        docs: 'https://kobra.js.org',
         github: 'https://github.com/johnsylvain/kobra'
       }
     }
