@@ -1,0 +1,26 @@
+#root {
+  position: fixed;
+  background-color: $dark-gray;
+  z-index: 9000;
+  width: 96%;
+  top: 100%;
+  height: 100vh;
+  left: 2%;
+}
+
+.app-selector {
+  transform: translateY(0%);
+  transition: $slow-duration ease-in-out;
+  border-radius: 10px 10px 0 0;
+  height: calc(100vh - 45px);
+
+  .app-selector__content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    height: 100%;
+  }
+
+  &.interactive-mode {
+    transform: translateY(-100%);
+  }
+}

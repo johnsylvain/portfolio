@@ -23,9 +23,10 @@ $slow-duration: 600ms;
 @import 'partials/code';
 @import 'partials/header';
 @import 'partials/footer';
-@import 'partials/app';
-@import 'partials/console';
-@import 'partials/resume';
+@import 'partials/components/app';
+@import 'partials/components/console';
+@import 'partials/components/resume';
+@import 'partials/components/header';
 
 body {
   color: $text;
@@ -46,7 +47,7 @@ body {
       border-radius $slow-duration ease-in-out,
       opacity $slow-duration ease-in-out;
     transform: translateY(0%);
-    transform-origin: 50vw 50vh;
+    transform-origin: 50vw 42vh;
     position: absolute;
     width: 100%;
     min-height: 100vh;
@@ -61,7 +62,7 @@ body {
 
     > .inner-wrap {
       border-radius: 10px 10px 0 0;
-      transform: scale(0.95);
+      transform: scale(0.92);
       opacity: 0.8;
     }
   }

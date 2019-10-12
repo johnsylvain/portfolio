@@ -1,6 +1,6 @@
 .resume {
   background: $light-gray;
   padding: 25px;
-  height: 100%;
+  height: calc(100vh - 70px);
   overflow-y: scroll;
 }
