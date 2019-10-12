@@ -31,14 +31,7 @@ body {
   color: $text;
   font-family: $font-sans-serif;
   font-size: 14pt;
-  background: linear-gradient(#e0d1fa, #1173dd);
-}
-
-#root {
-  position: absolute;
-  background-color: $dark-gray;
-  width: 100%;
-  height: 100%;
+  background: linear-gradient(to left bottom, #5c5c5c 0%,#3c3c3c 100%);
 }
 
 .wrap {
@@ -48,8 +41,12 @@ body {
   > .inner-wrap {
     background-color: white;
     z-index: 1000;
-    transition: transform $slow-duration ease-in-out;
+    transition:
+      transform $slow-duration ease-in-out,
+      border-radius $slow-duration ease-in-out,
+      opacity $slow-duration ease-in-out;
     transform: translateY(0%);
+    transform-origin: 50vw 50vh;
     position: absolute;
     width: 100%;
     min-height: 100vh;
@@ -62,20 +59,10 @@ body {
     height: 100vh;
     overflow: hidden;
 
-    .container {
-      max-width: 100%;
-    }
-
-    header {
-      padding: 2rem 0;
-    }
-
-    main {
-      opacity: 0;
-    }
-
     > .inner-wrap {
-      transform: translateY(calc(100vh - 125px));
+      border-radius: 10px 10px 0 0;
+      transform: scale(0.95);
+      opacity: 0.8;
     }
   }
 
