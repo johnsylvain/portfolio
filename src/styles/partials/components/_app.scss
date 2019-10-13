@@ -11,7 +11,7 @@
 .app-selector {
   transform: translateY(0%);
   transition: $slow-duration ease-in-out;
-  border-radius: 10px 10px 0 0;
+  border-radius: $round-border-radius $round-border-radius 0 0;
   height: calc(100vh - 45px);
 
   .app-selector__content {

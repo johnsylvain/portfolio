@@ -76,7 +76,7 @@ export default {
   ],
   skills: {
     languages: [
-      'JavaScript (ES Next)',
+      'JavaScript (esnext)',
       'TypeScript',
       'CSS (Sass, Less)',
       'HTML'

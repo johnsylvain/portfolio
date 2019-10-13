@@ -1,0 +1,38 @@
+h3, h4, p {
+  margin-bottom: 1rem;
+}
+
+h3, h4 {
+  font-weight: $font-bolder;
+  font-size: 1.3rem;
+
+  a {
+    text-decoration: none;
+    color: $text;
+
+    span {
+      transition: $fast-duration ease-in-out;
+      transform: translateX(-5px);
+      opacity: 0;
+      display: inline-block;
+      height: 14px;
+    }
+
+    &.slack-colors {
+      color: #4C9689;
+    }
+
+    &.pop-cover {
+      color: #A773A4;
+    }
+
+    &.kobra {
+      color: #5AB4F8;
+    }
+
+    &:hover span {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+}

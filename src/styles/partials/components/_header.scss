@@ -1,5 +1,5 @@
 .cli-header {
-  border-radius: 10px 10px 0 0;
+  border-radius: $round-border-radius $round-border-radius 0 0;
   background: darken($medium-gray, 10);
   padding: 6px 10px;
   display: flex;
