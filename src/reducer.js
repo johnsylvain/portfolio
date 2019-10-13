@@ -76,7 +76,7 @@ export function reducer(state = initialState, action) {
       ) {
         if (!argument) {
           responses.push(
-            new Command(`please secify an argument for'${keyword}'`, 'warning')
+            new Command(`please specify an argument for'${keyword}'`, 'warning')
           );
         } else {
           responses.push(
