@@ -1,0 +1,20 @@
+$font-bold: 500;
+$font-bolder: 600;
+$font-mono: 'Source Code Pro', monospace;
+$font-sans-serif: 'Avenir Next', Avenir, -apple-system, BlinkMacSystemFont,
+  'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol';
+
+$gray: #6b778c;
+$light-gray: #f4f5f7;
+$medium-gray: darken($light-gray, 3%);
+$dark-gray: darken($light-gray, 10%);
+$text: #484868;
+$primary: #3cb66f;
+
+$fast-duration: 150ms;
+$normal-duration: 300ms;
+$slow-duration: 600ms;
+
+$round-border-radius: 7px;
+$tablet-breakpoint: 768px;

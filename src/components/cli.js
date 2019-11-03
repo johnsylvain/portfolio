@@ -1,6 +1,7 @@
 import { Component, h } from '../lib';
 import { Output } from './output';
 import { Console } from './console';
+import { Link } from './link';
 import { EXECUTE_KEYPRESS, ENTER_COMMAND } from '../constants/actions';
 
 export class CLI extends Component {
@@ -42,12 +43,19 @@ export class CLI extends Component {
           this.props.store.state.interactiveMode ? 'interactive-mode' : ''
         }`}
       >
-        <Console
-          commandList={this.props.store.state.commandList}
-          onEnterCommand={this.handleConsoleSubmit}
-          onInputKeypress={this.handleConsoleKeypress}
-        />
-        <Output output={this.props.store.state.currentOutput} />
+        <div className="app-selector__header">
+          <Link to="/">
+            <span>👈</span> Back
+          </Link>
+        </div>
+        <div className="app-selector__content">
+          <Console
+            commandList={this.props.store.state.commandList}
+            onEnterCommand={this.handleConsoleSubmit}
+            onInputKeypress={this.handleConsoleKeypress}
+          />
+          <Output output={this.props.store.state.currentOutput} />
+        </div>
       </div>
     );
   }

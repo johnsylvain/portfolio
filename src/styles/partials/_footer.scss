@@ -1,26 +1,36 @@
-footer {
+.footer {
   padding: 1rem 0 4rem;
   color: $gray;
   font-size: 0.8rem;
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
 
-  .copyright {
-    flex-grow: 1;
-  }
-
-  a {
-    font-weight: $font-bold;
-    text-decoration: none;
-    color: $gray;
-    opacity: 0.8;
-
-    &:not(:first-child) {
-      margin-left: 7px;
+  .footer__item {
+    &:not(:last-child) {
+      padding-right: 2.5rem;
     }
 
-    &:hover {
-      opacity: 1;
+    strong {
+      display: block;
+      font-weight: $font-bolder;
+      margin-bottom: 0.2rem;
+    }
+
+    a {
+      font-weight: $font-bold;
+      text-decoration: none;
+      color: $gray;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: $tablet-breakpoint) {
+      width: 50%;
+      padding-bottom: 2rem;
     }
   }
 }

@@ -22,88 +22,102 @@
   <div class="wrap">
     <div class="inner-wrap">
       <div class="container">
-        <header>
+        <header class="header">
           <div>
-            <h1>John Sylvain</h1>
-            <p>Software Engineer</p>
+            <h1 class="header__title">John Sylvain</h1>
+            <p class="header__subtitle">Software Engineer</p>
           </div>
           <nav class="nav mobile-hide">
             <a data-to="/"
-              data-to-active-class="active"
-              class="active round-link">Projects</a>
+              data-to-active-class="nav__link--active"
+              class="active nav__link">Projects</a>
             <a data-to="/resume"
-              data-to-active-class="active"
-              class="round-link">Resume</a>
+              data-to-active-class="nav__link--active"
+              class="nav__link">Resume</a>
           </nav>
         </header>
 
         <main>
-          <section class="about">
-            <h3>Hey! 👋</h3>
-            <p>
-              I'm John, a passionate software engineer focused on creating beautiful and performant JavaScript web
+          <section class="content">
+            <h3 class="content__title">Hi! 👋</h3>
+            <p class="content__body">
+              I'm John, a passionate software engineer focused on creating beautiful and performant web
               applications.
             </p>
-            <p>Currently, I develop consumer web products at
+            <p class="content__body">Currently, I develop the core frontend web infrastructure at
               <a href="https://rocketmiles.com"
-                class="link"
+                class="content__link content__link--red"
                 target="_blank">Rocketmiles</a>.
             </p>
           </section>
 
-          <section class="project">
-            <h4>
+          <section class="content">
+            <h4 class="content__title">
               <a href="https://slackcolors.com"
-                class="slack-colors"
-                target="_blank">Slack Colors <span>👉</span>
-              </a>
+                class="content__link content__link--green"
+                target="_blank">Slack Colors</a>
+              <span>🎨</span>
             </h4>
-            <p class="sub-heading">Slack Colors is a web app for creating beautiful Slack color themes.</p>
-            <p>It uses a simple voting system to train a client-side neural network. In turn, the app generates a set of
+            <p class="content__subtitle">Slack Colors is a web app for creating beautiful Slack color themes.</p>
+            <p class="content__body">It uses a simple voting system to train a client-side neural network. In turn, the
+              app generates a set of
               recommended themes.</p>
             <p>Slack Colors uses a custom color generation technique for creating cohesive color schemes.</p>
           </section>
 
-          <section class="project">
-            <h4>
+          <section class="content">
+            <h4 class="content__title">
               <a href="https://popcover.pro"
-                class="pop-cover"
-                target="_blank">Pop Cover <span>👉</span>
-              </a>
+                class="content__link content__link--purple"
+                target="_blank">Pop Cover</a>
+              <span>🎉</span>
             </h4>
-            <p class="sub-heading">Pop Cover creates Spotify playlist cover art.</p>
-            <p>It creates playlists that are inspired by Spotify's "This is" playlist series.</p>
-            <p>Pop Cover is built with serverless functions, JWT based authentication, and the HTML Canvas API.</p>
+            <p class="content__subtitle">Pop Cover creates Spotify playlist cover art.</p>
+            <p class="content__body">It creates playlists that are inspired by Spotify's "This is" playlist series.</p>
+            <p class="content__body">Pop Cover is built with serverless functions, JWT based authentication, and the
+              HTML Canvas API.</p>
           </section>
 
-          <section class="project">
-            <h4>
+          <section class="content">
+            <h4 class="content__title">
               <a href="https://kobra.js.org"
-                class="kobra"
-                target="_blank">Kobra <span>👉</span>
-              </a>
+                class="content__link content__link--blue"
+                target="_blank">Kobra</a>
+              <span>🐍</span>
             </h4>
-            <p class="sub-heading">Kobra is a minimal JavaScript framework.</p>
-            <p>It includes a built-in router, Redux style actions/state management, and a small bundle size (~2.7 kb
+            <p class="content__subtitle">Kobra is a minimal JavaScript framework.</p>
+            <p class="content__body">It includes a built-in router, Redux style actions/state management, and a small
+              bundle size (~2.7 kb
               gzipped).</p>
-            <p>Kobra is inspired by the ELM architecture and is designed to be an approachable and lightweight
+            <p class="content__body">Kobra is inspired by the ELM architecture and is designed to be an approachable and
+              lightweight
               framework solution.</p>
           </section>
         </main>
 
-        <footer>
-          <div class="copyright">
-            &copy; John Sylvain 2019
+        <footer class="footer">
+          <div class="footer__item">
+            <strong>&copy; 2019</strong>
+            <a href="https://johnsylvain.me">John Sylvain</a>
           </div>
-          <div>
-            <a href="https://blog.johnsylvain.me"
-              target="_blank">Blog</a>
-            <a href="https://music.sylvain.win"
-              target="_blank">Music</a>
+          <div class="footer__item">
+            <strong>Social</strong>
             <a href="https://github.com/johnsylvain"
-              target="_blank">GitHub</a>
+              target="_blank">GitHub</a> /
             <a href="https://linkedin.com/in/johnsylvain"
               target="_blank">LinkedIn</a>
+          </div>
+          <div class="footer__item">
+            <strong>Music</strong>
+            <a href="https://music.sylvain.win"
+              target="_blank">Discography</a> /
+            <a href="https://soundcloud.com/johnsylvain"
+              target="_blank">SoundCloud</a>
+          </div>
+          <div class="footer__item">
+            <strong>Words</strong>
+            <a href="https://blog.johnsylvain.me"
+              target="_blank">Blog</a>
           </div>
         </footer>
       </div>

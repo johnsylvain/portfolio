@@ -1,0 +1,27 @@
+.trash {
+  position: fixed;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50vw;
+  height: 50vw;
+  transform-origin: center;
+  visibility: hidden;
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    height: auto;
+  }
+
+  &.crash {
+    animation: trash-can 4s;
+    visibility: visible;
+
+    &.trash__front {
+      z-index: 9000;
+    }
+  }
+}

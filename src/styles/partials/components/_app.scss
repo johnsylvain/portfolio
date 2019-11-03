@@ -1,0 +1,42 @@
+#root {
+  position: fixed;
+  z-index: 9000;
+  width: 100%;
+  top: 100vh;
+  height: 100vh;
+  left: 0px;
+}
+
+.app-selector {
+  transform: translateY(0%);
+  transition: $slow-duration ease-in-out;
+
+  .app-selector__header {
+    background: white;
+    border-radius: $round-border-radius $round-border-radius 0 0;
+    overflow: hidden;
+    padding: 15px;
+    border-bottom: 1px solid $dark-gray;
+    font-weight: $font-bolder;
+    font-size: 1.1rem;
+
+    a {
+      color: lighten($text, 10%);
+      text-decoration: none;
+
+      &:hover {
+        color: $text;
+      }
+    }
+  }
+
+  .app-selector__content {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    height: 100%;
+  }
+
+  &.interactive-mode {
+    transform: translateY(-100%);
+  }
+}

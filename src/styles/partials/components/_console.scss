@@ -1,8 +1,9 @@
 .console {
   font-family: $font-mono;
   background-color: $medium-gray;
+  border-right: 1px solid $dark-gray;
   padding: 25px;
-  height: calc(100vh - 125px);
+  height: calc(100vh - 93px);
   overflow-y: scroll;
   color: $text;
   font-size: 0.75rem;
