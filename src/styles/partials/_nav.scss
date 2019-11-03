@@ -23,10 +23,5 @@
       box-shadow: inset 0 0 0 2px $primary;
       outline: none;
     }
-
-    &:not(.nav__link--active):active {
-      box-shadow: inset 0 0 0 2px $primary;
-      background: lighten($primary, 45%);
-    }
   }
 }

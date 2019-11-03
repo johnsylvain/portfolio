@@ -11,16 +11,13 @@ let commandCache;
 const initialState = {
   interactiveMode: false,
   keyCommands: [{ code: 38, action: 'UP' }, { code: 40, action: 'DOWN' }],
-  commandList: [new Command("type 'help' to view commands")],
+  commandList: [new Command("Tip: type 'help' to view commands")],
   enteredCommands: {
     data: [],
     currentCommand: '',
     pointer: 0
   },
-  currentOutput: [
-    "to view my resume, type 'open resume' in the terminal to the left",
-    "type 'help' to view other commands"
-  ]
+  currentOutput: null
 };
 
 export function reducer(state = initialState, action) {

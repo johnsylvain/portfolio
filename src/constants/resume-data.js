@@ -90,6 +90,6 @@ export default {
       'Angular'
     ],
     'web-tooling': ['git', 'webpack', 'gulp', 'bash'],
-    database: ['SQL', 'MongoDB', 'Mongoose']
+    database: ['GraphQL', 'SQL', 'MongoDB', 'Mongoose']
   }
 };
