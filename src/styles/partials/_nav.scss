@@ -8,7 +8,6 @@
     font-weight: $font-bold;
     text-decoration: none;
     color: $gray;
-    transition: $fast-duration ease-in-out;
 
     &.nav__link--active {
       background: $primary;

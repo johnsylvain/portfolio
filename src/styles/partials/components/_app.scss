@@ -1,11 +1,10 @@
 #root {
   position: fixed;
-  background-color: $dark-gray;
   z-index: 9000;
-  width: 96vw;
-  top: 100%;
-  height: 95vh;
-  left: 2vw;
+  width: 100%;
+  top: 100vh;
+  height: 100vh;
+  left: 0px;
 }
 
 .app-selector {
@@ -33,7 +32,7 @@
 
   .app-selector__content {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 350px 1fr;
     height: 100%;
   }
 

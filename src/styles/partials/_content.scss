@@ -49,6 +49,10 @@
       transform-origin: left;
     }
 
+    &.content__link--red:after {
+      background: lighten(#ff4e21, 35%);
+    }
+
     &.content__link--green:after {
       background: lighten(#4C9689, 35%);
     }

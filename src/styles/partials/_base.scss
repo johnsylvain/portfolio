@@ -18,7 +18,7 @@ body {
       border-radius $slow-duration ease-in-out,
       background-color $slow-duration ease-in-out;
     transform: translateY(0%);
-    transform-origin: 50vw 35vh;
+    transform-origin: 50vw 300px;
     position: absolute;
     width: 100%;
     min-height: 100vh;

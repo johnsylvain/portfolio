@@ -20,7 +20,7 @@ export default {
       position: 'Software Engineer',
       date: 'October 2017 - present',
       description: [
-        'Led the process of migrating legacy AngularJS applications to React and TypeScript.',
+        'Led the process of migrating legacy AngularJS applications to React and TypeScript',
         "Architected profitable features for the company's flagship white-label product",
         'Constructed and maintained an internal, cross-product UI component library',
         'Created insightful A/B tests, leading to increased conversions'

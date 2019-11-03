@@ -45,7 +45,7 @@ export class CLI extends Component {
       >
         <div className="app-selector__header">
           <Link to="/">
-            <span>👈</span> Projects
+            <span>👈</span> Back
           </Link>
         </div>
         <div className="app-selector__content">
