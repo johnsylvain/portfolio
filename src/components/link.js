@@ -1,4 +1,4 @@
-import { h } from '../lib/vdom';
+import { h } from '../lib';
 
 export const Link = ({ to }, children) => {
   const handleClick = event => {

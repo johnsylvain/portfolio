@@ -1,27 +1,21 @@
-header {
+.header {
+  position: relative;
+  perspective: 500px;
   display: flex;
   align-items: center;
-  transition: padding $slow-duration ease-in-out;
-  padding: 3rem 0;
+  justify-content: space-between;
+  margin-bottom: 100px;
+  margin-top: 100px;
 
-  div {
+  .header__title {
+    font-weight: normal;
+    font-size: 2rem;
+    font-weight: $font-bolder;
     flex-grow: 1;
-
-    h1 {
-      font-weight: normal;
-      font-size: 1.8rem;
-      font-weight: $font-bolder;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: $gray;
-    }
   }
 
-  nav a {
+  .header__subtitle {
     font-size: 1.2rem;
-    cursor: pointer;
-    user-select: none;
+    color: $gray;
   }
 }

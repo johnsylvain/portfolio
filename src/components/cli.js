@@ -1,7 +1,7 @@
 import { Component, h } from '../lib';
 import { Output } from './output';
 import { Console } from './console';
-import { Header } from './header';
+import { Link } from './link';
 import { EXECUTE_KEYPRESS, ENTER_COMMAND } from '../constants/actions';
 
 export class CLI extends Component {
@@ -43,13 +43,11 @@ export class CLI extends Component {
           this.props.store.state.interactiveMode ? 'interactive-mode' : ''
         }`}
       >
-        <Header
-          title={
-            Array.isArray(this.props.store.state.currentOutput)
-              ? 'welcome.json'
-              : Object.keys(this.props.store.state.currentOutput)[0] + '.json'
-          }
-        />
+        <div className="app-selector__header">
+          <Link to="/">
+            <span>👈</span> Projects
+          </Link>
+        </div>
         <div className="app-selector__content">
           <Console
             commandList={this.props.store.state.commandList}

@@ -1,6 +1,7 @@
 export default {
   name: 'John Sylvain',
   title: 'Software Engineer',
+  'business-card': 'npx johnsylvain',
   contact: {
     github: 'http://github.com/johnsylvain',
     linkedin: 'http://linkedin.com/in/johnsylvain'
