@@ -1,5 +1,5 @@
 import { Command } from './command';
-import resume from '../constants/resume-data';
+import resume from '../data/resume';
 
 export class Commands {
   static commands = {
@@ -12,12 +12,12 @@ export class Commands {
     show: {
       description: 'section',
       params: Object.keys(resume).filter(
-        param => param !== 'name' && param !== 'title'
+        param => param !== 'name' && param !== 'occupation'
       )
     },
     social: {
       description: 'profile',
-      params: Object.keys(resume.contact)
+      params: Object.keys(resume.profiles)
     },
     rm: { description: '', params: ['-rf'], ignored: true }
   };
@@ -51,13 +51,13 @@ export class Commands {
               return [
                 new Command(
                   `  ${keyword}${commandDetails.description &&
-                    ` <${commandDetails.description}>`}`
+                  ` <${commandDetails.description}>`}`
                 )
               ].concat(
                 commandDetails.params &&
-                  commandDetails.params.map(
-                    param => new Command(`    ${param}`, 'light')
-                  )
+                commandDetails.params.map(
+                  param => new Command(`    ${param}`, 'light')
+                )
               );
             }
           })
@@ -82,7 +82,7 @@ export class Commands {
   }
 
   social(profile) {
-    const link = resume.contact[profile];
+    const link = resume.profiles[profile];
     if (link) {
       window.open(link);
     }

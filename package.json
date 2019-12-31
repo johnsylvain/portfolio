@@ -4,9 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "prestart": "node scripts/generate-resume-data.js && eslint --fix src/data/resume.js",
+    "prebuild": "npm run prestart",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./",
-    "lint": "eslint --ignore-path .gitignore --ignore-path .prettierignore \"src/js/*.js\"",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.js\"",
     "lint:fix": "npm run lint --fix"
   },
   "lint-staged": {
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "apollo-boost": "^0.4.7",
     "babel-core": "^6.24.1",
     "babel-eslint": "^8.2.3",
     "babel-plugin-transform-react-jsx": "^6.24.1",
@@ -27,6 +30,9 @@
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "node-fetch": "^2.6.0",
     "node-sass": "^4.13.0",
     "parcel-bundler": "^1.4.1",
     "prettier": "^1.12.1",
