@@ -1,5 +1,5 @@
 import { Command } from './command';
-import resume from '../constants/resume';
+import resume from '../data/resume';
 
 export class Commands {
   static commands = {
@@ -12,7 +12,7 @@ export class Commands {
     show: {
       description: 'section',
       params: Object.keys(resume).filter(
-        param => param !== 'name' && param !== 'title'
+        param => param !== 'name' && param !== 'occupation'
       )
     },
     social: {

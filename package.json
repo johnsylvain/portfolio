@@ -4,11 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "prestart": "node scripts/generate-resume-data.js",
+    "prestart": "node scripts/generate-resume-data.js && eslint --fix src/data/resume.js",
     "prebuild": "npm run prestart",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./",
-    "lint": "eslint --ignore-path .gitignore --ignore-path .prettierignore \"src/js/*.js\"",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.js\"",
     "lint:fix": "npm run lint --fix"
   },
   "lint-staged": {
