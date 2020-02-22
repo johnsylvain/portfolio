@@ -76,6 +76,13 @@ export default {
         docs: 'https://kobra.js.org',
         github: 'https://github.com/johnsylvain/kobra'
       }
+    },
+    {
+      title: 'Fileary',
+      description: 'Simple and secure file sharing',
+      links: {
+        demo: 'https://fileary.com'
+      }
     }
   ],
   skills: {
