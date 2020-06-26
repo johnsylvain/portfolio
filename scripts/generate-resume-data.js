@@ -16,6 +16,7 @@ const GET_RESUME_DATA = ApolloClient.gql`
       profiles {
         github
         linkedin
+        spotify
       }
       businessCard
       education {

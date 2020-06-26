@@ -3,10 +3,12 @@
 
 export default {
   name: 'John Sylvain',
-  occupation: 'Software Engineer',
+  occupation: 'Senior Software Engineer',
   profiles: {
     github: 'https://github.com/johnsylvain',
-    linkedin: 'https://linkedin.com/in/johnsylvain'
+    linkedin: 'https://linkedin.com/in/johnsylvain',
+    spotify:
+      'https://open.spotify.com/artist/4nEeXjmnkJHJG6xrRBK0bp?si=VBakI3tqSbukGo6VymkrUQ'
   },
   businessCard: 'npx johnsylvain',
   education: {
