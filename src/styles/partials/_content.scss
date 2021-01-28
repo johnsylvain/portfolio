@@ -24,6 +24,7 @@
     color: $text;
     font-weight: $font-bolder;
     position: relative;
+    display: inline-block;
 
     &:before,
     &:after {
@@ -47,6 +48,10 @@
     &:hover:after {
       transform: scaleX(1);
       transform-origin: left;
+    }
+
+    &.content__link--cyan:after {
+      background: lighten(#43CCED, 28%);
     }
 
     &.content__link--red:after {
