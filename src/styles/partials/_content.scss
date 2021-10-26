@@ -69,5 +69,9 @@
     &.content__link--blue:after {
       background: lighten(#5AB4F8, 15%);
     }
+
+    &.content__link--dark-blue:after {
+      background: lighten(#263d75, 55%);
+    }
   }
 }
