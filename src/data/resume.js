@@ -23,27 +23,17 @@ export default {
     {
       company: 'Rocketmiles',
       position: 'Software Engineer',
-      date: 'October 2017 - present',
-      description: [
-        'Led the process of migrating legacy AngularJS applications to React and TypeScript',
-        "Architected profitable features for the company's flagship white-label product",
-        'Constructed and maintained an internal, cross-product UI component library',
-        'Created insightful A/B tests, leading to increased conversions'
-      ]
+      date: 'October 2017 - July 2020'
     },
     {
-      company: 'USAA',
-      position: 'Software Developer',
-      date: 'Summer 2016',
-      description: [
-        'Worked on an agile team primarily focused on enterprise applications',
-        'Developed a Restful application to manage business rules'
-      ]
+      company: 'Coda Collection',
+      position: 'Senior Software Engineer',
+      date: 'July 2020 - October 2021'
     },
     {
-      company: 'Blast Radius',
-      position: 'Web Developer',
-      date: 'Summer 2015'
+      company: 'Vintro',
+      position: 'Senior Software Engineer',
+      date: 'October 2021 - Present'
     }
   ],
   projects: [
