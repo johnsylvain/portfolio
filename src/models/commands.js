@@ -51,13 +51,13 @@ export class Commands {
               return [
                 new Command(
                   `  ${keyword}${commandDetails.description &&
-                  ` <${commandDetails.description}>`}`
+                    ` <${commandDetails.description}>`}`
                 )
               ].concat(
                 commandDetails.params &&
-                commandDetails.params.map(
-                  param => new Command(`    ${param}`, 'light')
-                )
+                  commandDetails.params.map(
+                    param => new Command(`    ${param}`, 'light')
+                  )
               );
             }
           })

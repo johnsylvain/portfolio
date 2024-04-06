@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "prestart": "node scripts/generate-resume-data.js && eslint --fix src/data/resume.js",
     "prebuild": "npm run prestart",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./",
