@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "prebuild": "npm run prestart",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.js\"",
