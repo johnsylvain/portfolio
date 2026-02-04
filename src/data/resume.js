@@ -1,7 +1,8 @@
 export default {
   name: 'John Sylvain',
-  occupation: 'Senior Software Engineer',
+  occupation: 'Senior Software & Systems Engineer',
   profiles: {
+    artifactLab: 'https://artifactlab.net',
     github: 'https://github.com/johnsylvain',
     linkedin: 'https://linkedin.com/in/johnsylvain',
     spotify:
@@ -18,14 +19,14 @@ export default {
   },
   experience: [
     {
-      company: 'Rocketmiles',
-      position: 'Software Engineer',
-      date: 'October 2017 - July 2020'
+      company: 'Outfit',
+      position: 'Lead Software Engineer',
+      date: 'August 2025 - Present'
     },
     {
-      company: 'Coda Collection',
+      company: 'ChaChing',
       position: 'Senior Software Engineer',
-      date: 'July 2020 - October 2021'
+      date: 'October 2023 - August 2025'
     },
     {
       company: 'Vintro',
@@ -33,12 +34,43 @@ export default {
       date: 'October 2021 - October 2023'
     },
     {
-      company: 'ChaChing',
+      company: 'Coda Collection',
       position: 'Senior Software Engineer',
-      date: 'October 2023 - Present'
+      date: 'July 2020 - October 2021'
+    },
+    {
+      company: 'Rocketmiles',
+      position: 'Software Engineer',
+      date: 'October 2017 - July 2020'
     }
   ],
   projects: [
+    {
+      title: 'Artifact Lab',
+      description:
+        'Private design studio for physical computing, embedded systems, and networked objects. Focused on constraint-aware design, durability, and human-scale interaction.',
+      links: {
+        site: 'https://artifactlab.net'
+      }
+    },
+    {
+      title: 'RoboGlobe',
+      description:
+        'Two-axis robotic globe driven by an ESP32 and PCA9685. Explores coordinated motion control, mechanical constraints, and deterministic embedded behavior.',
+      github: 'https://github.com/johnsylvain/roboglobe'
+    },
+    {
+      title: 'Ambient Display Unit',
+      description:
+        'Miniature CRT-based ambient display for system state. Glanceable, non-interactive, and locally controlled via a web interface.',
+      github: 'https://github.com/johnsylvain/crt-hud'
+    },
+    {
+      title: 'ColdVault',
+      description:
+        'Containerized system for scheduled backups to cold storage with cost, lifecycle, and health visibility. Emphasizes durability over feature velocity.',
+      github: 'https://github.com/johnsylvain/coldvault'
+    },
     {
       title: 'Slack Colors',
       description: 'AI Slack themes',
@@ -47,22 +79,6 @@ export default {
         github: 'http://github.com/johnsylvain/slack-colors'
       }
     },
-    // {
-    //   title: 'Popcover',
-    //   description: 'Spotify Playlist Creator',
-    //   links: {
-    //     demo: 'https://popcover.pro',
-    //     github: 'http://github.com/johnsylvain/pop-cover'
-    //   }
-    // },
-    // {
-    //   title: 'Streamit',
-    //   description: 'Reddit Video streamer',
-    //   links: {
-    //     demo: 'https://streamit.space',
-    //     github: 'http://github.com/johnsylvain/streamit'
-    //   }
-    // },
     {
       title: 'Kobra',
       description: 'Minimal JavaScript Framework',
@@ -71,25 +87,21 @@ export default {
         github: 'https://github.com/johnsylvain/kobra'
       }
     }
-    // {
-    //   title: 'Fileary',
-    //   description: 'Simple and secure file sharing',
-    //   links: {
-    //     demo: 'https://fileary.com'
-    //   }
-    // }
   ],
   skills: {
-    languages: ['JavaScript', 'TypeScript', 'CSS (Sass, Less)', 'HTML'],
+    languages: ['JavaScript', 'TypeScript', 'Python', 'Bash'],
     frameworksAndLibraries: [
       'React',
       'Redux',
-      'Express',
       'Node',
-      'Angular',
-      'Nest.js'
+      'Express',
+      'Nest.js',
+      'WebSockets'
     ],
-    webTooling: ['git', 'webpack', 'gulp', 'bash'],
-    backend: ['GraphQL', 'Postgres', 'Kafka', 'Redis']
+    webTooling: ['git', 'Docker', 'Linux', 'webpack'],
+    backend: ['Postgres', 'Redis', 'Kafka', 'GraphQL', 'REST APIs'],
+    embeddedHardware: ['ESP32', 'Raspberry Pi', 'I2C'],
+    fabrication: ['Fusion 360', 'rapid prototyping'],
+    systems: ['Linux networking', 'self-hosting']
   }
 };
